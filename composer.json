@@ -1,0 +1,19 @@
+{
+    "name": "sokil/php-vast",
+    "description": "Generator and parser for VAST documents",
+    "authors": [
+        {
+            "name": "Dmytro Sokil",
+            "email": "dmytro.sokil@gmail.com"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+
+    },
+    "autoload": {
+        "psr-0": {
+            "Sokil": "src/"
+        }
+    }
+}
