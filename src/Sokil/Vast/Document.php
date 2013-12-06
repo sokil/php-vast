@@ -69,7 +69,7 @@ class Document
      * Create "Ad" section ov "VAST" node
      * @return \Sokil\Vast\Ad
      */
-    public function createAdSection($type)
+    private function _createAdSection($type)
     {        
         // Check Ad type
         $adTypeClassName = '\\Sokil\\Vast\\Ad\\' . $type;
@@ -100,7 +100,7 @@ class Document
      */
     public function createInLineAdSection()
     {
-        return $this->createAdSection('InLine');
+        return $this->_createAdSection('InLine');
     }
     
     /**
@@ -109,7 +109,7 @@ class Document
      */
     public function createWrapperAdSection()
     {
-        return $this->createAdSection('Wrapper');
+        return $this->_createAdSection('Wrapper');
     }
     
     public function getAdSections()
