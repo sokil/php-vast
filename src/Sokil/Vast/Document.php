@@ -69,26 +69,47 @@ class Document
      * Create "Ad" section ov "VAST" node
      * @return \Sokil\Vast\Ad
      */
-    public function createAdSection()
-    {
-        $adSection = new Ad();
-        $this->addAdSection($adSection);
+    public function createAdSection($type)
+    {        
+        // Check Ad type
+        $adTypeClassName = '\\Sokil\\Vast\\Ad\\' . $type;
+        if(!class_exists($adTypeClassName)) {
+            throw new \Exception('Ad type ' . $type . ' not allowed');
+        }
+        
+        // create dom node
+        $adDomElement = $this->_xml->createElement('Ad');
+        $this->_xml->documentElement->appendChild($adDomElement);
+
+        // Create type element
+        $adTypeDomElement = $this->_xml->createElement($type);
+        $adDomElement->appendChild($adTypeDomElement);
+        
+        // create ad section
+        $adSection = new $adTypeClassName($adDomElement);
+        
+        // cache
+        $this->_vastAdSequence[] = $adSection;
+        
         return $adSection;
     }
     
     /**
-     * Add previously created "Ad" section to sequence
      * 
-     * @param \Sokil\Vast\Ad $adSection
-     * @return \Sokil\Vast\Document
+     * @return \Sokil\Vast\Ad\InLine
      */
-    public function addAdSection(Ad $adSection)
+    public function createInLineAdSection()
     {
-        $this->_vastAdSequence[] = $adSection;
-        
-        $this->_xml->documentElement->appendChild($adSection->toDomElement());
-        
-        return $this;
+        return $this->createAdSection('InLine');
+    }
+    
+    /**
+     * 
+     * @return \Sokil\Vast\Ad\Wrapper
+     */
+    public function createWrapperAdSection()
+    {
+        return $this->createAdSection('Wrapper');
     }
     
     public function getAdSections()
@@ -97,6 +118,7 @@ class Document
             
             foreach($this->_xml->documentElement->childNodes as $adDomElement) {
                 
+                // get Ad tag
                 if(!($adDomElement instanceof \DOMElement)) {
                     continue;
                 }
@@ -105,7 +127,23 @@ class Document
                     continue;
                 }
 
-                $this->_vastAdSequence[] = new Ad($adDomElement);
+                // get Ad type tag
+                foreach($adDomElement->childNodes as $node) {
+                    if(!($node instanceof \DomElement)) {
+                        continue;
+                    }
+                    
+                    $type = $node->tagName;
+
+                    // create ad section
+                    $adTypeClassName = '\\Sokil\\Vast\\Ad\\' . $type;
+                    if(!class_exists($adTypeClassName)) {
+                        throw new \Exception('Ad type ' . $type . ' not allowed');
+                    }
+
+                    $this->_vastAdSequence[] = new $adTypeClassName($adDomElement);
+                    break;
+                }
             }
         }
         

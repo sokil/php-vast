@@ -2,38 +2,36 @@
 
 namespace Sokil\Vast;
 
-class Ad
-{
+abstract class Ad
+{    
     /**
      *
      * @var \DomNode
      */
-    private $_domElement;
+    protected $_domElement;
     
-    public function __construct($domElement = null) {
-        
-        if($domElement) {
-            $this->_domElement = $domElement;
-        }
-    }
-    
-    public function toDomElement()
+    /**
+     * 
+     * @param \Sokil\Vast\DomElement|string $domElement
+     */
+    public function __construct(\DomElement $domElement) 
     {
-        if(!$this->_domElement) {
-            $this->_domElement = new \DomElement('Ad');
-        }
-        
-        return $this->_domElement;
+        $this->_domElement = $domElement;
     }
     
     public function getId()
     {
-        return $this->toDomElement()->getAttribute('id');
+        return $this->_domElement->getAttribute('id');
     }
     
+    /**
+     * 
+     * @param type $id
+     * @return \Sokil\Vast\Ad
+     */
     public function setId($id)
     {
-        $this->toDomElement()->setAttribute('id', $id);
+        $this->_domElement->setAttribute('id', $id);
         return $this;
     }
 }
