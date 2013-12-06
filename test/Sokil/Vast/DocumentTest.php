@@ -14,11 +14,20 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
                     <InLine>
                         <AdSystem>Ad Server Name</AdSystem>
                         <AdTitle>Ad Title</AdTitle>
-                        <Impression><![CDATA[http://ad.server.com/getcode?11]]></Impression>
+                        <Impression><![CDATA[http://ad.server.com/impression]]></Impression>
                         <Creatives>
                             <Creative>
                                 <Linear>
                                     <Duration>02:08</Duration>
+                                    <VideoClips>
+                                        <ClickThrough><![CDATA[http://ad.server.com/videoclips/clickthrough]]></ClickThrough>
+                                        <ClickTracking><![CDATA[http://ad.server.com/videoclips/clicktracking]]></ClickTracking>
+                                        <CustomClick><![CDATA[http://ad.server.com/videoclips/customclick]]></CustomClick>
+                                    </VideoClips>
+                                    <TrackingEvents>
+                                        <Tracking event="start"><![CDATA[http://ad.server.com/trackingevent/start]]></Tracking>
+                                        <Tracking event="stop"><![CDATA[http://ad.server.com/trackingevent/stop]]></Tracking>
+                                    </TrackingEvents>
                                     <MediaFiles>
                                         <MediaFile delivery="progressive" type="video/mp4" height="100" width="100">
                                             <![CDATA[http://server.com/media.mp4]]>
@@ -43,20 +52,22 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
             ->setId('ad1')
             ->setAdSystem('Ad Server Name')
             ->setAdTitle('Ad Title')
-            ->setImpression('http://ad.server.com/getcode?11');
+            ->setImpression('http://ad.server.com/impression');
         
         // create creative for ad section
-        $creative = $ad1->createCreative();
-        $linearCreative = $creative
-            ->addLinear()
-            ->setDuration(128);
-        
-        $linearCreative->createMediaFile()
-            ->setProgressiveDelivery()
-            ->setType('video/mp4')
-            ->setHeight(100)
-            ->setWidth(100)
-            ->setUrl('http://server.com/media.mp4');
+        $ad1->createLinearCreative()
+            ->setDuration(128)
+            ->setVideoClipsClickThrough('http://ad.server.com/videoclips/clickthrough')
+            ->addVideoClipsClickTracking('http://ad.server.com/videoclips/clicktracking')
+            ->addVideoClipsCustomClick('http://ad.server.com/videoclips/customclick')
+            ->addTrackingEvent('start', 'http://ad.server.com/trackingevent/start')
+            ->addTrackingEvent('stop', 'http://ad.server.com/trackingevent/stop')
+            ->createMediaFile()
+                ->setProgressiveDelivery()
+                ->setType('video/mp4')
+                ->setHeight(100)
+                ->setWidth(100)
+                ->setUrl('http://server.com/media.mp4');
         
         // insert another ad section
         $document->createWrapperAdSection()->setId('ad2');

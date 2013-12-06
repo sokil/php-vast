@@ -98,8 +98,14 @@ class InLine extends \Sokil\Vast\Ad
      * 
      * @return \Sokil\Vast\Ad\InLine\Creative
      */
-    public function createCreative()
+    private function _createCreative($type)
     {
+        // check type
+        $creativeClassName = '\\Sokil\Vast\\Ad\\InLine\\Creative\\' . $type;
+        if(!class_exists($creativeClassName)) {
+            throw new \Exception('Wrong crative specified');
+        }
+        
         // get container
         if(!$this->_creativesDomElement) {
             // get creatives tag
@@ -110,14 +116,27 @@ class InLine extends \Sokil\Vast\Ad
             }
         }
         
-        // dom
+        // Creative dom element
         $creativeDomElement = $this->_creativesDomElement->ownerDocument->createElement('Creative');
         $this->_creativesDomElement->appendChild($creativeDomElement);
         
+        // Cteative type dom element
+        $creativeTypeDomElement = $this->_domElement->ownerDocument->createElement($type);
+        $creativeDomElement->appendChild($creativeTypeDomElement);
+        
         // object
-        $creative = new Creative($creativeDomElement);
+        $creative = new $creativeClassName($creativeDomElement);
         $this->_creatives[] = $creative;
         
         return $creative;
+    }
+    
+    /**
+     * 
+     * @return \Sokil\Vast\Ad\InLine\Creative\Linear
+     */
+    public function createLinearCreative()
+    {
+        return $this->_createCreative('Linear');
     }
 }
