@@ -4,6 +4,9 @@ namespace Sokil\Vast\Ad\InLine\Creative\Base;
 
 class MediaFile
 {
+    const DELIVERY_PROGRESSIVE = 'progressive';
+    const DELIVERY_STREAMING = 'streaming';
+    
     private $_domElement;
     
     public function __construct(\DomElement $domElement)
@@ -13,13 +16,13 @@ class MediaFile
     
     public function setProgressiveDelivery()
     {
-        $this->_domElement->setAttribute('delivery', 'progressive');
+        $this->_domElement->setAttribute('delivery', self::DELIVERY_PROGRESSIVE);
         return $this;
     }
     
     public function setStreamingDelivery()
     {
-        $this->_domElement->setAttribute('delivery', 'streaming');
+        $this->_domElement->setAttribute('delivery', self::DELIVERY_STREAMING);
         return $this;
     }
     
