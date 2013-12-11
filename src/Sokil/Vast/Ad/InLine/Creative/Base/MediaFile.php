@@ -29,7 +29,7 @@ class MediaFile
     public function setDelivery($delivery)
     {
         if(!in_array($delivery, array(self::DELIVERY_PROGRESSIVE, self::DELIVERY_STREAMING))) {
-            throw new Exception('Wrong delivery specified');
+            throw new \Exception('Wrong delivery specified');
         }
         
         $this->_domElement->setAttribute('delivery', $delivery);
