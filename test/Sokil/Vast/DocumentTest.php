@@ -45,7 +45,6 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
         
         // create document
         $document = \Sokil\Vast\Document::create('2.0');
-        $document->toDomDocument()->formatOutput = true;
         
         // insert Ad section
         $ad1 = $document->createInLineAdSection()
