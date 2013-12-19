@@ -247,6 +247,17 @@ class Linear extends Base
         return $this;
     }
     
+        
+    public function skipAfter($time) {
+        if(is_numeric($time)) {
+            $time = $this->_secondsToString($time);
+        }
+        
+        $this->_domElement->setAttribute('skipoffset', $time);
+        
+        return $this;
+    }
+    
     private function _secondsToString($seconds)
     {
         $seconds = (int) $seconds;
@@ -255,8 +266,7 @@ class Linear extends Base
         
         // get hours
         $hours = floor($seconds / 3600);
-        if($hours)
-            $time[] = str_pad($hours, 2, '0', STR_PAD_LEFT);
+        $time[] = str_pad($hours, 2, '0', STR_PAD_LEFT);
         
         // get minutes
         $seconds = $seconds % 3600;

@@ -17,14 +17,15 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
                         <Impression><![CDATA[http://ad.server.com/impression]]></Impression>
                         <Creatives>
                             <Creative>
-                                <Linear>
-                                    <Duration>02:08</Duration>
+                                <Linear skipoffset="00:02:01">
+                                    <Duration>00:02:08</Duration>
                                     <VideoClips>
                                         <ClickThrough><![CDATA[http://ad.server.com/videoclips/clickthrough]]></ClickThrough>
                                         <ClickTracking><![CDATA[http://ad.server.com/videoclips/clicktracking]]></ClickTracking>
                                         <CustomClick><![CDATA[http://ad.server.com/videoclips/customclick]]></CustomClick>
                                     </VideoClips>
                                     <TrackingEvents>
+                                        <Tracking event="skip"><![CDATA[http://ad.server.com/trackingevent/skip]]></Tracking>
                                         <Tracking event="start"><![CDATA[http://ad.server.com/trackingevent/start]]></Tracking>
                                         <Tracking event="stop"><![CDATA[http://ad.server.com/trackingevent/stop]]></Tracking>
                                     </TrackingEvents>
@@ -67,6 +68,8 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
             ->setVideoClipsClickThrough('http://ad.server.com/videoclips/clickthrough')
             ->addVideoClipsClickTracking('http://ad.server.com/videoclips/clicktracking')
             ->addVideoClipsCustomClick('http://ad.server.com/videoclips/customclick')
+            ->skipAfter(121)
+            ->addTrackingEvent('skip', 'http://ad.server.com/trackingevent/start')
             ->addTrackingEvent('start', 'http://ad.server.com/trackingevent/start')
             ->addTrackingEvent('stop', 'http://ad.server.com/trackingevent/stop')
             ->createMediaFile()
