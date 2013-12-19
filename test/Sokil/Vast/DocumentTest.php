@@ -36,6 +36,14 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
                                 </Linear>
                             </Creative>
                         </Creatives>
+                        <Extensions>
+                            <Extension type="startTime">
+                                <![CDATA[00:01]]>
+                            </Extension>
+                            <Extension type="skipTime">
+                                <![CDATA[05:02]]>
+                            </Extension>
+                        </Extensions>
                     </InLine>
                 </Ad>
                 <Ad id="ad2">
@@ -67,6 +75,10 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
                 ->setHeight(100)
                 ->setWidth(100)
                 ->setUrl('http://server.com/media.mp4');
+        
+        $ad1
+            ->addExtension('startTime', '00:01')
+            ->addExtension('skipTime', '00:02');
         
         // insert another ad section
         $document->createWrapperAdSection()->setId('ad2');

@@ -18,6 +18,12 @@ class InLine extends \Sokil\Vast\Ad
     private $_creativesDomElement;
     
     /**
+     *
+     * @var \DomElement
+     */
+    private $_extensionsDomElement;
+    
+    /**
      * 
      * @param type $adSystem
      * @return \Sokil\Vast\Ad\InLine
@@ -109,7 +115,7 @@ class InLine extends \Sokil\Vast\Ad
         // get container
         if(!$this->_creativesDomElement) {
             // get creatives tag
-            $this->_creativesDomElement = $this->_domElement->getElementsByTagName('creatives')->item(0);
+            $this->_creativesDomElement = $this->_domElement->getElementsByTagName('Creatives')->item(0);
             if(!$this->_creativesDomElement) {
                 $this->_creativesDomElement = $this->_domElement->ownerDocument->createElement('Creatives');
                 $this->_domElement->firstChild->appendChild($this->_creativesDomElement);
@@ -138,5 +144,31 @@ class InLine extends \Sokil\Vast\Ad
     public function createLinearCreative()
     {
         return $this->_createCreative('Linear');
+    }
+    
+    public function addExtension($type, $value)
+    {
+        // get container
+        if(!$this->_extensionsDomElement) {
+            // get creatives tag
+            $this->_extensionsDomElement = $this->_domElement->getElementsByTagName('Extensions')->item(0);
+            if(!$this->_extensionsDomElement) {
+                $this->_extensionsDomElement = $this->_domElement->ownerDocument->createElement('Extensions');
+                $this->_domElement->firstChild->appendChild($this->_extensionsDomElement);
+            }
+        }
+        
+        // Creative dom element
+        $extensionDomElement = $this->_extensionsDomElement->ownerDocument->createElement('Extension');
+        $this->_extensionsDomElement->appendChild($extensionDomElement);
+        
+        // create cdata
+        $cdata = $this->_domElement->ownerDocument->createCDATASection($value);
+        
+        // append
+        $extensionDomElement->setAttribute('type', $type);
+        $extensionDomElement->appendChild($cdata);
+        
+        return $this;
     }
 }
