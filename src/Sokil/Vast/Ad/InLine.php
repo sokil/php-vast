@@ -2,8 +2,6 @@
 
 namespace Sokil\Vast\Ad;
 
-use Sokil\Vast\Ad\InLine\Creative;
-
 /**
  * @method \Sokil\Vast\Ad\InLine setId(integer $id) Set "id" of Ad section
  */
