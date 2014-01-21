@@ -258,7 +258,7 @@ class Linear extends Base
     
     public function addTrackingEvent($event, $url)
     {
-        if(!un_array($event, $this->getEventList())) {
+        if(!in_array($event, $this->getEventList())) {
             throw new \Exception('Wrong event specified');
         }
         
