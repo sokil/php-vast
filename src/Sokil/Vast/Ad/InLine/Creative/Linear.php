@@ -26,7 +26,7 @@ class Linear extends Base
     const EVENT_TYPE_MIDPOINT = 'midpoint';
     
     // the creative played for at least 75% of the duration.
-    const EVENT_TYPE_ = 'thirdQuartile';
+    const EVENT_TYPE_THIRDQUARTILE = 'thirdQuartile';
     
     // The creative was played to the end at normal speed.
     const EVENT_TYPE_COMPLETE = 'complete';
@@ -90,6 +90,31 @@ class Linear extends Base
     private $_videoClicksDomElement;
     
     private $_trackingEventsDomElement;
+    
+    public function getEventList()
+    {
+        return array(
+            self::EVENT_TYPE_CREATIVEVIEW,
+            self::EVENT_TYPE_START,
+            self::EVENT_TYPE_FIRSTQUARTILE,
+            self::EVENT_TYPE_MIDPOINT,
+            self::EVENT_TYPE_THIRDQUARTILE,
+            self::EVENT_TYPE_COMPLETE,
+            self::EVENT_TYPE_MUTE,
+            self::EVENT_TYPE_UNMUTE,
+            self::EVENT_TYPE_PAUSE,
+            self::EVENT_TYPE_REWIND,
+            self::EVENT_TYPE_RESUME,
+            self::EVENT_TYPE_FULLSCREEN,
+            self::EVENT_TYPE_EXITFULLSCREEN,
+            self::EVENT_TYPE_EXPAND,
+            self::EVENT_TYPE_COLLAPSE,
+            self::EVENT_TYPE_ACCEPTINVITATIONLINEAR,
+            self::EVENT_TYPE_CLOSELINEAR,
+            self::EVENT_TYPE_SKIP,
+            self::EVENT_TYPE_PROGRESS,
+        );
+    }
     
     public function setDuration($duration)
     {
@@ -233,6 +258,10 @@ class Linear extends Base
     
     public function addTrackingEvent($event, $url)
     {
+        if(!un_array($event, $this->getEventList())) {
+            throw new \Exception('Wrong event specified');
+        }
+        
         // create Tracking
         $trackingDomElement = $this->_domElement->ownerDocument->createElement('Tracking');
         $this->_getTrackingEventsDomElement()->appendChild($trackingDomElement);
