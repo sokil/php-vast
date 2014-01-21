@@ -91,7 +91,7 @@ class Linear extends Base
     
     private $_trackingEventsDomElement;
     
-    public function getEventList()
+    public static function getEventList()
     {
         return array(
             self::EVENT_TYPE_CREATIVEVIEW,
