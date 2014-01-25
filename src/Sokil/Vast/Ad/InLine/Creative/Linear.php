@@ -282,7 +282,7 @@ class Linear extends Base
             $time = $this->_secondsToString($time);
         }
         
-        $this->_domElement->setAttribute('skipoffset', $time);
+        $this->_domElement->firstChild->setAttribute('skipoffset', $time);
         
         return $this;
     }
