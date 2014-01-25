@@ -27,7 +27,7 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
                                     <TrackingEvents>
                                         <Tracking event="skip"><![CDATA[http://ad.server.com/trackingevent/skip]]></Tracking>
                                         <Tracking event="start"><![CDATA[http://ad.server.com/trackingevent/start]]></Tracking>
-                                        <Tracking event="stop"><![CDATA[http://ad.server.com/trackingevent/stop]]></Tracking>
+                                        <Tracking event="mute"><![CDATA[http://ad.server.com/trackingevent/stop]]></Tracking>
                                     </TrackingEvents>
                                     <MediaFiles>
                                         <MediaFile delivery="progressive" type="video/mp4" height="100" width="100">
@@ -71,7 +71,7 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
             ->skipAfter(121)
             ->addTrackingEvent('skip', 'http://ad.server.com/trackingevent/start')
             ->addTrackingEvent('start', 'http://ad.server.com/trackingevent/start')
-            ->addTrackingEvent('stop', 'http://ad.server.com/trackingevent/stop')
+            ->addTrackingEvent('mute', 'http://ad.server.com/trackingevent/stop')
             ->createMediaFile()
                 ->setProgressiveDelivery()
                 ->setType('video/mp4')
