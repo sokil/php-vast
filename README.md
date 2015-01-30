@@ -17,7 +17,7 @@ $ad1 = $document->createInLineAdSection()
 // create creative for ad section
 $ad1->createLinearCreative()
     ->setDuration(128)
-    ->setVideoClipsClickThrough('http://ad.server.com/videoclips/clickthrough')
+    ->setVideoClipsClickThrough('http://entertainmentserver.com/landing')
     ->addVideoClipsClickTracking('http://ad.server.com/videoclips/clicktracking')
     ->addVideoClipsCustomClick('http://ad.server.com/videoclips/customclick')
     ->addTrackingEvent('start', 'http://ad.server.com/trackingevent/start')
