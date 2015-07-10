@@ -19,11 +19,11 @@ $ad1 = $document->createInLineAdSection()
 // create creative for ad section
 $ad1->createLinearCreative()
     ->setDuration(128)
-    ->setVideoClipsClickThrough('http://entertainmentserver.com/landing')
-    ->addVideoClipsClickTracking('http://ad.server.com/videoclips/clicktracking')
-    ->addVideoClipsCustomClick('http://ad.server.com/videoclips/customclick')
+    ->setVideoClicksClickThrough('http://entertainmentserver.com/landing')
+    ->addVideoClicksClickTracking('http://ad.server.com/videoclicks/clicktracking')
+    ->addVideoClicksCustomClick('http://ad.server.com/videoclicks/customclick')
     ->addTrackingEvent('start', 'http://ad.server.com/trackingevent/start')
-    ->addTrackingEvent('stop', 'http://ad.server.com/trackingevent/stop')
+    ->addTrackingEvent('pause', 'http://ad.server.com/trackingevent/stop')
     ->createMediaFile()
         ->setProgressiveDelivery()
         ->setType('video/mp4')
@@ -31,5 +31,45 @@ $ad1->createLinearCreative()
         ->setWidth(100)
         ->setUrl('http://server.com/media.mp4');
 
-echo $document->toDomDocument();
+// get dom document
+$domDocument = $document->toDomDocument();
+
+// get XML string
+echo $document;
+```
+
+This will generate:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<VAST version="2.0">
+    <Ad id="ad1">
+        <InLine>
+            <AdSystem>Ad Server Name</AdSystem>
+            <AdTitle><![CDATA[Ad Title]]></AdTitle>
+            <Impression><![CDATA[http://ad.server.com/impression]]></Impression>
+            <Creatives>
+                <Creative>
+                    <Linear>
+                        <Duration>00:02:08</Duration>
+                        <VideoClicks>
+                            <ClickThrough><![CDATA[http://entertainmentserver.com/landing]]></ClickThrough>
+                            <ClickTracking><![CDATA[http://ad.server.com/videoclicks/clicktracking]]></ClickTracking>
+                            <CustomClick><![CDATA[http://ad.server.com/videoclicks/customclick]]></CustomClick>
+                        </VideoClicks>
+                        <TrackingEvents>
+                            <Tracking event="start"><![CDATA[http://ad.server.com/trackingevent/start]]></Tracking>
+                            <Tracking event="pause"><![CDATA[http://ad.server.com/trackingevent/stop]]></Tracking>
+                        </TrackingEvents>
+                        <MediaFiles>
+                            <MediaFile delivery="progressive" type="video/mp4" height="100" width="100">
+                                <![CDATA[http://server.com/media.mp4]]>
+                            </MediaFile>
+                        </MediaFiles>
+                    </Linear>
+                </Creative>
+            </Creatives>
+        </InLine>
+    </Ad>
+</VAST>
 ```

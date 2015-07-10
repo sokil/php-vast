@@ -85,11 +85,11 @@ class Linear extends Base
      */
     const EVENT_TYPE_PROGRESS = 'progress';
     
-    private $_mediaFilesDomElement;
+    private $mediaFilesDomElement;
     
-    private $_videoClicksDomElement;
+    private $videoClicksDomElement;
     
-    private $_trackingEventsDomElement;
+    private $trackingEventsDomElement;
     
     public static function getEventList()
     {
@@ -128,7 +128,7 @@ class Linear extends Base
         // set value
         if(is_numeric($duration)) {
             // in seconds
-            $duration = $this->_secondsToString($duration);
+            $duration = $this->secondsToString($duration);
         }
         
         $durationDomElement->nodeValue = $duration;
@@ -138,38 +138,38 @@ class Linear extends Base
     
     public function createMediaFile()
     {
-        if(!$this->_mediaFilesDomElement) {
-            $this->_mediaFilesDomElement = $this->_domElement->getElementsByTagName('MediaFiles')->item(0);
-            if(!$this->_mediaFilesDomElement) {
-                $this->_mediaFilesDomElement = $this->_domElement->ownerDocument->createElement('MediaFiles');
-                $this->_domElement->firstChild->appendChild($this->_mediaFilesDomElement);
+        if(!$this->mediaFilesDomElement) {
+            $this->mediaFilesDomElement = $this->_domElement->getElementsByTagName('MediaFiles')->item(0);
+            if(!$this->mediaFilesDomElement) {
+                $this->mediaFilesDomElement = $this->_domElement->ownerDocument->createElement('MediaFiles');
+                $this->_domElement->firstChild->appendChild($this->mediaFilesDomElement);
             }
         }
         
         // dom
-        $mediaFileDomElement = $this->_mediaFilesDomElement->ownerDocument->createElement('MediaFile');
-        $this->_mediaFilesDomElement->appendChild($mediaFileDomElement);
+        $mediaFileDomElement = $this->mediaFilesDomElement->ownerDocument->createElement('MediaFile');
+        $this->mediaFilesDomElement->appendChild($mediaFileDomElement);
         
         // object
         return new Base\MediaFile($mediaFileDomElement);
     }
     
-    private function _getVideoClipsDomElement()
+    private function getVideoClicksDomElement()
     {
         // create container
-        if($this->_videoClicksDomElement) {
-            return $this->_videoClicksDomElement;
+        if($this->videoClicksDomElement) {
+            return $this->videoClicksDomElement;
         }
         
-        $this->_videoClicksDomElement = $this->_domElement->getElementsByTagName('VideoClips')->item(0);
-        if($this->_videoClicksDomElement) {
-            return $this->_videoClicksDomElement;
+        $this->videoClicksDomElement = $this->_domElement->getElementsByTagName('VideoClicks')->item(0);
+        if($this->videoClicksDomElement) {
+            return $this->videoClicksDomElement;
         }
         
-        $this->_videoClicksDomElement = $this->_domElement->ownerDocument->createElement('VideoClips');
-        $this->_domElement->firstChild->appendChild($this->_videoClicksDomElement);
+        $this->videoClicksDomElement = $this->_domElement->ownerDocument->createElement('VideoClicks');
+        $this->_domElement->firstChild->appendChild($this->videoClicksDomElement);
         
-        return $this->_videoClicksDomElement;
+        return $this->videoClicksDomElement;
     }
     
     /**
@@ -177,16 +177,16 @@ class Linear extends Base
      * @param type $url
      * @return \Sokil\Vast\Ad\InLine\Creative\Linear
      */
-    public function setVideoClipsClickThrough($url)
+    public function setVideoClicksClickThrough($url)
     {
         // create cdata
         $cdata = $this->_domElement->ownerDocument->createCDATASection($url);
         
         // create ClickThrough
-        $clickThroughDomElement = $this->_getVideoClipsDomElement()->getElementsByTagName('ClickThrough')->item(0);
+        $clickThroughDomElement = $this->getVideoClicksDomElement()->getElementsByTagName('ClickThrough')->item(0);
         if(!$clickThroughDomElement) {
             $clickThroughDomElement = $this->_domElement->ownerDocument->createElement('ClickThrough');
-            $this->_getVideoClipsDomElement()->appendChild($clickThroughDomElement);
+            $this->getVideoClicksDomElement()->appendChild($clickThroughDomElement);
         }
         
         // update CData
@@ -207,11 +207,11 @@ class Linear extends Base
      * @param type $url
      * @return \Sokil\Vast\Ad\InLine\Creative\Linear
      */
-    public function addVideoClipsClickTracking($url)
+    public function addVideoClicksClickTracking($url)
     {
         // create ClickTracking
         $clickTrackingDomElement = $this->_domElement->ownerDocument->createElement('ClickTracking');
-        $this->_getVideoClipsDomElement()->appendChild($clickTrackingDomElement);
+        $this->getVideoClicksDomElement()->appendChild($clickTrackingDomElement);
         
         // create cdata
         $cdata = $this->_domElement->ownerDocument->createCDATASection($url);
@@ -225,11 +225,11 @@ class Linear extends Base
      * @param type $url
      * @return \Sokil\Vast\Ad\InLine\Creative\Linear
      */
-    public function addVideoClipsCustomClick($url)
+    public function addVideoClicksCustomClick($url)
     {
         // create CustomClick
         $customClickDomElement = $this->_domElement->ownerDocument->createElement('CustomClick');
-        $this->_getVideoClipsDomElement()->appendChild($customClickDomElement);
+        $this->getVideoClicksDomElement()->appendChild($customClickDomElement);
         
         // create cdata
         $cdata = $this->_domElement->ownerDocument->createCDATASection($url);
@@ -238,33 +238,33 @@ class Linear extends Base
         return $this;
     }
     
-    private function _getTrackingEventsDomElement()
+    private function getTrackingEventsDomElement()
     {
         // create container
-        if($this->_trackingEventsDomElement) {
-            return $this->_trackingEventsDomElement;
+        if($this->trackingEventsDomElement) {
+            return $this->trackingEventsDomElement;
         }
         
-        $this->_trackingEventsDomElement = $this->_domElement->getElementsByTagName('TrackingEvents')->item(0);
-        if($this->_trackingEventsDomElement) {
-            return $this->_trackingEventsDomElement;
+        $this->trackingEventsDomElement = $this->_domElement->getElementsByTagName('TrackingEvents')->item(0);
+        if($this->trackingEventsDomElement) {
+            return $this->trackingEventsDomElement;
         }
         
-        $this->_trackingEventsDomElement = $this->_domElement->ownerDocument->createElement('TrackingEvents');
-        $this->_domElement->firstChild->appendChild($this->_trackingEventsDomElement);
+        $this->trackingEventsDomElement = $this->_domElement->ownerDocument->createElement('TrackingEvents');
+        $this->_domElement->firstChild->appendChild($this->trackingEventsDomElement);
         
-        return $this->_trackingEventsDomElement;
+        return $this->trackingEventsDomElement;
     }
     
     public function addTrackingEvent($event, $url)
     {
         if(!in_array($event, $this->getEventList())) {
-            throw new \Exception('Wrong event specified');
+            throw new \Exception(sprintf('Wrong event "%s" specified', $event));
         }
         
         // create Tracking
         $trackingDomElement = $this->_domElement->ownerDocument->createElement('Tracking');
-        $this->_getTrackingEventsDomElement()->appendChild($trackingDomElement);
+        $this->getTrackingEventsDomElement()->appendChild($trackingDomElement);
         
         // add event attribute
         $trackingDomElement->setAttribute('event', $event);
@@ -279,7 +279,7 @@ class Linear extends Base
         
     public function skipAfter($time) {
         if(is_numeric($time)) {
-            $time = $this->_secondsToString($time);
+            $time = $this->secondsToString($time);
         }
         
         $this->_domElement->firstChild->setAttribute('skipoffset', $time);
@@ -287,7 +287,7 @@ class Linear extends Base
         return $this;
     }
     
-    private function _secondsToString($seconds)
+    private function secondsToString($seconds)
     {
         $seconds = (int) $seconds;
         
