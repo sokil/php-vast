@@ -23,7 +23,7 @@ class InLine extends \Sokil\Vast\Ad
     
     /**
      * 
-     * @param type $adSystem
+     * @param string $adSystem
      * @return \Sokil\Vast\Ad\InLine
      */
     public function setAdSystem($adSystem)
@@ -42,7 +42,7 @@ class InLine extends \Sokil\Vast\Ad
     
     /**
      * 
-     * @param type $adTitle
+     * @param string $adTitle
      * @return \Sokil\Vast\Ad\InLine
      */
     public function setAdTitle($adTitle)
@@ -71,7 +71,7 @@ class InLine extends \Sokil\Vast\Ad
     
     /**
      * 
-     * @param type $url
+     * @param string $url
      * @return \Sokil\Vast\Ad\InLine
      */
     public function setImpression($url)
