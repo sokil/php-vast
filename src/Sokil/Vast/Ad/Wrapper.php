@@ -33,10 +33,9 @@ class Wrapper extends \Sokil\Vast\Ad
     public function setAdSystem($adSystem)
     {
         $adSystemDomElement = $this->_domElement->getElementsByTagName('AdSystem')->item(0);
-        if($adSystemDomElement) {
+        if ($adSystemDomElement) {
             $adSystemDomElement->nodeValue = $adSystem;
-        }
-        else {
+        } else {
             $adSystemDomElement = $this->_domElement->ownerDocument->createElement('AdSystem', $adSystem);
             $this->_domElement->firstChild->appendChild($adSystemDomElement);
         }
