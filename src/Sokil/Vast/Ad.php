@@ -25,9 +25,10 @@ abstract class Ad
     }
     
     /**
-     * 
+     * Set `id' attribute of 'ad' element
+     *
      * @param type $id
-     * @return \Sokil\Vast\Ad
+     * @return \Sokil\Vast\Ad\InLine|\Sokil\Vast\Ad\Wrapper
      */
     public function setId($id)
     {
@@ -37,9 +38,10 @@ abstract class Ad
 
 
     /**
+     * Add `AdSystem` element to `Ad' element
      *
      * @param string $adSystem
-     * @return \Sokil\Vast\Ad\InLine
+     * @return \Sokil\Vast\Ad\InLine|\Sokil\Vast\Ad\Wrapper
      */
     public function setAdSystem($adSystem)
     {
