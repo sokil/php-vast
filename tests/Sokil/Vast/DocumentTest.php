@@ -47,7 +47,7 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
         $ad1 = $document->createWrapperAdSection()
             ->setId('ad1')
             ->setAdSystem('Ad Server Name')
-            ->addVASTAdTagURI('http://entertainmentserver.com/vart.xml');
+            ->setVASTAdTagURI('http://entertainmentserver.com/vart.xml');
 
         $actualXml = str_replace(array("\r", "\n"), '', $document->toString());
 
