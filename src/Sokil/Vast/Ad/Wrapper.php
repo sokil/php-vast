@@ -13,19 +13,24 @@ class Wrapper extends \Sokil\Vast\Ad
      */
     public function setVASTAdTagURI($uri)
     {
+        $cdata = $this->domElement->ownerDocument->createCDATASection($uri);
+        
         // get VASTAdTagURI dom node
         $VASTAdTagURIDomElement = $this->domElement->getElementsByTagName('VASTAdTagURI')->item(0);
 
         // create VASTAdTagURI-Node
-        if(!$VASTAdTagURIDomElement) {
+        if (!$VASTAdTagURIDomElement) {
             $VASTAdTagURIDomElement = $this->domElement->ownerDocument->createElement('VASTAdTagURI');
             $this->domElement->firstChild->appendChild($VASTAdTagURIDomElement);
         }
-
-        // create VASTAdTagURI-cdata
-        $cdata = $this->domElement->ownerDocument->createCDATASection($uri);
-        $VASTAdTagURIDomElement->appendChild($cdata);
-
+        
+        // set cdata
+        if ($VASTAdTagURIDomElement->hasChildNodes()) {
+            $VASTAdTagURIDomElement->replaceChild($cdata, $VASTAdTagURIDomElement->firstChild);
+        } else {
+            $VASTAdTagURIDomElement->appendChild($cdata);
+        }
+        
         return $this;
     }
 }
