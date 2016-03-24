@@ -47,11 +47,12 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
         $ad1 = $document->createWrapperAdSection()
             ->setId('ad1')
             ->setAdSystem('Ad Server Name')
-            ->setVASTAdTagURI('http://entertainmentserver.com/vart.xml');
+            ->setVASTAdTagURI('http://entertainmentserver.com/vast1.xml')
+            ->setVASTAdTagURI('http://entertainmentserver.com/vast2.xml');
 
         $actualXml = str_replace(array("\r", "\n"), '', $document->toString());
 
-        $expectedXml = '<?xml version="1.0" encoding="UTF-8"?><VAST version="2.0"><Ad id="ad1"><Wrapper><AdSystem>Ad Server Name</AdSystem><VASTAdTagURI><![CDATA[http://entertainmentserver.com/vart.xml]]></VASTAdTagURI></Wrapper></Ad></VAST>';
+        $expectedXml = '<?xml version="1.0" encoding="UTF-8"?><VAST version="2.0"><Ad id="ad1"><Wrapper><AdSystem>Ad Server Name</AdSystem><VASTAdTagURI><![CDATA[http://entertainmentserver.com/vast2.xml]]></VASTAdTagURI></Wrapper></Ad></VAST>';
 
         $this->assertEquals($expectedXml, $actualXml);
     }
