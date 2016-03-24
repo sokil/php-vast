@@ -119,10 +119,10 @@ class Linear extends Base
     public function setDuration($duration)
     {
         // get dom element
-        $durationDomElement = $this->_domElement->getElementsByTagName('Duration')->item(0);
+        $durationDomElement = $this->domElement->getElementsByTagName('Duration')->item(0);
         if(!$durationDomElement) {
-            $durationDomElement = $this->_domElement->ownerDocument->createElement('Duration');
-            $this->_domElement->firstChild->appendChild($durationDomElement);
+            $durationDomElement = $this->domElement->ownerDocument->createElement('Duration');
+            $this->domElement->firstChild->appendChild($durationDomElement);
         }
         
         // set value
@@ -139,10 +139,10 @@ class Linear extends Base
     public function createMediaFile()
     {
         if(!$this->mediaFilesDomElement) {
-            $this->mediaFilesDomElement = $this->_domElement->getElementsByTagName('MediaFiles')->item(0);
+            $this->mediaFilesDomElement = $this->domElement->getElementsByTagName('MediaFiles')->item(0);
             if(!$this->mediaFilesDomElement) {
-                $this->mediaFilesDomElement = $this->_domElement->ownerDocument->createElement('MediaFiles');
-                $this->_domElement->firstChild->appendChild($this->mediaFilesDomElement);
+                $this->mediaFilesDomElement = $this->domElement->ownerDocument->createElement('MediaFiles');
+                $this->domElement->firstChild->appendChild($this->mediaFilesDomElement);
             }
         }
         
@@ -161,13 +161,13 @@ class Linear extends Base
             return $this->videoClicksDomElement;
         }
         
-        $this->videoClicksDomElement = $this->_domElement->getElementsByTagName('VideoClicks')->item(0);
+        $this->videoClicksDomElement = $this->domElement->getElementsByTagName('VideoClicks')->item(0);
         if($this->videoClicksDomElement) {
             return $this->videoClicksDomElement;
         }
         
-        $this->videoClicksDomElement = $this->_domElement->ownerDocument->createElement('VideoClicks');
-        $this->_domElement->firstChild->appendChild($this->videoClicksDomElement);
+        $this->videoClicksDomElement = $this->domElement->ownerDocument->createElement('VideoClicks');
+        $this->domElement->firstChild->appendChild($this->videoClicksDomElement);
         
         return $this->videoClicksDomElement;
     }
@@ -180,12 +180,12 @@ class Linear extends Base
     public function setVideoClicksClickThrough($url)
     {
         // create cdata
-        $cdata = $this->_domElement->ownerDocument->createCDATASection($url);
+        $cdata = $this->domElement->ownerDocument->createCDATASection($url);
         
         // create ClickThrough
         $clickThroughDomElement = $this->getVideoClicksDomElement()->getElementsByTagName('ClickThrough')->item(0);
         if(!$clickThroughDomElement) {
-            $clickThroughDomElement = $this->_domElement->ownerDocument->createElement('ClickThrough');
+            $clickThroughDomElement = $this->domElement->ownerDocument->createElement('ClickThrough');
             $this->getVideoClicksDomElement()->appendChild($clickThroughDomElement);
         }
         
@@ -210,11 +210,11 @@ class Linear extends Base
     public function addVideoClicksClickTracking($url)
     {
         // create ClickTracking
-        $clickTrackingDomElement = $this->_domElement->ownerDocument->createElement('ClickTracking');
+        $clickTrackingDomElement = $this->domElement->ownerDocument->createElement('ClickTracking');
         $this->getVideoClicksDomElement()->appendChild($clickTrackingDomElement);
         
         // create cdata
-        $cdata = $this->_domElement->ownerDocument->createCDATASection($url);
+        $cdata = $this->domElement->ownerDocument->createCDATASection($url);
         $clickTrackingDomElement->appendChild($cdata);
         
         return $this;
@@ -228,11 +228,11 @@ class Linear extends Base
     public function addVideoClicksCustomClick($url)
     {
         // create CustomClick
-        $customClickDomElement = $this->_domElement->ownerDocument->createElement('CustomClick');
+        $customClickDomElement = $this->domElement->ownerDocument->createElement('CustomClick');
         $this->getVideoClicksDomElement()->appendChild($customClickDomElement);
         
         // create cdata
-        $cdata = $this->_domElement->ownerDocument->createCDATASection($url);
+        $cdata = $this->domElement->ownerDocument->createCDATASection($url);
         $customClickDomElement->appendChild($cdata);
         
         return $this;
@@ -245,13 +245,13 @@ class Linear extends Base
             return $this->trackingEventsDomElement;
         }
         
-        $this->trackingEventsDomElement = $this->_domElement->getElementsByTagName('TrackingEvents')->item(0);
+        $this->trackingEventsDomElement = $this->domElement->getElementsByTagName('TrackingEvents')->item(0);
         if($this->trackingEventsDomElement) {
             return $this->trackingEventsDomElement;
         }
         
-        $this->trackingEventsDomElement = $this->_domElement->ownerDocument->createElement('TrackingEvents');
-        $this->_domElement->firstChild->appendChild($this->trackingEventsDomElement);
+        $this->trackingEventsDomElement = $this->domElement->ownerDocument->createElement('TrackingEvents');
+        $this->domElement->firstChild->appendChild($this->trackingEventsDomElement);
         
         return $this->trackingEventsDomElement;
     }
@@ -263,14 +263,14 @@ class Linear extends Base
         }
         
         // create Tracking
-        $trackingDomElement = $this->_domElement->ownerDocument->createElement('Tracking');
+        $trackingDomElement = $this->domElement->ownerDocument->createElement('Tracking');
         $this->getTrackingEventsDomElement()->appendChild($trackingDomElement);
         
         // add event attribute
         $trackingDomElement->setAttribute('event', $event);
         
         // create cdata
-        $cdata = $this->_domElement->ownerDocument->createCDATASection($url);
+        $cdata = $this->domElement->ownerDocument->createCDATASection($url);
         $trackingDomElement->appendChild($cdata);
         
         return $this;
@@ -282,7 +282,7 @@ class Linear extends Base
             $time = $this->secondsToString($time);
         }
         
-        $this->_domElement->firstChild->setAttribute('skipoffset', $time);
+        $this->domElement->firstChild->setAttribute('skipoffset', $time);
         
         return $this;
     }
