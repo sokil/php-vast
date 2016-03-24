@@ -6,6 +6,8 @@ PHP VAST
 
 VAST Ad generator and parser library on PHP.
 
+Vast 3.0 Spec: http://www.iab.com/wp-content/uploads/2015/06/VASTv3_0.pdf
+
 ```php
 // create document
 $document = \Sokil\Vast\Document::create('2.0');
