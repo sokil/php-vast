@@ -23,25 +23,6 @@ class InLine extends \Sokil\Vast\Ad
     
     /**
      * 
-     * @param string $adSystem
-     * @return \Sokil\Vast\Ad\InLine
-     */
-    public function setAdSystem($adSystem)
-    {
-        $adSystemDomElement = $this->_domElement->getElementsByTagName('AdSystem')->item(0);
-        if($adSystemDomElement) {
-            $adSystemDomElement->nodeValue = $adSystem;
-        }
-        else {
-            $adSystemDomElement = $this->_domElement->ownerDocument->createElement('AdSystem', $adSystem);
-            $this->_domElement->firstChild->appendChild($adSystemDomElement);
-        }
-        
-        return $this;
-    }
-    
-    /**
-     * 
      * @param string $adTitle
      * @return \Sokil\Vast\Ad\InLine
      */
