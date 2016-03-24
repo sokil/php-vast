@@ -7,22 +7,22 @@ class MediaFile
     const DELIVERY_PROGRESSIVE = 'progressive';
     const DELIVERY_STREAMING = 'streaming';
     
-    private $_domElement;
+    private $domElement;
     
     public function __construct(\DomElement $domElement)
     {
-        $this->_domElement = $domElement;
+        $this->domElement = $domElement;
     }
     
     public function setProgressiveDelivery()
     {
-        $this->_domElement->setAttribute('delivery', self::DELIVERY_PROGRESSIVE);
+        $this->domElement->setAttribute('delivery', self::DELIVERY_PROGRESSIVE);
         return $this;
     }
     
     public function setStreamingDelivery()
     {
-        $this->_domElement->setAttribute('delivery', self::DELIVERY_STREAMING);
+        $this->domElement->setAttribute('delivery', self::DELIVERY_STREAMING);
         return $this;
     }
     
@@ -32,40 +32,40 @@ class MediaFile
             throw new \Exception('Wrong delivery specified');
         }
         
-        $this->_domElement->setAttribute('delivery', $delivery);
+        $this->domElement->setAttribute('delivery', $delivery);
         return $this;
     }
     
     public function setType($mime)
     {
-        $this->_domElement->setAttribute('type', $mime);
+        $this->domElement->setAttribute('type', $mime);
         return $this;
     }
     
     public function setWidth($width)
     {
-        $this->_domElement->setAttribute('width', $width);
+        $this->domElement->setAttribute('width', $width);
         return $this;
     }
     
     public function setHeight($height)
     {
-        $this->_domElement->setAttribute('height', $height);
+        $this->domElement->setAttribute('height', $height);
         return $this;
     }
     
     public function setUrl($url)
     {
-        $cdata = $this->_domElement->ownerDocument->createCDATASection($url);
+        $cdata = $this->domElement->ownerDocument->createCDATASection($url);
     
         // update CData
-        if($this->_domElement->hasChildNodes()) {
-            $this->_domElement->replaceChild($cdata, $this->_domElement->firstChild);
+        if($this->domElement->hasChildNodes()) {
+            $this->domElement->replaceChild($cdata, $this->domElement->firstChild);
         }
         
         // insert CData
         else {
-            $this->_domElement->appendChild($cdata);
+            $this->domElement->appendChild($cdata);
         }
     }
 }

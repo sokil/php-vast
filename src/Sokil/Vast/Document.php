@@ -8,9 +8,9 @@ class Document
      *
      * @var \DomDocument
      */
-    private $_xml;
+    private $xml;
     
-    private $_vastAdSequence = array();
+    private $vastAdSequence = array();
     
     public static function create($vastVersion = '2.0')
     {        
@@ -47,12 +47,12 @@ class Document
     
     public function __construct(\DOMDocument $xml)
     {
-        $this->_xml = $xml;
+        $this->xml = $xml;
     }
 
     public function toString()
     {
-        return $this->_xml->saveXML();
+        return $this->xml->saveXML();
     }
     
     public function __toString()
@@ -62,14 +62,14 @@ class Document
     
     public function toDomDocument()
     {
-        return $this->_xml;
+        return $this->xml;
     }
     
     /**
      * Create "Ad" section ov "VAST" node
      * @return \Sokil\Vast\Ad
      */
-    private function _createAdSection($type)
+    private function createAdSection($type)
     {        
         // Check Ad type
         $adTypeClassName = '\\Sokil\\Vast\\Ad\\' . $type;
@@ -78,18 +78,18 @@ class Document
         }
         
         // create dom node
-        $adDomElement = $this->_xml->createElement('Ad');
-        $this->_xml->documentElement->appendChild($adDomElement);
+        $adDomElement = $this->xml->createElement('Ad');
+        $this->xml->documentElement->appendChild($adDomElement);
 
         // Create type element
-        $adTypeDomElement = $this->_xml->createElement($type);
+        $adTypeDomElement = $this->xml->createElement($type);
         $adDomElement->appendChild($adTypeDomElement);
         
         // create ad section
         $adSection = new $adTypeClassName($adDomElement);
         
         // cache
-        $this->_vastAdSequence[] = $adSection;
+        $this->vastAdSequence[] = $adSection;
         
         return $adSection;
     }
@@ -100,7 +100,7 @@ class Document
      */
     public function createInLineAdSection()
     {
-        return $this->_createAdSection('InLine');
+        return $this->createAdSection('InLine');
     }
     
     /**
@@ -109,14 +109,14 @@ class Document
      */
     public function createWrapperAdSection()
     {
-        return $this->_createAdSection('Wrapper');
+        return $this->createAdSection('Wrapper');
     }
     
     public function getAdSections()
     {
-        if(!$this->_vastAdSequence) {
+        if(!$this->vastAdSequence) {
             
-            foreach($this->_xml->documentElement->childNodes as $adDomElement) {
+            foreach($this->xml->documentElement->childNodes as $adDomElement) {
                 
                 // get Ad tag
                 if(!($adDomElement instanceof \DOMElement)) {
@@ -141,13 +141,13 @@ class Document
                         throw new \Exception('Ad type ' . $type . ' not allowed');
                     }
 
-                    $this->_vastAdSequence[] = new $adTypeClassName($adDomElement);
+                    $this->vastAdSequence[] = new $adTypeClassName($adDomElement);
                     break;
                 }
             }
         }
         
         
-        return $this->_vastAdSequence;
+        return $this->vastAdSequence;
     }
 }

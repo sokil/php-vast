@@ -7,38 +7,19 @@ namespace Sokil\Vast\Ad;
  */
 class InLine extends \Sokil\Vast\Ad
 {
-    private $_creatives = array();
+    private $creatives = array();
     
     /**
      *
      * @var \DomElement
      */
-    private $_creativesDomElement;
+    private $creativesDomElement;
     
     /**
      *
      * @var \DomElement
      */
-    private $_extensionsDomElement;
-    
-    /**
-     * 
-     * @param string $adSystem
-     * @return \Sokil\Vast\Ad\InLine
-     */
-    public function setAdSystem($adSystem)
-    {
-        $adSystemDomElement = $this->_domElement->getElementsByTagName('AdSystem')->item(0);
-        if($adSystemDomElement) {
-            $adSystemDomElement->nodeValue = $adSystem;
-        }
-        else {
-            $adSystemDomElement = $this->_domElement->ownerDocument->createElement('AdSystem', $adSystem);
-            $this->_domElement->firstChild->appendChild($adSystemDomElement);
-        }
-        
-        return $this;
-    }
+    private $extensionsDomElement;
     
     /**
      * 
@@ -47,13 +28,13 @@ class InLine extends \Sokil\Vast\Ad
      */
     public function setAdTitle($adTitle)
     {
-        $cdata = $this->_domElement->ownerDocument->createCDATASection($adTitle);
+        $cdata = $this->domElement->ownerDocument->createCDATASection($adTitle);
     
         // get AdTitle tag
-        $adTitleDomElement = $this->_domElement->getElementsByTagName('AdTitle')->item(0);
+        $adTitleDomElement = $this->domElement->getElementsByTagName('AdTitle')->item(0);
         if(!$adTitleDomElement) {
-            $adTitleDomElement = $this->_domElement->ownerDocument->createElement('AdTitle', $adTitle);
-            $this->_domElement->firstChild->appendChild($adTitleDomElement);
+            $adTitleDomElement = $this->domElement->ownerDocument->createElement('AdTitle', $adTitle);
+            $this->domElement->firstChild->appendChild($adTitleDomElement);
         }
         
         // update CData
@@ -76,13 +57,13 @@ class InLine extends \Sokil\Vast\Ad
      */
     public function setImpression($url)
     {
-        $cdata = $this->_domElement->ownerDocument->createCDATASection($url);
+        $cdata = $this->domElement->ownerDocument->createCDATASection($url);
         
         // get impression tag
-        $impressionDomElement = $this->_domElement->getElementsByTagName('Impression')->item(0);
+        $impressionDomElement = $this->domElement->getElementsByTagName('Impression')->item(0);
         if(!$impressionDomElement) {
-            $impressionDomElement = $this->_domElement->ownerDocument->createElement('Impression');
-            $this->_domElement->firstChild->appendChild($impressionDomElement);
+            $impressionDomElement = $this->domElement->ownerDocument->createElement('Impression');
+            $this->domElement->firstChild->appendChild($impressionDomElement);
         }
         
         // update CData
@@ -111,26 +92,26 @@ class InLine extends \Sokil\Vast\Ad
         }
         
         // get container
-        if(!$this->_creativesDomElement) {
+        if(!$this->creativesDomElement) {
             // get creatives tag
-            $this->_creativesDomElement = $this->_domElement->getElementsByTagName('Creatives')->item(0);
-            if(!$this->_creativesDomElement) {
-                $this->_creativesDomElement = $this->_domElement->ownerDocument->createElement('Creatives');
-                $this->_domElement->firstChild->appendChild($this->_creativesDomElement);
+            $this->creativesDomElement = $this->domElement->getElementsByTagName('Creatives')->item(0);
+            if(!$this->creativesDomElement) {
+                $this->creativesDomElement = $this->domElement->ownerDocument->createElement('Creatives');
+                $this->domElement->firstChild->appendChild($this->creativesDomElement);
             }
         }
         
         // Creative dom element
-        $creativeDomElement = $this->_creativesDomElement->ownerDocument->createElement('Creative');
-        $this->_creativesDomElement->appendChild($creativeDomElement);
+        $creativeDomElement = $this->creativesDomElement->ownerDocument->createElement('Creative');
+        $this->creativesDomElement->appendChild($creativeDomElement);
         
         // Cteative type dom element
-        $creativeTypeDomElement = $this->_domElement->ownerDocument->createElement($type);
+        $creativeTypeDomElement = $this->domElement->ownerDocument->createElement($type);
         $creativeDomElement->appendChild($creativeTypeDomElement);
         
         // object
         $creative = new $creativeClassName($creativeDomElement);
-        $this->_creatives[] = $creative;
+        $this->creatives[] = $creative;
         
         return $creative;
     }
@@ -147,21 +128,21 @@ class InLine extends \Sokil\Vast\Ad
     public function addExtension($type, $value)
     {
         // get container
-        if(!$this->_extensionsDomElement) {
+        if(!$this->extensionsDomElement) {
             // get creatives tag
-            $this->_extensionsDomElement = $this->_domElement->getElementsByTagName('Extensions')->item(0);
-            if(!$this->_extensionsDomElement) {
-                $this->_extensionsDomElement = $this->_domElement->ownerDocument->createElement('Extensions');
-                $this->_domElement->firstChild->appendChild($this->_extensionsDomElement);
+            $this->extensionsDomElement = $this->domElement->getElementsByTagName('Extensions')->item(0);
+            if(!$this->extensionsDomElement) {
+                $this->extensionsDomElement = $this->domElement->ownerDocument->createElement('Extensions');
+                $this->domElement->firstChild->appendChild($this->extensionsDomElement);
             }
         }
         
         // Creative dom element
-        $extensionDomElement = $this->_extensionsDomElement->ownerDocument->createElement('Extension');
-        $this->_extensionsDomElement->appendChild($extensionDomElement);
+        $extensionDomElement = $this->extensionsDomElement->ownerDocument->createElement('Extension');
+        $this->extensionsDomElement->appendChild($extensionDomElement);
         
         // create cdata
-        $cdata = $this->_domElement->ownerDocument->createCDATASection($value);
+        $cdata = $this->domElement->ownerDocument->createCDATASection($value);
         
         // append
         $extensionDomElement->setAttribute('type', $type);

@@ -8,7 +8,7 @@ abstract class Ad
      *
      * @var \DomNode
      */
-    protected $_domElement;
+    protected $domElement;
     
     /**
      * 
@@ -16,12 +16,12 @@ abstract class Ad
      */
     public function __construct(\DomElement $domElement) 
     {
-        $this->_domElement = $domElement;
+        $this->domElement = $domElement;
     }
     
     public function getId()
     {
-        return $this->_domElement->getAttribute('id');
+        return $this->domElement->getAttribute('id');
     }
     
     /**
@@ -31,7 +31,27 @@ abstract class Ad
      */
     public function setId($id)
     {
-        $this->_domElement->setAttribute('id', $id);
+        $this->domElement->setAttribute('id', $id);
+        return $this;
+    }
+
+
+    /**
+     *
+     * @param string $adSystem
+     * @return \Sokil\Vast\Ad\InLine
+     */
+    public function setAdSystem($adSystem)
+    {
+        $adSystemDomElement = $this->domElement->getElementsByTagName('AdSystem')->item(0);
+        if($adSystemDomElement) {
+            $adSystemDomElement->nodeValue = $adSystem;
+        }
+        else {
+            $adSystemDomElement = $this->domElement->ownerDocument->createElement('AdSystem', $adSystem);
+            $this->domElement->firstChild->appendChild($adSystemDomElement);
+        }
+
         return $this;
     }
 }

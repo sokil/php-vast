@@ -8,10 +8,10 @@ abstract class Base
      *
      * @var \DomElement
      */
-    protected $_domElement;
+    protected $domElement;
     
     public function __construct(\DomElement $domElement) 
     {
-        $this->_domElement = $domElement;
+        $this->domElement = $domElement;
     }
 }
