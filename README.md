@@ -1,4 +1,4 @@
-PHP VAST
+PHP-VAST
 ========
 
 [![Build Status](https://travis-ci.org/sokil/php-vast.png?branch=master&1)](https://travis-ci.org/sokil/php-vast)
