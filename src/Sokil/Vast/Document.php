@@ -5,11 +5,15 @@ namespace Sokil\Vast;
 class Document
 {    
     /**
-     *
      * @var \DomDocument
      */
     private $xml;
-    
+
+    /**
+     * Cached ad sequence
+     *
+     * @var array
+     */
     private $vastAdSequence = array();
 
     /**
@@ -22,16 +26,34 @@ class Document
         $this->xml = $xml;
     }
 
+    /**
+     * Convert to string
+     *
+     * @deprecated use `(string) $document` instead
+     *
+     * @return string
+     */
     public function toString()
     {
-        return $this->xml->saveXML();
+        return $this->__toString();
     }
-    
+
+    /**
+     * "Magic" method to convert document to string
+     *
+     * @return string
+     */
     public function __toString()
     {
-        return $this->toString();
+        return $this->xml->saveXML();
+
     }
-    
+
+    /**
+     * Get DomDocument object
+     *
+     * @return \DomDocument
+     */
     public function toDomDocument()
     {
         return $this->xml;
@@ -39,14 +61,18 @@ class Document
     
     /**
      * Create "Ad" section ov "VAST" node
+     *
+     * @param string $type
+     * @throws \Exception
+     *
      * @return \Sokil\Vast\Ad
      */
     private function createAdSection($type)
     {        
         // Check Ad type
         $adTypeClassName = '\\Sokil\\Vast\\Ad\\' . $type;
-        if(!class_exists($adTypeClassName)) {
-            throw new \Exception('Ad type ' . $type . ' not allowed');
+        if (!class_exists($adTypeClassName)) {
+            throw new \Exception('Ad type ' . $type . ' not supported');
         }
         
         // create dom node
@@ -67,7 +93,8 @@ class Document
     }
     
     /**
-     * 
+     * Create inline Ad section
+     *
      * @return \Sokil\Vast\Ad\InLine
      */
     public function createInLineAdSection()
@@ -76,32 +103,39 @@ class Document
     }
     
     /**
-     * 
+     * Create Wrapper Ad section
+     *
      * @return \Sokil\Vast\Ad\Wrapper
      */
     public function createWrapperAdSection()
     {
         return $this->createAdSection('Wrapper');
     }
-    
+
+    /**
+     * Get document ad sections
+     *
+     * @return array
+     * @throws \Exception
+     */
     public function getAdSections()
     {
-        if(!$this->vastAdSequence) {
+        if (!$this->vastAdSequence) {
             
-            foreach($this->xml->documentElement->childNodes as $adDomElement) {
+            foreach ($this->xml->documentElement->childNodes as $adDomElement) {
                 
                 // get Ad tag
-                if(!($adDomElement instanceof \DOMElement)) {
+                if (!($adDomElement instanceof \DOMElement)) {
                     continue;
                 }
                 
-                if('ad' !== strtolower($adDomElement->tagName)) {
+                if ('ad' !== strtolower($adDomElement->tagName)) {
                     continue;
                 }
 
                 // get Ad type tag
-                foreach($adDomElement->childNodes as $node) {
-                    if(!($node instanceof \DomElement)) {
+                foreach ($adDomElement->childNodes as $node) {
+                    if (!($node instanceof \DomElement)) {
                         continue;
                     }
                     
@@ -118,7 +152,6 @@ class Document
                 }
             }
         }
-        
         
         return $this->vastAdSequence;
     }

@@ -174,7 +174,7 @@ class Linear extends Base
     
     /**
      * 
-     * @param type $url
+     * @param string $url
      * @return \Sokil\Vast\Ad\InLine\Creative\Linear
      */
     public function setVideoClicksClickThrough($url)
@@ -204,7 +204,7 @@ class Linear extends Base
     
     /**
      * 
-     * @param type $url
+     * @param string $url
      * @return \Sokil\Vast\Ad\InLine\Creative\Linear
      */
     public function addVideoClicksClickTracking($url)
@@ -222,7 +222,7 @@ class Linear extends Base
     
     /**
      * 
-     * @param type $url
+     * @param string $url
      * @return \Sokil\Vast\Ad\InLine\Creative\Linear
      */
     public function addVideoClicksCustomClick($url)

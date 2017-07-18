@@ -9,10 +9,11 @@ abstract class Ad
      * @var \DomNode
      */
     protected $domElement;
-    
+
     /**
-     * 
-     * @param \Sokil\Vast\DomElement|string $domElement
+     * Ad constructor.
+     *
+     * @param \DomElement $domElement
      */
     public function __construct(\DomElement $domElement) 
     {
@@ -27,12 +28,14 @@ abstract class Ad
     /**
      * Set `id' attribute of 'ad' element
      *
-     * @param type $id
+     * @param string $id
+     *
      * @return \Sokil\Vast\Ad\InLine|\Sokil\Vast\Ad\Wrapper
      */
     public function setId($id)
     {
         $this->domElement->setAttribute('id', $id);
+
         return $this;
     }
 
@@ -41,6 +44,7 @@ abstract class Ad
      * Add `AdSystem` element to `Ad' element
      *
      * @param string $adSystem
+     *
      * @return \Sokil\Vast\Ad\InLine|\Sokil\Vast\Ad\Wrapper
      */
     public function setAdSystem($adSystem)
