@@ -44,23 +44,7 @@ class InLine extends \Sokil\Vast\Ad
      */
     public function setAdTitle($adTitle)
     {
-        $cdata = $this->domElement->ownerDocument->createCDATASection($adTitle);
-    
-        // get AdTitle tag
-        $adTitleDomElement = $this->domElement->getElementsByTagName('AdTitle')->item(0);
-        if (!$adTitleDomElement) {
-            $adTitleDomElement = $this->domElement->ownerDocument->createElement('AdTitle', $adTitle);
-            $this->domElement->firstChild->appendChild($adTitleDomElement);
-        }
-        
-        // update CData
-        if ($adTitleDomElement->hasChildNodes()) {
-            $adTitleDomElement->replaceChild($cdata, $adTitleDomElement->firstChild);
-        } else {  // insert cdata
-            $adTitleDomElement->appendChild($cdata);
-        }
-        
-        return $this;
+        return $this->setTagValue('AdTitle', $adTitle);
     }
     
     /**
