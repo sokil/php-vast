@@ -2,7 +2,7 @@
 
 namespace Sokil\Vast\Ad;
 
-class Wrapper extends \Sokil\Vast\Ad
+class Wrapper extends \Sokil\Vast\Ad\Ad
 {
     use \Sokil\Vast\Traits\UniqTag;
     use \Sokil\Vast\Traits\Error;
@@ -27,5 +27,13 @@ class Wrapper extends \Sokil\Vast\Ad
     public function setVASTAdTagURI($uri)
     {
         return $this->setTagValue('VASTAdTagURI', $uri);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function buildCreativeClassName($type)
+    {
+        return '\\Sokil\\Vast\\Ad\\Wrapper\\Creative\\' . $type;
     }
 }

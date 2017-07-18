@@ -2,23 +2,11 @@
 
 namespace Sokil\Vast\Ad;
 
-class InLine extends \Sokil\Vast\Ad
+class InLine extends \Sokil\Vast\Ad\Ad
 {
     use \Sokil\Vast\Traits\UniqTag;
     use \Sokil\Vast\Traits\Error;
     use \Sokil\Vast\Traits\Impression;
-
-    /**
-     * Creatives
-     *
-     * @var array
-     */
-    private $creatives = array();
-    
-    /**
-     * @var \DomElement
-     */
-    private $creativesDomElement;
     
     /**
      * @var \DomElement
@@ -38,56 +26,23 @@ class InLine extends \Sokil\Vast\Ad
     /**
      * Set Ad title
      *
-     * @param string $adTitle
+     * @param string $value
      *
      * @return \Sokil\Vast\Ad\InLine
      */
-    public function setAdTitle($adTitle)
+    public function setAdTitle($value)
     {
-        return $this->setTagValue('AdTitle', $adTitle);
+        return $this->setTagValue('AdTitle', $value);
     }
-    
+
     /**
-     * Create "creative" object of given type
-     *
-     * @param string $type
-     * @throws \Exception
-     *
-     * @return \Sokil\Vast\Ad\InLine\Creative\Base
+     * @inheritdoc
      */
-    private function _createCreative($type)
+    protected function buildCreativeClassName($type)
     {
-        // check type
-        $creativeClassName = '\\Sokil\Vast\\Ad\\InLine\\Creative\\' . $type;
-        if (!class_exists($creativeClassName)) {
-            throw new \Exception('Wrong crative specified');
-        }
-        
-        // get container
-        if (!$this->creativesDomElement) {
-            // get creatives tag
-            $this->creativesDomElement = $this->domElement->getElementsByTagName('Creatives')->item(0);
-            if (!$this->creativesDomElement) {
-                $this->creativesDomElement = $this->domElement->ownerDocument->createElement('Creatives');
-                $this->domElement->firstChild->appendChild($this->creativesDomElement);
-            }
-        }
-        
-        // Creative dom element
-        $creativeDomElement = $this->creativesDomElement->ownerDocument->createElement('Creative');
-        $this->creativesDomElement->appendChild($creativeDomElement);
-        
-        // Cteative type dom element
-        $creativeTypeDomElement = $this->domElement->ownerDocument->createElement($type);
-        $creativeDomElement->appendChild($creativeTypeDomElement);
-        
-        // object
-        $creative = new $creativeClassName($creativeDomElement);
-        $this->creatives[] = $creative;
-        
-        return $creative;
+        return '\\Sokil\\Vast\\Ad\\InLine\\Creative\\' . $type;
     }
-    
+
     /**
      * 
      * @return \Sokil\Vast\Ad\InLine\Creative\Linear

@@ -6,6 +6,7 @@ trait Impression
 {
     /**
      * Add Impression tracking url
+     * NB! Non standard! By standard multiple impressions should be allowed.
      *
      * @param string $url
      *
