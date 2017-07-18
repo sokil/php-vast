@@ -19,14 +19,19 @@ abstract class Ad
     {
         $this->domElement = $domElement;
     }
-    
+
+    /**
+     * Get id for Ad element
+     *
+     * @return string
+     */
     public function getId()
     {
         return $this->domElement->getAttribute('id');
     }
     
     /**
-     * Set `id' attribute of 'ad' element
+     * Set 'id' attribute of 'ad' element
      *
      * @param string $id
      *
@@ -39,7 +44,6 @@ abstract class Ad
         return $this;
     }
 
-
     /**
      * Add `AdSystem` element to `Ad' element
      *
@@ -50,10 +54,9 @@ abstract class Ad
     public function setAdSystem($adSystem)
     {
         $adSystemDomElement = $this->domElement->getElementsByTagName('AdSystem')->item(0);
-        if($adSystemDomElement) {
+        if ($adSystemDomElement) {
             $adSystemDomElement->nodeValue = $adSystem;
-        }
-        else {
+        } else {
             $adSystemDomElement = $this->domElement->ownerDocument->createElement('AdSystem', $adSystem);
             $this->domElement->firstChild->appendChild($adSystemDomElement);
         }
