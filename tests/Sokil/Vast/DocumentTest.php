@@ -73,7 +73,7 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Error trait in ad
+     * Error trait in wrapper ad
      */
     public function testErrorInWrapperAd()
     {
@@ -91,6 +91,29 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
         $actualXml = str_replace(array("\r", "\n"), '', (string) $document);
 
         $expectedXml = '<?xml version="1.0" encoding="UTF-8"?><VAST version="2.0"><Ad id="ad1"><Wrapper><AdSystem>Ad Server Name</AdSystem><VASTAdTagURI><![CDATA[//entertainmentserver.com/vast1.xml]]></VASTAdTagURI><Error><![CDATA[//ad.server.com/tracking/error]]></Error></Wrapper></Ad></VAST>';
+
+        $this->assertEquals($expectedXml, $actualXml);
+        $this->assertEquals('//ad.server.com/tracking/error', $ad1->getError());
+    }
+
+    /**
+     * Error trait in inline ad
+     */
+    public function testErrorInInlineAd()
+    {
+        $document = (new \Sokil\Vast\Document\Factory())->create('2.0');
+        $this->assertInstanceOf('\Sokil\Vast\Document\Document', $document);
+
+        // insert Ad section
+        $ad1 = $document->createInLineAdSection()
+            ->setId('ad1')
+            ->setAdSystem('Ad Server Name')
+            ->setError('//ad.server.com/tracking/error')
+        ;
+
+        $actualXml = $this->stripNewLines((string) $document);
+
+        $expectedXml = '<?xml version="1.0" encoding="UTF-8"?><VAST version="2.0"><Ad id="ad1"><InLine><AdSystem>Ad Server Name</AdSystem><Error><![CDATA[//ad.server.com/tracking/error]]></Error></InLine></Ad></VAST>';
 
         $this->assertEquals($expectedXml, $actualXml);
         $this->assertEquals('//ad.server.com/tracking/error', $ad1->getError());

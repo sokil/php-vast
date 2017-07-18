@@ -4,6 +4,8 @@ namespace Sokil\Vast\Ad;
 
 class InLine extends \Sokil\Vast\Ad
 {
+    use \Sokil\Vast\Traits\Error;
+
     /**
      * Creatives
      *
@@ -20,6 +22,16 @@ class InLine extends \Sokil\Vast\Ad
      * @var \DomElement
      */
     private $extensionsDomElement;
+
+    /**
+     * UniqTag trait interface method
+     *
+     * @return \DOMElement
+     */
+    protected function getDomElement()
+    {
+        return $this->domElement->firstChild;
+    }
     
     /**
      * Set Ad title
