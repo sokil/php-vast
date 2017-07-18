@@ -25,7 +25,7 @@ class Factory
         $root->appendChild($vastVersionAttribute);
 
         // return
-        return new \Sokil\Vast\Document($xml);
+        return new \Sokil\Vast\Document\Document($xml);
     }
 
     /**
@@ -40,7 +40,7 @@ class Factory
         $xml = $this->prepareEmptyDom();
         $xml->load($filename);
 
-        return new \Sokil\Vast\Document($xml);
+        return new \Sokil\Vast\Document\Document($xml);
     }
 
     /**
@@ -55,7 +55,7 @@ class Factory
         $xml = $this->prepareEmptyDom();
         $xml->loadXml($xmlString);
 
-        return new \Sokil\Vast\Document($xml);
+        return new \Sokil\Vast\Document\Document($xml);
     }
 
     /**

@@ -7,7 +7,7 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
     public function testCreateInLineAdSection()
     {
         $document = (new \Sokil\Vast\Document\Factory())->create('2.0');
-        $this->assertInstanceOf('\Sokil\Vast\Document', $document);
+        $this->assertInstanceOf('\Sokil\Vast\Document\Document', $document);
 
         // insert Ad section
         $ad1 = $document->createInLineAdSection()
@@ -41,7 +41,7 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
     public function testCreateWrapperAdSection()
     {
         $document = (new \Sokil\Vast\Document\Factory())->create('2.0');
-        $this->assertInstanceOf('\Sokil\Vast\Document', $document);
+        $this->assertInstanceOf('\Sokil\Vast\Document\Document', $document);
 
         // insert Ad section
         $ad1 = $document->createWrapperAdSection()

@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokil\Vast;
+namespace Sokil\Vast\Document;
 
 class Document
 {    
