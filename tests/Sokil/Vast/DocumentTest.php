@@ -58,6 +58,21 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Error trait in different objects
+     */
+    public function testErrorField()
+    {
+        $document = (new \Sokil\Vast\Document\Factory())->create('3.0');
+        $document->setError('//ad.server.com/tracking/error');
+
+        $actualXml = str_replace(array("\r", "\n"), '', (string) $document);
+        $expectedXml = '<?xml version="1.0" encoding="UTF-8"?><VAST version="3.0"><Error><![CDATA[//ad.server.com/tracking/error]]></Error></VAST>';
+
+        $this->assertEquals($expectedXml, $actualXml);
+        $this->assertEquals('//ad.server.com/tracking/error', $document->getError());
+    }
+
+    /**
      * Clean given string of newlines
      *
      * @param string $xml

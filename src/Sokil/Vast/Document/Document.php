@@ -3,7 +3,9 @@
 namespace Sokil\Vast\Document;
 
 class Document
-{    
+{
+    use \Sokil\Vast\Traits\Error;
+
     /**
      * @var \DomDocument
      */
@@ -57,6 +59,16 @@ class Document
     public function toDomDocument()
     {
         return $this->xml;
+    }
+
+    /**
+     * UniqTag trait interface method
+     *
+     * @return \DOMElement
+     */
+    protected function getDomElement()
+    {
+        return $this->xml->documentElement;
     }
     
     /**
