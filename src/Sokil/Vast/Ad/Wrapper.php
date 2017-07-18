@@ -6,6 +6,7 @@ class Wrapper extends \Sokil\Vast\Ad
 {
     use \Sokil\Vast\Traits\UniqTag;
     use \Sokil\Vast\Traits\Error;
+    use \Sokil\Vast\Traits\Impression;
 
     /**
      * UniqTag trait interface method

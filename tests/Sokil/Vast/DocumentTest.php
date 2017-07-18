@@ -120,6 +120,30 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Impression trait in wrapper ad
+     */
+    public function testImpressionInWrapperAd()
+    {
+        $document = (new \Sokil\Vast\Document\Factory())->create('2.0');
+        $this->assertInstanceOf('\Sokil\Vast\Document\Document', $document);
+
+        // insert Ad section
+        $ad1 = $document->createWrapperAdSection()
+            ->setId('ad1')
+            ->setAdSystem('Ad Server Name')
+            ->setVASTAdTagURI('//entertainmentserver.com/vast1.xml')
+            ->setImpression('//ad.server.com/tracking/impression')
+        ;
+
+        $actualXml = str_replace(array("\r", "\n"), '', (string) $document);
+
+        $expectedXml = '<?xml version="1.0" encoding="UTF-8"?><VAST version="2.0"><Ad id="ad1"><Wrapper><AdSystem>Ad Server Name</AdSystem><VASTAdTagURI><![CDATA[//entertainmentserver.com/vast1.xml]]></VASTAdTagURI><Impression><![CDATA[//ad.server.com/tracking/impression]]></Impression></Wrapper></Ad></VAST>';
+
+        $this->assertEquals($expectedXml, $actualXml);
+        $this->assertEquals('//ad.server.com/tracking/impression', $ad1->getImpression());
+    }
+
+    /**
      * Clean given string of newlines
      *
      * @param string $xml
