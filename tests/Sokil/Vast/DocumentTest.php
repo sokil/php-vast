@@ -4,6 +4,18 @@ namespace Sokil\Vast;
 
 class DocumentTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * Test empty document created with new
+     */
+    public function testEmptyDocument()
+    {
+        $document = new \Sokil\Vast\Document();
+        $actualXml = $this->stripNewLines($document->toString());
+        $expectedXml = '<?xml version="1.0" encoding="UTF-8"?>';
+
+        $this->assertEquals($expectedXml, $actualXml);
+    }
+
     public function testCreateInLineAdSection()
     {
         $document = \Sokil\Vast\Document::create('2.0');
@@ -55,5 +67,17 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
         $expectedXml = '<?xml version="1.0" encoding="UTF-8"?><VAST version="2.0"><Ad id="ad1"><Wrapper><AdSystem>Ad Server Name</AdSystem><VASTAdTagURI><![CDATA[http://entertainmentserver.com/vast2.xml]]></VASTAdTagURI></Wrapper></Ad></VAST>';
 
         $this->assertEquals($expectedXml, $actualXml);
+    }
+
+    /**
+     * Clean given string of newlines
+     *
+     * @param string $xml
+     *
+     * @return string
+     */
+    protected function stripNewLines($xml)
+    {
+        return str_replace(array("\r", "\n"), '', $xml);
     }
 }

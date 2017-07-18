@@ -44,9 +44,18 @@ class Document
         
         return new self($xml);
     }
-    
-    public function __construct(\DOMDocument $xml)
+
+    /**
+     * Document constructor.
+     *
+     * @param \DOMDocument|null $xml
+     */
+    public function __construct(\DOMDocument $xml = null)
     {
+        if (null === $xml) {
+            $xml = $this->prepareEmptyDom();
+        }
+
         $this->xml = $xml;
     }
 
@@ -63,6 +72,16 @@ class Document
     public function toDomDocument()
     {
         return $this->xml;
+    }
+
+    /**
+     * Extracted common logic for preparing empty dom document
+     *
+     * @return \DomDocument
+     */
+    protected function prepareEmptyDom()
+    {
+        return new \DomDocument('1.0', 'UTF-8');
     }
     
     /**
