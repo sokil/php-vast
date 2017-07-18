@@ -58,18 +58,42 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Error trait in different objects
+     * Error trait in document
      */
-    public function testErrorField()
+    public function testErrorInDocument()
     {
         $document = (new \Sokil\Vast\Document\Factory())->create('3.0');
-        $document->setError('//ad.server.com/tracking/error');
+        $document->setError('//ad.server.com/tracking/error/noad');
 
         $actualXml = str_replace(array("\r", "\n"), '', (string) $document);
-        $expectedXml = '<?xml version="1.0" encoding="UTF-8"?><VAST version="3.0"><Error><![CDATA[//ad.server.com/tracking/error]]></Error></VAST>';
+        $expectedXml = '<?xml version="1.0" encoding="UTF-8"?><VAST version="3.0"><Error><![CDATA[//ad.server.com/tracking/error/noad]]></Error></VAST>';
 
         $this->assertEquals($expectedXml, $actualXml);
-        $this->assertEquals('//ad.server.com/tracking/error', $document->getError());
+        $this->assertEquals('//ad.server.com/tracking/error/noad', $document->getError());
+    }
+
+    /**
+     * Error trait in ad
+     */
+    public function testErrorInWrapperAd()
+    {
+        $document = (new \Sokil\Vast\Document\Factory())->create('2.0');
+        $this->assertInstanceOf('\Sokil\Vast\Document\Document', $document);
+
+        // insert Ad section
+        $ad1 = $document->createWrapperAdSection()
+            ->setId('ad1')
+            ->setAdSystem('Ad Server Name')
+            ->setVASTAdTagURI('//entertainmentserver.com/vast1.xml')
+            ->setError('//ad.server.com/tracking/error')
+        ;
+
+        $actualXml = str_replace(array("\r", "\n"), '', (string) $document);
+
+        $expectedXml = '<?xml version="1.0" encoding="UTF-8"?><VAST version="2.0"><Ad id="ad1"><Wrapper><AdSystem>Ad Server Name</AdSystem><VASTAdTagURI><![CDATA[//entertainmentserver.com/vast1.xml]]></VASTAdTagURI><Error><![CDATA[//ad.server.com/tracking/error]]></Error></Wrapper></Ad></VAST>';
+
+        $this->assertEquals($expectedXml, $actualXml);
+        $this->assertEquals('//ad.server.com/tracking/error', $ad1->getError());
     }
 
     /**
