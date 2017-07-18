@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokil\Vast\Ad\InLine\Creative\Base;
+namespace Sokil\Vast\Creative\InLine\Linear;
 
 class MediaFile
 {

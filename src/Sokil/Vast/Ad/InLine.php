@@ -40,12 +40,13 @@ class InLine extends \Sokil\Vast\Ad\Ad
      */
     protected function buildCreativeClassName($type)
     {
-        return '\\Sokil\\Vast\\Ad\\InLine\\Creative\\' . $type;
+        return '\\Sokil\\Vast\\Creative\\InLine\\' . $type;
     }
 
     /**
-     * 
-     * @return \Sokil\Vast\Ad\InLine\Creative\Linear
+     * Create Linear creative
+     *
+     * @return \Sokil\Vast\Creative\Inline\Linear
      */
     public function createLinearCreative()
     {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Sokil\Vast\Ad\InLine\Creative;
+namespace Sokil\Vast\Creative;
 
-class Linear extends Base
+abstract class Linear extends Base
 {
     /**
      * not to be confused with an impression, this event indicates that an individual creative
@@ -85,12 +85,15 @@ class Linear extends Base
      */
     const EVENT_TYPE_PROGRESS = 'progress';
     
-    private $mediaFilesDomElement;
-    
     private $videoClicksDomElement;
     
     private $trackingEventsDomElement;
-    
+
+    /**
+     * List of allowed events
+     *
+     * @return array
+     */
     public static function getEventList()
     {
         return array(
@@ -115,54 +118,21 @@ class Linear extends Base
             self::EVENT_TYPE_PROGRESS,
         );
     }
-    
-    public function setDuration($duration)
-    {
-        // get dom element
-        $durationDomElement = $this->domElement->getElementsByTagName('Duration')->item(0);
-        if(!$durationDomElement) {
-            $durationDomElement = $this->domElement->ownerDocument->createElement('Duration');
-            $this->domElement->firstChild->appendChild($durationDomElement);
-        }
-        
-        // set value
-        if(is_numeric($duration)) {
-            // in seconds
-            $duration = $this->secondsToString($duration);
-        }
-        
-        $durationDomElement->nodeValue = $duration;
-        
-        return $this;
-    }
-    
-    public function createMediaFile()
-    {
-        if(!$this->mediaFilesDomElement) {
-            $this->mediaFilesDomElement = $this->domElement->getElementsByTagName('MediaFiles')->item(0);
-            if(!$this->mediaFilesDomElement) {
-                $this->mediaFilesDomElement = $this->domElement->ownerDocument->createElement('MediaFiles');
-                $this->domElement->firstChild->appendChild($this->mediaFilesDomElement);
-            }
-        }
-        
-        // dom
-        $mediaFileDomElement = $this->mediaFilesDomElement->ownerDocument->createElement('MediaFile');
-        $this->mediaFilesDomElement->appendChild($mediaFileDomElement);
-        
-        // object
-        return new Base\MediaFile($mediaFileDomElement);
-    }
-    
-    private function getVideoClicksDomElement()
+
+    /**
+     * Get VideoClicks DomElement
+     *
+     * @return \DOMElement
+     */
+    protected function getVideoClicksDomElement()
     {
         // create container
-        if($this->videoClicksDomElement) {
+        if ($this->videoClicksDomElement) {
             return $this->videoClicksDomElement;
         }
         
         $this->videoClicksDomElement = $this->domElement->getElementsByTagName('VideoClicks')->item(0);
-        if($this->videoClicksDomElement) {
+        if ($this->videoClicksDomElement) {
             return $this->videoClicksDomElement;
         }
         
@@ -173,39 +143,10 @@ class Linear extends Base
     }
     
     /**
-     * 
+     * Add click tracking url
+     *
      * @param string $url
-     * @return \Sokil\Vast\Ad\InLine\Creative\Linear
-     */
-    public function setVideoClicksClickThrough($url)
-    {
-        // create cdata
-        $cdata = $this->domElement->ownerDocument->createCDATASection($url);
-        
-        // create ClickThrough
-        $clickThroughDomElement = $this->getVideoClicksDomElement()->getElementsByTagName('ClickThrough')->item(0);
-        if(!$clickThroughDomElement) {
-            $clickThroughDomElement = $this->domElement->ownerDocument->createElement('ClickThrough');
-            $this->getVideoClicksDomElement()->appendChild($clickThroughDomElement);
-        }
-        
-        // update CData
-        if($clickThroughDomElement->hasChildNodes()) {
-            $clickThroughDomElement->replaceChild($cdata, $clickThroughDomElement->firstChild);
-        }
-        
-        // insert CData
-        else {
-            $clickThroughDomElement->appendChild($cdata);
-        }
-        
-        return $this;
-    }
-    
-    /**
-     * 
-     * @param string $url
-     * @return \Sokil\Vast\Ad\InLine\Creative\Linear
+     * @return $this
      */
     public function addVideoClicksClickTracking($url)
     {
@@ -221,9 +162,10 @@ class Linear extends Base
     }
     
     /**
-     * 
+     * Add custom click url
+     *
      * @param string $url
-     * @return \Sokil\Vast\Ad\InLine\Creative\Linear
+     * @return $this
      */
     public function addVideoClicksCustomClick($url)
     {
@@ -237,8 +179,13 @@ class Linear extends Base
         
         return $this;
     }
-    
-    private function getTrackingEventsDomElement()
+
+    /**
+     * Get TrackingEvents DomElement
+     *
+     * @return \DOMElement
+     */
+    protected function getTrackingEventsDomElement()
     {
         // create container
         if($this->trackingEventsDomElement) {
@@ -255,10 +202,17 @@ class Linear extends Base
         
         return $this->trackingEventsDomElement;
     }
-    
+
+    /**
+     * @param string $event
+     * @param string $url
+     *
+     * @return $this
+     * @throws \Exception
+     */
     public function addTrackingEvent($event, $url)
     {
-        if(!in_array($event, $this->getEventList())) {
+        if (!in_array($event, $this->getEventList())) {
             throw new \Exception(sprintf('Wrong event "%s" specified', $event));
         }
         
@@ -274,36 +228,5 @@ class Linear extends Base
         $trackingDomElement->appendChild($cdata);
         
         return $this;
-    }
-    
-        
-    public function skipAfter($time) {
-        if(is_numeric($time)) {
-            $time = $this->secondsToString($time);
-        }
-        
-        $this->domElement->firstChild->setAttribute('skipoffset', $time);
-        
-        return $this;
-    }
-    
-    private function secondsToString($seconds)
-    {
-        $seconds = (int) $seconds;
-        
-        $time = array();
-        
-        // get hours
-        $hours = floor($seconds / 3600);
-        $time[] = str_pad($hours, 2, '0', STR_PAD_LEFT);
-        
-        // get minutes
-        $seconds = $seconds % 3600;
-        $time[] = str_pad(floor($seconds / 60), 2, '0', STR_PAD_LEFT);
-        
-        // get seconds
-        $time[] = str_pad($seconds % 60, 2, '0', STR_PAD_LEFT);
-        
-        return implode(':', $time);
     }
 }

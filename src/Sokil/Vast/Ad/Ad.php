@@ -91,14 +91,14 @@ abstract class Ad
      * @param string $type
      * @throws \Exception
      *
-     * @return \Sokil\Vast\Ad\InLine\Creative\Base
+     * @return \Sokil\Vast\Creative\Base
      */
     protected function _createCreative($type)
     {
         // check type
         $creativeClassName = $this->buildCreativeClassName($type);
         if (!class_exists($creativeClassName)) {
-            throw new \Exception('Wrong creative specified');
+            throw new \Exception('Wrong creative specified: ' . var_export($creativeClassName, true));
         }
 
         // get container

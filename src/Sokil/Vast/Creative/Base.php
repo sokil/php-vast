@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokil\Vast\Ad\InLine\Creative;
+namespace Sokil\Vast\Creative;
 
 abstract class Base
 {
