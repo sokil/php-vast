@@ -4,6 +4,7 @@ namespace Sokil\Vast\Document;
 
 class Document
 {
+    use \Sokil\Vast\Traits\UniqTag;
     use \Sokil\Vast\Traits\Error;
 
     /**

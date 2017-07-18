@@ -2,28 +2,28 @@
 
 namespace Sokil\Vast\Traits;
 
-trait Error
+trait Impression
 {
     /**
-     * Add Error tracking url
+     * Add Impression tracking url
      *
      * @param string $url
      *
      * @return $this
      */
-    public function setError($url)
+    public function setImpression($url)
     {
-        return $this->setTagValue('Error', $url);
+        return $this->setTagValue('Impression', $url);
     }
 
     /**
-     * Get previously set Error tracking url value
+     * Get previously set Impression tracking url value
      *
      * @return null|string
      */
-    public function getError()
+    public function getImpression()
     {
-        return $this->getTagValue('Error');
+        return $this->getTagValue('Impression');
     }
 
     /**

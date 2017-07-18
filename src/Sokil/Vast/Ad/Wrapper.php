@@ -4,6 +4,7 @@ namespace Sokil\Vast\Ad;
 
 class Wrapper extends \Sokil\Vast\Ad
 {
+    use \Sokil\Vast\Traits\UniqTag;
     use \Sokil\Vast\Traits\Error;
 
     /**

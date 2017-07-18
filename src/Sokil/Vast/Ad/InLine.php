@@ -4,7 +4,9 @@ namespace Sokil\Vast\Ad;
 
 class InLine extends \Sokil\Vast\Ad
 {
+    use \Sokil\Vast\Traits\UniqTag;
     use \Sokil\Vast\Traits\Error;
+    use \Sokil\Vast\Traits\Impression;
 
     /**
      * Creatives
@@ -56,33 +58,6 @@ class InLine extends \Sokil\Vast\Ad
             $adTitleDomElement->replaceChild($cdata, $adTitleDomElement->firstChild);
         } else {  // insert cdata
             $adTitleDomElement->appendChild($cdata);
-        }
-        
-        return $this;
-    }
-    
-    /**
-     * Set impression tracking url
-     *
-     * @param string $url
-     * @return \Sokil\Vast\Ad\InLine
-     */
-    public function setImpression($url)
-    {
-        $cdata = $this->domElement->ownerDocument->createCDATASection($url);
-        
-        // get impression tag
-        $impressionDomElement = $this->domElement->getElementsByTagName('Impression')->item(0);
-        if (!$impressionDomElement) {
-            $impressionDomElement = $this->domElement->ownerDocument->createElement('Impression');
-            $this->domElement->firstChild->appendChild($impressionDomElement);
-        }
-        
-        // update CData
-        if ($impressionDomElement->hasChildNodes()) {
-            $impressionDomElement->replaceChild($cdata, $impressionDomElement->firstChild);
-        } else { // insert cdata
-            $impressionDomElement->appendChild($cdata);
         }
         
         return $this;
