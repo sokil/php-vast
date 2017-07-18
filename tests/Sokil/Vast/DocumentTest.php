@@ -52,13 +52,19 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
         // insert Ad section
         $ad1 = $document->createWrapperAdSection()
             ->setId('ad1')
+            ->setVASTAdTagURI('//entertainmentserver.com/vast1.xml')
             ->setAdSystem('Ad Server Name')
-            ->setVASTAdTagURI('http://entertainmentserver.com/vast1.xml')
-            ->setVASTAdTagURI('http://entertainmentserver.com/vast2.xml');
+            ->setVASTAdTagURI('//entertainmentserver.com/vast2.xml')
+            ->createLinearCreative()
+                ->addVideoClicksClickTracking('//ad.server.com/videoclicks/clicktracking')
+                ->addVideoClicksCustomClick('//ad.server.com/videoclicks/customclick')
+                ->addTrackingEvent('start', '//ad.server.com/trackingevent/start')
+                ->addTrackingEvent('pause', '//ad.server.com/trackingevent/stop')
+        ;
 
         $actualXml = $this->stripNewLines((string) $document);
 
-        $expectedXml = '<?xml version="1.0" encoding="UTF-8"?><VAST version="2.0"><Ad id="ad1"><Wrapper><AdSystem>Ad Server Name</AdSystem><VASTAdTagURI><![CDATA[http://entertainmentserver.com/vast2.xml]]></VASTAdTagURI></Wrapper></Ad></VAST>';
+        $expectedXml = '<?xml version="1.0" encoding="UTF-8"?><VAST version="2.0"><Ad id="ad1"><Wrapper><VASTAdTagURI><![CDATA[//entertainmentserver.com/vast2.xml]]></VASTAdTagURI><AdSystem>Ad Server Name</AdSystem><Creatives><Creative><Linear><VideoClicks><ClickTracking><![CDATA[//ad.server.com/videoclicks/clicktracking]]></ClickTracking><CustomClick><![CDATA[//ad.server.com/videoclicks/customclick]]></CustomClick></VideoClicks><TrackingEvents><Tracking event="start"><![CDATA[//ad.server.com/trackingevent/start]]></Tracking><Tracking event="pause"><![CDATA[//ad.server.com/trackingevent/stop]]></Tracking></TrackingEvents></Linear></Creative></Creatives></Wrapper></Ad></VAST>';
 
         $this->assertEquals($expectedXml, $actualXml);
     }

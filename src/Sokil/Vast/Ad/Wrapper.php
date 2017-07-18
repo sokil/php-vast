@@ -34,6 +34,16 @@ class Wrapper extends \Sokil\Vast\Ad\Ad
      */
     protected function buildCreativeClassName($type)
     {
-        return '\\Sokil\\Vast\\Ad\\Wrapper\\Creative\\' . $type;
+        return '\\Sokil\\Vast\\Creative\\Wrapper\\' . $type;
+    }
+
+    /**
+     * Create Linear creative
+     *
+     * @return \Sokil\Vast\Creative\Wrapper\Linear
+     */
+    public function createLinearCreative()
+    {
+        return $this->_createCreative('Linear');
     }
 }
