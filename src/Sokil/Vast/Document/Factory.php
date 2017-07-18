@@ -9,7 +9,7 @@ class Factory
      *
      * @param string $vastVersion
      *
-     * @return \Sokil\Vast\Document
+     * @return \Sokil\Vast\Document\Document
      */
     public function create($vastVersion = '2.0')
     {
@@ -33,7 +33,7 @@ class Factory
      *
      * @param string $filename
      *
-     * @return \Sokil\Vast\Document
+     * @return \Sokil\Vast\Document\Document
      */
     public function fromFile($filename)
     {
@@ -48,7 +48,7 @@ class Factory
      *
      * @param string $xmlString
      *
-     * @return \Sokil\Vast\Document
+     * @return \Sokil\Vast\Document\Document
      */
     public function fromString($xmlString)
     {

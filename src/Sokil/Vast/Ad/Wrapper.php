@@ -4,11 +4,10 @@ namespace Sokil\Vast\Ad;
 
 class Wrapper extends \Sokil\Vast\Ad
 {
-
     /**
      * URI of ad tag of downstream Secondary Ad Server
      *
-     * @param $uri
+     * @param string $uri
      * @return $this
      */
     public function setVASTAdTagURI($uri)
