@@ -15,7 +15,7 @@ VAST Ad generator and parser library on PHP.
 
 ```php
 // create document
-$document = \Sokil\Vast\Document::create('2.0');
+$document = (new \Sokil\Vast\Document\Factory())->create('2.0');
 
 // insert Ad section
 $ad1 = $document->createInLineAdSection()

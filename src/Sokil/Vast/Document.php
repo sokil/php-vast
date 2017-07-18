@@ -11,51 +11,14 @@ class Document
     private $xml;
     
     private $vastAdSequence = array();
-    
-    public static function create($vastVersion = '2.0')
-    {        
-        $xml = new \DomDocument('1.0', 'UTF-8');
-        
-        // root
-        $root = $xml->createElement('VAST');
-        $xml->appendChild($root);
-        
-        // version
-        $vastVersionAttribute = $xml->createAttribute('version');
-        $vastVersionAttribute->value = $vastVersion;
-        $root->appendChild($vastVersionAttribute);
-        
-        // return
-        return new self($xml);
-    }
-    
-    public static function fromFile($filename)
-    {
-        $xml = new \DomDocument('1.0', 'UTF-8');
-        $xml->load($filename);
-        
-        return new self($xml);
-    }
-    
-    public static function fromString($xmlString)
-    {
-        $xml = new \DomDocument('1.0', 'UTF-8');
-        $xml->loadXml($xmlString);
-        
-        return new self($xml);
-    }
 
     /**
      * Document constructor.
      *
-     * @param \DOMDocument|null $xml
+     * @param \DOMDocument $xml
      */
-    public function __construct(\DOMDocument $xml = null)
+    public function __construct(\DOMDocument $xml)
     {
-        if (null === $xml) {
-            $xml = $this->prepareEmptyDom();
-        }
-
         $this->xml = $xml;
     }
 
@@ -72,16 +35,6 @@ class Document
     public function toDomDocument()
     {
         return $this->xml;
-    }
-
-    /**
-     * Extracted common logic for preparing empty dom document
-     *
-     * @return \DomDocument
-     */
-    protected function prepareEmptyDom()
-    {
-        return new \DomDocument('1.0', 'UTF-8');
     }
     
     /**

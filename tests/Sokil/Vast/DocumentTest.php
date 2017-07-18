@@ -4,21 +4,9 @@ namespace Sokil\Vast;
 
 class DocumentTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * Test empty document created with new
-     */
-    public function testEmptyDocument()
-    {
-        $document = new \Sokil\Vast\Document();
-        $actualXml = $this->stripNewLines($document->toString());
-        $expectedXml = '<?xml version="1.0" encoding="UTF-8"?>';
-
-        $this->assertEquals($expectedXml, $actualXml);
-    }
-
     public function testCreateInLineAdSection()
     {
-        $document = \Sokil\Vast\Document::create('2.0');
+        $document = (new \Sokil\Vast\Document\Factory())->create('2.0');
         $this->assertInstanceOf('\Sokil\Vast\Document', $document);
 
         // insert Ad section
@@ -52,7 +40,7 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateWrapperAdSection()
     {
-        $document = \Sokil\Vast\Document::create('2.0');
+        $document = (new \Sokil\Vast\Document\Factory())->create('2.0');
         $this->assertInstanceOf('\Sokil\Vast\Document', $document);
 
         // insert Ad section
