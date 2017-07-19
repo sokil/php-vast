@@ -4,8 +4,10 @@ namespace Sokil\Vast\Document;
 
 class Document
 {
-    use \Sokil\Vast\Traits\UniqTag;
-    use \Sokil\Vast\Traits\Error;
+    /**
+     * @var \Sokil\Vast\Util\ElementWrapper
+     */
+    private $elementWrapper;
 
     /**
      * @var \DomDocument
@@ -63,13 +65,19 @@ class Document
     }
 
     /**
-     * UniqTag trait interface method
+     * Get element wrapper helper
      *
-     * @return \DOMElement
+     * @return \Sokil\Vast\Util\ElementWrapper
      */
-    protected function getDomElement()
+    protected function getElementWrapper()
     {
-        return $this->xml->documentElement;
+        if (null === $this->elementWrapper) {
+            $this->elementWrapper = new \Sokil\Vast\Util\ElementWrapper(
+                $this->xml->documentElement
+            );
+        }
+
+        return $this->elementWrapper;
     }
     
     /**
@@ -167,5 +175,29 @@ class Document
         }
         
         return $this->vastAdSequence;
+    }
+
+    /**
+     * Add Error tracking url
+     *
+     * @param string $url
+     *
+     * @return $this
+     */
+    public function setError($url)
+    {
+        $this->getElementWrapper()->setUniqTagValue('Error', $url);
+
+        return $this;
+    }
+
+    /**
+     * Get previously set Error tracking url value
+     *
+     * @return null|string
+     */
+    public function getError()
+    {
+        return $this->getElementWrapper()->getUniqTagValue('Error');
     }
 }

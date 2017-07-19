@@ -4,20 +4,6 @@ namespace Sokil\Vast\Ad;
 
 class Wrapper extends \Sokil\Vast\Ad\Ad
 {
-    use \Sokil\Vast\Traits\UniqTag;
-    use \Sokil\Vast\Traits\Error;
-    use \Sokil\Vast\Traits\Impression;
-
-    /**
-     * UniqTag trait interface method
-     *
-     * @return \DOMElement
-     */
-    protected function getDomElement()
-    {
-        return $this->domElement->firstChild;
-    }
-
     /**
      * URI of ad tag of downstream Secondary Ad Server
      *
@@ -26,7 +12,9 @@ class Wrapper extends \Sokil\Vast\Ad\Ad
      */
     public function setVASTAdTagURI($uri)
     {
-        return $this->setTagValue('VASTAdTagURI', $uri);
+        $this->getElementWrapper()->setUniqTagValue('VASTAdTagURI', $uri);
+
+        return $this;
     }
 
     /**
@@ -45,5 +33,53 @@ class Wrapper extends \Sokil\Vast\Ad\Ad
     public function createLinearCreative()
     {
         return $this->_createCreative('Linear');
+    }
+
+    /**
+     * Add Error tracking url
+     *
+     * @param string $url
+     *
+     * @return $this
+     */
+    public function setError($url)
+    {
+        $this->getElementWrapper()->setUniqTagValue('Error', $url);
+
+        return $this;
+    }
+
+    /**
+     * Get previously set Error tracking url value
+     *
+     * @return null|string
+     */
+    public function getError()
+    {
+        return $this->getElementWrapper()->getUniqTagValue('Error');
+    }
+    /**
+     * Add Impression tracking url
+     * NB! Non standard! By standard multiple impressions should be allowed.
+     *
+     * @param string $url
+     *
+     * @return $this
+     */
+    public function setImpression($url)
+    {
+        $this->getElementWrapper()->setUniqTagValue('Impression', $url);
+
+        return $this;
+    }
+
+    /**
+     * Get previously set Impression tracking url value
+     *
+     * @return null|string
+     */
+    public function getImpression()
+    {
+        return $this->getElementWrapper()->getUniqTagValue('Impression');
     }
 }

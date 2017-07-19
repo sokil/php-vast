@@ -23,6 +23,11 @@ abstract class Ad
     private $creativesDomElement;
 
     /**
+     * @var \Sokil\Vast\Util\ElementWrapper
+     */
+    private $elementWrapper;
+
+    /**
      * Ad constructor.
      *
      * @param \DomElement $domElement
@@ -30,6 +35,22 @@ abstract class Ad
     public function __construct(\DomElement $domElement) 
     {
         $this->domElement = $domElement;
+    }
+
+    /**
+     * Get element wrapper helper
+     *
+     * @return \Sokil\Vast\Util\ElementWrapper
+     */
+    protected function getElementWrapper()
+    {
+        if (null === $this->elementWrapper) {
+            $this->elementWrapper = new \Sokil\Vast\Util\ElementWrapper(
+                $this->domElement->firstChild
+            );
+        }
+
+        return $this->elementWrapper;
     }
 
     /**

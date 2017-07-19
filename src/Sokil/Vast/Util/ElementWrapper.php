@@ -1,9 +1,24 @@
 <?php
 
-namespace Sokil\Vast\Traits;
+namespace Sokil\Vast\Util;
 
-trait UniqTag
+class ElementWrapper
 {
+    /**
+     * @var \DOMElement
+     */
+    protected $element;
+
+    /**
+     * ElementWrapper constructor.
+     *
+     * @param \DOMElement $element
+     */
+    public function __construct(\DOMElement $element)
+    {
+        $this->element = $element;
+    }
+
     /**
      * Set value for given tag
      *
@@ -12,7 +27,7 @@ trait UniqTag
      *
      * @return $this
      */
-    public function setTagValue($name, $value)
+    public function setUniqTagValue($name, $value)
     {
         $el = $this->getDomElement();
 
@@ -42,7 +57,7 @@ trait UniqTag
      *
      * @return null|string
      */
-    public function getTagValue($name)
+    public function getUniqTagValue($name)
     {
         $el = $this->getDomElement();
         $tagElement = $el->getElementsByTagName($name)->item(0);
@@ -57,5 +72,8 @@ trait UniqTag
      *
      * @return \DOMElement
      */
-    abstract protected function getDomElement();
+    public function getDomElement()
+    {
+        return $this->element;
+    }
 }
