@@ -9,9 +9,9 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateInLineAdSection()
     {
-        $factory = new \Sokil\Vast\Document\Factory();
+        $factory = new Factory();
         $document = $factory->create('2.0');
-        $this->assertInstanceOf('\Sokil\Vast\Document\Document', $document);
+        $this->assertInstanceOf('\Sokil\Vast\Document', $document);
 
         // insert Ad section
         $ad1 = $document->createInLineAdSection()
@@ -47,9 +47,9 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateWrapperAdSection()
     {
-        $factory = new \Sokil\Vast\Document\Factory();
+        $factory = new \Sokil\Vast\Factory();
         $document = $factory->create('2.0');
-        $this->assertInstanceOf('\Sokil\Vast\Document\Document', $document);
+        $this->assertInstanceOf('\Sokil\Vast\Document', $document);
 
         // insert Ad section
         $ad1 = $document->createWrapperAdSection()
@@ -76,7 +76,7 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
      */
     public function testErrorInDocument()
     {
-        $factory = new \Sokil\Vast\Document\Factory();
+        $factory = new Factory();
         $document = $factory->create('3.0');
         $document->setError('//ad.server.com/tracking/error/noad');
 
@@ -92,9 +92,9 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
      */
     public function testErrorInWrapperAd()
     {
-        $factory = new \Sokil\Vast\Document\Factory();
+        $factory = new Factory();
         $document = $factory->create('2.0');
-        $this->assertInstanceOf('\Sokil\Vast\Document\Document', $document);
+        $this->assertInstanceOf('\Sokil\Vast\Document', $document);
 
         // insert Ad section
         $ad1 = $document->createWrapperAdSection()
@@ -117,9 +117,9 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
      */
     public function testErrorInInlineAd()
     {
-        $factory = new \Sokil\Vast\Document\Factory();
+        $factory = new Factory();
         $document = $factory->create('2.0');
-        $this->assertInstanceOf('\Sokil\Vast\Document\Document', $document);
+        $this->assertInstanceOf('\Sokil\Vast\Document', $document);
 
         // insert Ad section
         $ad1 = $document->createInLineAdSection()
@@ -141,9 +141,9 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
      */
     public function testImpressionInWrapperAd()
     {
-        $factory = new \Sokil\Vast\Document\Factory();
+        $factory = new Factory();
         $document = $factory->create('2.0');
-        $this->assertInstanceOf('\Sokil\Vast\Document\Document', $document);
+        $this->assertInstanceOf('\Sokil\Vast\Document', $document);
 
         // insert Ad section
         $ad1 = $document->createWrapperAdSection()

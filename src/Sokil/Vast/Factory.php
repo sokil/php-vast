@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokil\Vast\Document;
+namespace Sokil\Vast;
 
 class Factory
 {
@@ -9,11 +9,11 @@ class Factory
      *
      * @param string $vastVersion
      *
-     * @return \Sokil\Vast\Document\Document
+     * @return Document
      */
     public function create($vastVersion = '2.0')
     {
-        $xml = $this->prepareEmptyDom();
+        $xml = $this->createDomDocument();
 
         // root
         $root = $xml->createElement('VAST');
@@ -25,7 +25,7 @@ class Factory
         $root->appendChild($vastVersionAttribute);
 
         // return
-        return new \Sokil\Vast\Document\Document($xml);
+        return new Document($xml);
     }
 
     /**
@@ -33,14 +33,14 @@ class Factory
      *
      * @param string $filename
      *
-     * @return \Sokil\Vast\Document\Document
+     * @return Document
      */
     public function fromFile($filename)
     {
-        $xml = $this->prepareEmptyDom();
+        $xml = $this->createDomDocument();
         $xml->load($filename);
 
-        return new \Sokil\Vast\Document\Document($xml);
+        return new Document($xml);
     }
 
     /**
@@ -48,22 +48,22 @@ class Factory
      *
      * @param string $xmlString
      *
-     * @return \Sokil\Vast\Document\Document
+     * @return Document
      */
     public function fromString($xmlString)
     {
-        $xml = $this->prepareEmptyDom();
+        $xml = $this->createDomDocument();
         $xml->loadXml($xmlString);
 
-        return new \Sokil\Vast\Document\Document($xml);
+        return new Document($xml);
     }
 
     /**
-     * Extracted common logic for preparing empty dom document
+     * Create dom document
      *
      * @return \DomDocument
      */
-    protected function prepareEmptyDom()
+    private function createDomDocument()
     {
         return new \DomDocument('1.0', 'UTF-8');
     }
