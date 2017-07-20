@@ -2,7 +2,7 @@
 
 namespace Sokil\Vast\Ad;
 
-class Wrapper extends AbstractAd
+class Wrapper extends AbstractAdNode
 {
     /**
      * URI of ad tag of downstream Secondary Ad Server

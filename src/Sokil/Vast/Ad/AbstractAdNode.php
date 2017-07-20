@@ -5,7 +5,7 @@ namespace Sokil\Vast\Ad;
 use Sokil\Vast\Creative\AbstractLinearCreative;
 use Sokil\Vast\Document\Node;
 
-abstract class AbstractAd extends Node
+abstract class AbstractAdNode extends Node
 {
     /**
      * Creatives
@@ -55,7 +55,7 @@ abstract class AbstractAd extends Node
      *
      * @param string $id
      *
-     * @return InLine|Wrapper|AbstractAd
+     * @return InLine|Wrapper|AbstractAdNode
      */
     public function setId($id)
     {
@@ -69,7 +69,7 @@ abstract class AbstractAd extends Node
      *
      * @param string $adSystem
      *
-     * @return InLine|Wrapper|AbstractAd
+     * @return InLine|Wrapper|AbstractAdNode
      */
     public function setAdSystem($adSystem)
     {

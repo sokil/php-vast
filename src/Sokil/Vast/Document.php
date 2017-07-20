@@ -2,7 +2,7 @@
 
 namespace Sokil\Vast;
 
-use Sokil\Vast\Ad\AbstractAd;
+use Sokil\Vast\Ad\AbstractAdNode;
 
 class Document
 {
@@ -90,7 +90,7 @@ class Document
      *
      * @throws \Exception
      *
-     * @return AbstractAd
+     * @return AbstractAdNode
      */
     private function createAdSection($type)
     {        
@@ -167,7 +167,7 @@ class Document
                     $type = $node->tagName;
 
                     // create ad section
-                    $adTypeClassName = '\\Sokil\\Vast\\AbstractAd\\' . $type;
+                    $adTypeClassName = '\\Sokil\\Vast\\AbstractAdNode\\' . $type;
                     if (!class_exists($adTypeClassName)) {
                         throw new \Exception('Ad type ' . $type . ' not supported');
                     }
