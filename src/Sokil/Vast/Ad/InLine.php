@@ -48,7 +48,7 @@ class InLine extends AbstractAd
      */
     public function createLinearCreative()
     {
-        return $this->_createCreative('Linear');
+        return $this->buildCreative('Linear');
     }
 
     /**

@@ -1,8 +1,8 @@
 <?php
 
-namespace Sokil\Vast\Creative;
+namespace Sokil\Vast\Document;
 
-abstract class Base
+abstract class Node
 {
     /**
      *

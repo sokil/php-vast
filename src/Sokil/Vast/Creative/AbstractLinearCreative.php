@@ -2,7 +2,9 @@
 
 namespace Sokil\Vast\Creative;
 
-abstract class Linear extends Base
+use Sokil\Vast\Document\Node;
+
+abstract class AbstractLinearCreative extends Node
 {
     /**
      * not to be confused with an impression, this event indicates that an individual creative
@@ -11,7 +13,7 @@ abstract class Linear extends Base
      * others. This event enables ad servers to track which ad creative are viewed, and therefore, which
      * platforms are more common.
      */
-    const EVENT_TYPE_CREATIVEVIEW = 'creativeView'; // 
+    const EVENT_TYPE_CREATIVEVIEW = 'creativeView';
                      
     /**
      * this event is used to indicate that an individual creative within the ad was loaded and playback

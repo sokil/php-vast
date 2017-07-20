@@ -2,7 +2,10 @@
 
 namespace Sokil\Vast\Creative\Inline;
 
-class Linear extends \Sokil\Vast\Creative\Linear
+use Sokil\Vast\Creative\AbstractLinearCreative;
+use Sokil\Vast\Creative\InLine\Linear\MediaFile;
+
+class Linear extends AbstractLinearCreative
 {
     private $mediaFilesDomElement;
 
@@ -33,7 +36,9 @@ class Linear extends \Sokil\Vast\Creative\Linear
         return $this;
     }
 
-
+    /**
+     * @return MediaFile
+     */
     public function createMediaFile()
     {
         if (!$this->mediaFilesDomElement) {
@@ -49,7 +54,7 @@ class Linear extends \Sokil\Vast\Creative\Linear
         $this->mediaFilesDomElement->appendChild($mediaFileDomElement);
 
         // object
-        return new \Sokil\Vast\Creative\InLine\Linear\MediaFile($mediaFileDomElement);
+        return new MediaFile($mediaFileDomElement);
     }
 
     /**

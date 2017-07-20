@@ -2,14 +2,11 @@
 
 namespace Sokil\Vast\Ad;
 
-abstract class AbstractAd
-{    
-    /**
-     *
-     * @var \DomNode
-     */
-    protected $domElement;
+use Sokil\Vast\Creative\AbstractLinearCreative;
+use Sokil\Vast\Document\Node;
 
+abstract class AbstractAd extends Node
+{
     /**
      * Creatives
      *
@@ -26,14 +23,6 @@ abstract class AbstractAd
      * @var \Sokil\Vast\Util\ElementWrapper
      */
     private $elementWrapper;
-
-    /**
-     * @param \DomElement $domElement
-     */
-    public function __construct(\DomElement $domElement) 
-    {
-        $this->domElement = $domElement;
-    }
 
     /**
      * Get element wrapper helper
@@ -60,13 +49,13 @@ abstract class AbstractAd
     {
         return $this->domElement->getAttribute('id');
     }
-    
+
     /**
      * Set 'id' attribute of 'ad' element
      *
      * @param string $id
      *
-     * @return \Sokil\Vast\Ad\InLine|\Sokil\Vast\Ad\Wrapper
+     * @return InLine|Wrapper|AbstractAd
      */
     public function setId($id)
     {
@@ -80,7 +69,7 @@ abstract class AbstractAd
      *
      * @param string $adSystem
      *
-     * @return \Sokil\Vast\Ad\InLine|\Sokil\Vast\Ad\Wrapper
+     * @return InLine|Wrapper|AbstractAd
      */
     public function setAdSystem($adSystem)
     {
@@ -108,11 +97,12 @@ abstract class AbstractAd
      * Create "creative" object of given type
      *
      * @param string $type
+     *
      * @throws \Exception
      *
-     * @return \Sokil\Vast\Creative\Base
+     * @return AbstractLinearCreative
      */
-    protected function _createCreative($type)
+    protected function buildCreative($type)
     {
         // check type
         $creativeClassName = $this->buildCreativeClassName($type);

@@ -2,5 +2,9 @@
 
 namespace Sokil\Vast\Creative\Wrapper;
 
-class Linear extends \Sokil\Vast\Creative\Linear
-{}
+use Sokil\Vast\Creative\AbstractLinearCreative;
+
+class Linear extends AbstractLinearCreative
+{
+
+}
