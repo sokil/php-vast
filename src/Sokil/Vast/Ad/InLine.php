@@ -2,7 +2,7 @@
 
 namespace Sokil\Vast\Ad;
 
-class InLine extends \Sokil\Vast\Ad\Ad
+class InLine extends AbstractAd
 {
     /**
      * @var \DomElement

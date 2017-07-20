@@ -2,6 +2,8 @@
 
 namespace Sokil\Vast;
 
+use Sokil\Vast\Ad\AbstractAd;
+
 class Document
 {
     /**
@@ -84,16 +86,17 @@ class Document
      * Create "Ad" section ov "VAST" node
      *
      * @param string $type
+     *
      * @throws \Exception
      *
-     * @return \Sokil\Vast\Ad
+     * @return AbstractAd
      */
     private function createAdSection($type)
     {        
         // Check Ad type
         $adTypeClassName = '\\Sokil\\Vast\\Ad\\' . $type;
         if (!class_exists($adTypeClassName)) {
-            throw new \Exception('Ad type ' . $type . ' not supported');
+            throw new \InvalidArgumentException('Ad type ' . $type . ' not supported');
         }
         
         // create dom node
@@ -163,9 +166,9 @@ class Document
                     $type = $node->tagName;
 
                     // create ad section
-                    $adTypeClassName = '\\Sokil\\Vast\\Ad\\' . $type;
-                    if(!class_exists($adTypeClassName)) {
-                        throw new \Exception('Ad type ' . $type . ' not allowed');
+                    $adTypeClassName = '\\Sokil\\Vast\\AbstractAd\\' . $type;
+                    if (!class_exists($adTypeClassName)) {
+                        throw new \Exception('Ad type ' . $type . ' not supported');
                     }
 
                     $this->vastAdSequence[] = new $adTypeClassName($adDomElement);

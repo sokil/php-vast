@@ -2,7 +2,7 @@
 
 namespace Sokil\Vast\Ad;
 
-abstract class Ad
+abstract class AbstractAd
 {    
     /**
      *
@@ -28,8 +28,6 @@ abstract class Ad
     private $elementWrapper;
 
     /**
-     * Ad constructor.
-     *
      * @param \DomElement $domElement
      */
     public function __construct(\DomElement $domElement) 
