@@ -23,9 +23,10 @@ class Document
      */
     private $vastAdSequence = array();
 
+    /** @var Factory */
+    private static $documentFactory;
+
     /**
-     * Document constructor.
-     *
      * @param \DOMDocument $xml
      */
     public function __construct(\DOMDocument $xml)
@@ -202,5 +203,55 @@ class Document
     public function getError()
     {
         return $this->getElementWrapper()->getUniqTagValue('Error');
+    }
+
+    /**
+     * @deprecated Helper method to get factory for deprecated methods
+     *
+     * @return Factory
+     */
+    private static function getFactory()
+    {
+        if (empty(self::$documentFactory)) {
+            self::$documentFactory = new Factory();
+        }
+
+        return self::$documentFactory;
+    }
+
+    /**
+     * @deprecated use Factory::create
+     *
+     * @param string $vastVersion
+     *
+     * @return Document
+     */
+    public static function create($vastVersion = '2.0')
+    {
+        return self::getFactory()->create($vastVersion);
+    }
+
+    /**
+     * @deprecated use Factory::fromFile
+     *
+     * @param string $filename
+     *
+     * @return Document
+     */
+    public static function fromFile($filename)
+    {
+        return self::getFactory()->fromFile($filename);
+    }
+
+    /**
+     * @deprecated use Factory::fromString
+     *
+     * @param string $xmlString
+     *
+     * @return Document
+     */
+    public static function fromString($xmlString)
+    {
+        return self::getFactory()->fromString($xmlString);
     }
 }
