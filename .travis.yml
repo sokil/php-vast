@@ -9,7 +9,7 @@ before_script:
   - composer update --no-interaction
   
 script:
-  - composer clover
+  - composer cover
   - composer check-style
   
 after_script:
