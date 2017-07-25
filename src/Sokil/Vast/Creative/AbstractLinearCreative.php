@@ -247,12 +247,12 @@ abstract class AbstractLinearCreative extends AbstractNode
     protected function getTrackingEventsDomElement()
     {
         // create container
-        if($this->trackingEventsDomElement) {
+        if ($this->trackingEventsDomElement) {
             return $this->trackingEventsDomElement;
         }
         
         $this->trackingEventsDomElement = $this->linearCreativeDomElement->getElementsByTagName('TrackingEvents')->item(0);
-        if($this->trackingEventsDomElement) {
+        if ($this->trackingEventsDomElement) {
             return $this->trackingEventsDomElement;
         }
         

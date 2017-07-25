@@ -58,7 +58,6 @@ class Document extends AbstractNode
     public function __toString()
     {
         return $this->domDocument->saveXML();
-
     }
 
     /**
@@ -81,7 +80,7 @@ class Document extends AbstractNode
      * @return AbstractAdNode
      */
     private function createAdSection($type)
-    {        
+    {
         // Check Ad type
         $adTypeClassName = '\\Sokil\\Vast\\Ad\\' . $type;
         if (!class_exists($adTypeClassName)) {
@@ -139,7 +138,6 @@ class Document extends AbstractNode
         }
             
         foreach ($this->domDocument->documentElement->childNodes as $adDomElement) {
-
             // get Ad tag
             if (!$adDomElement instanceof \DOMElement) {
                 continue;
