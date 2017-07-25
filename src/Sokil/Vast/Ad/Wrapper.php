@@ -12,8 +12,7 @@ class Wrapper extends AbstractAdNode
      */
     public function setVASTAdTagURI($uri)
     {
-        $this->getElementWrapper()->setUniqTagValue('VASTAdTagURI', $uri);
-
+        $this->setScalarNodeCdata('VASTAdTagURI', $uri);
         return $this;
     }
 
@@ -33,53 +32,5 @@ class Wrapper extends AbstractAdNode
     public function createLinearCreative()
     {
         return $this->buildCreative('Linear');
-    }
-
-    /**
-     * Add Error tracking url
-     *
-     * @param string $url
-     *
-     * @return $this
-     */
-    public function setError($url)
-    {
-        $this->getElementWrapper()->setUniqTagValue('Error', $url);
-
-        return $this;
-    }
-
-    /**
-     * Get previously set Error tracking url value
-     *
-     * @return null|string
-     */
-    public function getError()
-    {
-        return $this->getElementWrapper()->getUniqTagValue('Error');
-    }
-    /**
-     * Add Impression tracking url
-     * NB! Non standard! By standard multiple impressions should be allowed.
-     *
-     * @param string $url
-     *
-     * @return $this
-     */
-    public function setImpression($url)
-    {
-        $this->getElementWrapper()->setUniqTagValue('Impression', $url);
-
-        return $this;
-    }
-
-    /**
-     * Get previously set Impression tracking url value
-     *
-     * @return null|string
-     */
-    public function getImpression()
-    {
-        return $this->getElementWrapper()->getUniqTagValue('Impression');
     }
 }

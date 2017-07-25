@@ -3,35 +3,39 @@
 namespace Sokil\Vast;
 
 use Sokil\Vast\Ad\AbstractAdNode;
+use Sokil\Vast\Document\AbstractNode;
 
-class Document
+class Document extends AbstractNode
 {
     /**
-     * @var \Sokil\Vast\Util\ElementWrapper
+     * @var \DOMDocument
      */
-    private $elementWrapper;
+    private $domDocument;
 
     /**
-     * @var \DomDocument
-     */
-    private $xml;
-
-    /**
-     * Cached ad sequence
+     * Ad node list
      *
-     * @var array
+     * @var AbstractAdNode[]
      */
-    private $vastAdSequence = array();
+    private $vastAdNodeList = array();
 
     /** @var Factory */
     private static $documentFactory;
 
     /**
-     * @param \DOMDocument $xml
+     * @param \DOMDocument $DOMDocument
      */
-    public function __construct(\DOMDocument $xml)
+    public function __construct(\DOMDocument $DOMDocument)
     {
-        $this->xml = $xml;
+        $this->domDocument = $DOMDocument;
+    }
+
+    /**
+     * @return \DOMElement
+     */
+    protected function getDomElement()
+    {
+        return $this->domDocument->documentElement;
     }
 
     /**
@@ -53,7 +57,7 @@ class Document
      */
     public function __toString()
     {
-        return $this->xml->saveXML();
+        return $this->domDocument->saveXML();
 
     }
 
@@ -64,31 +68,15 @@ class Document
      */
     public function toDomDocument()
     {
-        return $this->xml;
-    }
-
-    /**
-     * Get element wrapper helper
-     *
-     * @return \Sokil\Vast\Util\ElementWrapper
-     */
-    protected function getElementWrapper()
-    {
-        if (null === $this->elementWrapper) {
-            $this->elementWrapper = new \Sokil\Vast\Util\ElementWrapper(
-                $this->xml->documentElement
-            );
-        }
-
-        return $this->elementWrapper;
+        return $this->domDocument;
     }
     
     /**
-     * Create "Ad" section ov "VAST" node
+     * Create "Ad" section on "VAST" node
      *
      * @param string $type
      *
-     * @throws \Exception
+     * @throws \InvalidArgumentException
      *
      * @return AbstractAdNode
      */
@@ -97,22 +85,22 @@ class Document
         // Check Ad type
         $adTypeClassName = '\\Sokil\\Vast\\Ad\\' . $type;
         if (!class_exists($adTypeClassName)) {
-            throw new \InvalidArgumentException('Ad type ' . $type . ' not supported');
+            throw new \InvalidArgumentException(sprintf('Ad type %s not supported', $type));
         }
         
         // create dom node
-        $adDomElement = $this->xml->createElement('Ad');
-        $this->xml->documentElement->appendChild($adDomElement);
+        $adDomElement = $this->domDocument->createElement('Ad');
+        $this->domDocument->documentElement->appendChild($adDomElement);
 
-        // Create type element
-        $adTypeDomElement = $this->xml->createElement($type);
+        // create type element
+        $adTypeDomElement = $this->domDocument->createElement($type);
         $adDomElement->appendChild($adTypeDomElement);
         
         // create ad section
         $adSection = new $adTypeClassName($adDomElement);
         
         // cache
-        $this->vastAdSequence[] = $adSection;
+        $this->vastAdNodeList[] = $adSection;
         
         return $adSection;
     }
@@ -140,69 +128,71 @@ class Document
     /**
      * Get document ad sections
      *
-     * @return array
+     * @return AbstractAdNode[]
+     *
      * @throws \Exception
      */
     public function getAdSections()
     {
-        if (!$this->vastAdSequence) {
+        if (!empty($this->vastAdNodeList)) {
+            return $this->vastAdNodeList;
+        }
             
-            foreach ($this->xml->documentElement->childNodes as $adDomElement) {
-                
-                // get Ad tag
-                if (!($adDomElement instanceof \DOMElement)) {
+        foreach ($this->domDocument->documentElement->childNodes as $adDomElement) {
+
+            // get Ad tag
+            if (!$adDomElement instanceof \DOMElement) {
+                continue;
+            }
+
+            if ('ad' !== strtolower($adDomElement->tagName)) {
+                continue;
+            }
+
+            // get Ad type tag
+            foreach ($adDomElement->childNodes as $node) {
+                if (!($node instanceof \DOMElement)) {
                     continue;
                 }
-                
-                if ('ad' !== strtolower($adDomElement->tagName)) {
-                    continue;
+
+                $type = $node->tagName;
+
+                // create ad section
+                $adTypeClassName = '\\Sokil\\Vast\\AbstractAdNode\\' . $type;
+                if (!class_exists($adTypeClassName)) {
+                    throw new \Exception('Ad type ' . $type . ' not supported');
                 }
 
-                // get Ad type tag
-                foreach ($adDomElement->childNodes as $node) {
-                    if (!($node instanceof \DomElement)) {
-                        continue;
-                    }
-                    
-                    $type = $node->tagName;
-
-                    // create ad section
-                    $adTypeClassName = '\\Sokil\\Vast\\AbstractAdNode\\' . $type;
-                    if (!class_exists($adTypeClassName)) {
-                        throw new \Exception('Ad type ' . $type . ' not supported');
-                    }
-
-                    $this->vastAdSequence[] = new $adTypeClassName($adDomElement);
-                    break;
-                }
+                $this->vastAdNodeList[] = new $adTypeClassName($adDomElement);
+                break;
             }
         }
         
-        return $this->vastAdSequence;
+        return $this->vastAdNodeList;
     }
 
     /**
-     * Add Error tracking url
+     * Add Error tracking url.
+     * Allowed multiple error elements.
      *
      * @param string $url
      *
      * @return $this
      */
-    public function setError($url)
+    public function addErrors($url)
     {
-        $this->getElementWrapper()->setUniqTagValue('Error', $url);
-
+        $this->addCdataToArrayNode('Error', $url);
         return $this;
     }
 
     /**
-     * Get previously set Error tracking url value
+     * Get previously set error tracking url value
      *
-     * @return null|string
+     * @return array
      */
-    public function getError()
+    public function getErrors()
     {
-        return $this->getElementWrapper()->getUniqTagValue('Error');
+        return $this->getValuesOfArrayNode('Error');
     }
 
     /**

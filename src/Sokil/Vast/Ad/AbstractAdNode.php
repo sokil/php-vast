@@ -3,10 +3,15 @@
 namespace Sokil\Vast\Ad;
 
 use Sokil\Vast\Creative\AbstractLinearCreative;
-use Sokil\Vast\Document\Node;
+use Sokil\Vast\Document\AbstractNode;
 
-abstract class AbstractAdNode extends Node
+abstract class AbstractAdNode extends AbstractNode
 {
+    /**
+     * @var \DOMElement
+     */
+    private $domElement;
+
     /**
      * Creatives
      *
@@ -20,25 +25,23 @@ abstract class AbstractAdNode extends Node
     private $creativesDomElement;
 
     /**
-     * @var \Sokil\Vast\Util\ElementWrapper
+     * @param \DOMElement $domElement instance of \Vast\Ad element
      */
-    private $elementWrapper;
+    public function __construct(\DOMElement $domElement)
+    {
+        $this->domElement = $domElement;
+    }
 
     /**
-     * Get element wrapper helper
+     * Instance of "\Vast\Ad\(InLine|Wrapper)" emenet
      *
-     * @return \Sokil\Vast\Util\ElementWrapper
+     * @return \DOMElement
      */
-    protected function getElementWrapper()
+    protected function getDomElement()
     {
-        if (null === $this->elementWrapper) {
-            $this->elementWrapper = new \Sokil\Vast\Util\ElementWrapper(
-                $this->domElement->firstChild
-            );
-        }
-
-        return $this->elementWrapper;
+        return $this->domElement->firstChild;
     }
+
 
     /**
      * Get id for Ad element
@@ -65,7 +68,7 @@ abstract class AbstractAdNode extends Node
     }
 
     /**
-     * Add `AdSystem` element to `Ad' element
+     * /Vast/Ad/Inline/AdSystem element
      *
      * @param string $adSystem
      *
@@ -73,14 +76,7 @@ abstract class AbstractAdNode extends Node
      */
     public function setAdSystem($adSystem)
     {
-        $adSystemDomElement = $this->domElement->getElementsByTagName('AdSystem')->item(0);
-        if ($adSystemDomElement) {
-            $adSystemDomElement->nodeValue = $adSystem;
-        } else {
-            $adSystemDomElement = $this->domElement->ownerDocument->createElement('AdSystem', $adSystem);
-            $this->domElement->firstChild->appendChild($adSystemDomElement);
-        }
-
+        $this->setScalarNodeCdata('AdSystem', $adSystem);
         return $this;
     }
 
@@ -124,7 +120,7 @@ abstract class AbstractAdNode extends Node
         $creativeDomElement = $this->creativesDomElement->ownerDocument->createElement('Creative');
         $this->creativesDomElement->appendChild($creativeDomElement);
 
-        // Cteative type dom element
+        // Creative type dom element
         $creativeTypeDomElement = $this->domElement->ownerDocument->createElement($type);
         $creativeDomElement->appendChild($creativeTypeDomElement);
 
@@ -133,5 +129,53 @@ abstract class AbstractAdNode extends Node
         $this->creatives[] = $creative;
 
         return $creative;
+    }
+
+        /**
+     * Add Error tracking url.
+     * Allowed multiple error elements.
+     *
+     * @param string $url
+     *
+     * @return $this
+     */
+    public function addError($url)
+    {
+        $this->addCdataToArrayNode('Error', $url);
+        return $this;
+    }
+
+    /**
+     * Get previously set error tracking url value
+     *
+     * @return array
+     */
+    public function getErrors()
+    {
+        return $this->getValuesOfArrayNode('Error');
+    }
+
+    /**
+     * Add Impression tracking url
+     * Allowed multiple impressions
+     *
+     * @param string $url
+     *
+     * @return $this
+     */
+    public function addImpression($url)
+    {
+        $this->addCdataToArrayNode('Impression', $url);
+        return $this;
+    }
+
+    /**
+     * Get previously set impression tracking url value
+     *
+     * @return array
+     */
+    public function getImpressions()
+    {
+        return $this->getValuesOfArrayNode('Impression');
     }
 }

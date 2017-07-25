@@ -8,16 +8,6 @@ class InLine extends AbstractAdNode
      * @var \DomElement
      */
     private $extensionsDomElement;
-
-    /**
-     * UniqTag trait interface method
-     *
-     * @return \DOMElement
-     */
-    protected function getDomElement()
-    {
-        return $this->domElement->firstChild;
-    }
     
     /**
      * Set Ad title
@@ -28,8 +18,7 @@ class InLine extends AbstractAdNode
      */
     public function setAdTitle($value)
     {
-        $this->getElementWrapper()->setUniqTagValue('AdTitle', $value);
-
+        $this->setScalarNodeCdata('AdTitle', $value);
         return $this;
     }
 
@@ -64,10 +53,10 @@ class InLine extends AbstractAdNode
         // get container
         if (!$this->extensionsDomElement) {
             // get creatives tag
-            $this->extensionsDomElement = $this->domElement->getElementsByTagName('Extensions')->item(0);
+            $this->extensionsDomElement = $this->getDomElement()->getElementsByTagName('Extensions')->item(0);
             if (!$this->extensionsDomElement) {
-                $this->extensionsDomElement = $this->domElement->ownerDocument->createElement('Extensions');
-                $this->domElement->firstChild->appendChild($this->extensionsDomElement);
+                $this->extensionsDomElement = $this->getDomElement()->ownerDocument->createElement('Extensions');
+                $this->getDomElement()->firstChild->appendChild($this->extensionsDomElement);
             }
         }
         
@@ -76,60 +65,12 @@ class InLine extends AbstractAdNode
         $this->extensionsDomElement->appendChild($extensionDomElement);
         
         // create cdata
-        $cdata = $this->domElement->ownerDocument->createCDATASection($value);
+        $cdata = $this->getDomElement()->ownerDocument->createCDATASection($value);
         
         // append
         $extensionDomElement->setAttribute('type', $type);
         $extensionDomElement->appendChild($cdata);
         
         return $this;
-    }
-
-    /**
-     * Add Error tracking url
-     *
-     * @param string $url
-     *
-     * @return $this
-     */
-    public function setError($url)
-    {
-        $this->getElementWrapper()->setUniqTagValue('Error', $url);
-
-        return $this;
-    }
-
-    /**
-     * Get previously set Error tracking url value
-     *
-     * @return null|string
-     */
-    public function getError()
-    {
-        return $this->getElementWrapper()->getUniqTagValue('Error');
-    }
-    /**
-     * Add Impression tracking url
-     * NB! Non standard! By standard multiple impressions should be allowed.
-     *
-     * @param string $url
-     *
-     * @return $this
-     */
-    public function setImpression($url)
-    {
-        $this->getElementWrapper()->setUniqTagValue('Impression', $url);
-
-        return $this;
-    }
-
-    /**
-     * Get previously set Impression tracking url value
-     *
-     * @return null|string
-     */
-    public function getImpression()
-    {
-        return $this->getElementWrapper()->getUniqTagValue('Impression');
     }
 }

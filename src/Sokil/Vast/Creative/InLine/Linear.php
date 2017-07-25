@@ -19,10 +19,10 @@ class Linear extends AbstractLinearCreative
     public function setDuration($duration)
     {
         // get dom element
-        $durationDomElement = $this->domElement->getElementsByTagName('Duration')->item(0);
+        $durationDomElement = $this->getDomElement()->getElementsByTagName('Duration')->item(0);
         if (!$durationDomElement) {
-            $durationDomElement = $this->domElement->ownerDocument->createElement('Duration');
-            $this->domElement->firstChild->appendChild($durationDomElement);
+            $durationDomElement = $this->getDomElement()->ownerDocument->createElement('Duration');
+            $this->getDomElement()->firstChild->appendChild($durationDomElement);
         }
 
         // set value
@@ -42,10 +42,10 @@ class Linear extends AbstractLinearCreative
     public function createMediaFile()
     {
         if (!$this->mediaFilesDomElement) {
-            $this->mediaFilesDomElement = $this->domElement->getElementsByTagName('MediaFiles')->item(0);
+            $this->mediaFilesDomElement = $this->getDomElement()->getElementsByTagName('MediaFiles')->item(0);
             if (!$this->mediaFilesDomElement) {
-                $this->mediaFilesDomElement = $this->domElement->ownerDocument->createElement('MediaFiles');
-                $this->domElement->firstChild->appendChild($this->mediaFilesDomElement);
+                $this->mediaFilesDomElement = $this->getDomElement()->ownerDocument->createElement('MediaFiles');
+                $this->getDomElement()->firstChild->appendChild($this->mediaFilesDomElement);
             }
         }
 
@@ -91,35 +91,7 @@ class Linear extends AbstractLinearCreative
             $time = $this->secondsToString($time);
         }
 
-        $this->domElement->firstChild->setAttribute('skipoffset', $time);
-
-        return $this;
-    }
-
-    /**
-     * Set video click through url
-     *
-     * @param string $url
-     * @return $this
-     */
-    public function setVideoClicksClickThrough($url)
-    {
-        // create cdata
-        $cdata = $this->domElement->ownerDocument->createCDATASection($url);
-
-        // create ClickThrough
-        $clickThroughDomElement = $this->getVideoClicksDomElement()->getElementsByTagName('ClickThrough')->item(0);
-        if (!$clickThroughDomElement) {
-            $clickThroughDomElement = $this->domElement->ownerDocument->createElement('ClickThrough');
-            $this->getVideoClicksDomElement()->appendChild($clickThroughDomElement);
-        }
-
-        // update CData
-        if ($clickThroughDomElement->hasChildNodes()) {
-            $clickThroughDomElement->replaceChild($cdata, $clickThroughDomElement->firstChild);
-        } else { // insert CData
-            $clickThroughDomElement->appendChild($cdata);
-        }
+        $this->getDomElement()->firstChild->setAttribute('skipoffset', $time);
 
         return $this;
     }
