@@ -2,7 +2,8 @@ PHP-VAST
 ========
 
 [![Build Status](https://travis-ci.org/sokil/php-vast.png?branch=master&1)](https://travis-ci.org/sokil/php-vast)
-[![Total Downloads](http://img.shields.io/packagist/dt/sokil/php-vast.svg)](https://packagist.org/packages/sokil/php-vast)
+[![Total Downloads](http://img.shields.io/packagist/dt/sokil/php-vast.svg?1)](https://packagist.org/packages/sokil/php-vast)
+[![Coverage Status](https://coveralls.io/repos/github/sokil/php-vast/badge.svg?branch=master)](https://coveralls.io/github/sokil/php-vast?branch=master)
 
 VAST Ad generator and parser library on PHP.
 
