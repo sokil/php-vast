@@ -2,6 +2,8 @@
 
 namespace Sokil\Vast;
 
+use Sokil\Vast\Ad\InLine;
+
 class DocumentTest extends AbstractTestCase
 {
     /**
@@ -39,6 +41,49 @@ class DocumentTest extends AbstractTestCase
 
         $expectedXml = '<?xml version="1.0" encoding="UTF-8"?><VAST version="2.0"><Ad id="ad1"><InLine><AdSystem><![CDATA[Ad Server Name]]></AdSystem><AdTitle><![CDATA[Ad Title]]></AdTitle><Impression><![CDATA[http://ad.server.com/impression]]></Impression><Creatives><Creative><Linear><Duration>00:02:08</Duration><VideoClicks><ClickThrough><![CDATA[http://entertainmentserver.com/landing]]></ClickThrough><ClickTracking><![CDATA[http://ad.server.com/videoclicks/clicktracking]]></ClickTracking><CustomClick><![CDATA[http://ad.server.com/videoclicks/customclick]]></CustomClick></VideoClicks><TrackingEvents><Tracking event="start"><![CDATA[http://ad.server.com/trackingevent/start]]></Tracking><Tracking event="pause"><![CDATA[http://ad.server.com/trackingevent/stop]]></Tracking></TrackingEvents><MediaFiles><MediaFile delivery="progressive" type="video/mp4" height="100" width="100"><![CDATA[http://server.com/media.mp4]]></MediaFile></MediaFiles></Linear></Creative></Creatives></InLine></Ad></VAST>';
         $this->assertVastXmlEquals($expectedXml, $document);
+    }
+
+    /**
+     * Test for inline ad
+     */
+    public function testGetAdSection()
+    {
+        $factory = new Factory();
+        $document = $factory->create('2.0');
+        $this->assertInstanceOf('\Sokil\Vast\Document', $document);
+
+        // insert Ad section
+        $ad1 = $document
+            ->createInLineAdSection()
+            ->setId('ad1')
+            ->setAdSystem('Ad Server Name')
+            ->setAdTitle('Ad Title')
+            ->addImpression('http://ad.server.com/impression');
+
+        // create creative for ad section
+        $ad1
+            ->createLinearCreative()
+            ->setDuration(128)
+            ->setVideoClicksClickThrough('http://entertainmentserver.com/landing')
+            ->addVideoClicksClickTracking('http://ad.server.com/videoclicks/clicktracking')
+            ->addVideoClicksCustomClick('http://ad.server.com/videoclicks/customclick')
+            ->addTrackingEvent('start', 'http://ad.server.com/trackingevent/start')
+            ->addTrackingEvent('pause', 'http://ad.server.com/trackingevent/stop')
+            ->createMediaFile()
+                ->setProgressiveDelivery()
+                ->setType('video/mp4')
+                ->setHeight(100)
+                ->setWidth(100)
+                ->setUrl('http://server.com/media.mp4');
+
+        $adSections = $document->getAdSections();
+        $this->assertSame(1, count($adSections));
+
+        /** @var InLine $adSection */
+        $adSection = $adSections[0];
+        $this->assertInstanceOf('\\Sokil\\Vast\\Ad\\InLine', $adSection);
+
+        $this->assertSame('ad1', $adSection->getId());
     }
 
     /**
