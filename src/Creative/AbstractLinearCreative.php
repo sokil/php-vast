@@ -77,7 +77,8 @@ abstract class AbstractLinearCreative extends AbstractNode
      */
     const EVENT_TYPE_CLOSELINEAR = 'closeLinear';
     
-    // the user activated a skip control to skip the creative, which is a different control than the one used to close the creative.
+    // the user activated a skip control to skip the creative, which is a
+    // different control than the one used to close the creative.
     const EVENT_TYPE_SKIP = 'skip';
     
     /**
@@ -251,12 +252,18 @@ abstract class AbstractLinearCreative extends AbstractNode
             return $this->trackingEventsDomElement;
         }
         
-        $this->trackingEventsDomElement = $this->linearCreativeDomElement->getElementsByTagName('TrackingEvents')->item(0);
+        $this->trackingEventsDomElement = $this->linearCreativeDomElement
+            ->getElementsByTagName('TrackingEvents')
+            ->item(0);
+
         if ($this->trackingEventsDomElement) {
             return $this->trackingEventsDomElement;
         }
         
-        $this->trackingEventsDomElement = $this->linearCreativeDomElement->ownerDocument->createElement('TrackingEvents');
+        $this->trackingEventsDomElement = $this->linearCreativeDomElement
+            ->ownerDocument
+            ->createElement('TrackingEvents');
+
         $this->linearCreativeDomElement->firstChild->appendChild($this->trackingEventsDomElement);
         
         return $this->trackingEventsDomElement;
