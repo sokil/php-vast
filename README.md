@@ -16,10 +16,12 @@ VAST Ad generator and parser library on PHP.
 
 ```php
 // create document
-$factory = new \Sokil\Vast\Document\Factory();
+$factory = new \Sokil\Vast\Factory();
 $document = $factory->create('2.0');
 // or, if you have at least PHP5.4
-$document = (new \Sokil\Vast\Document\Factory())->create('2.0');
+$document = (new \Sokil\Vast\Factory())->create('2.0');
+// creating through Document::create and oyher factory methods are now deprecated:
+$document = \Sokil\Vast\Document::create('2.0')
 
 // insert Ad section
 $ad1 = $document->createInLineAdSection()
