@@ -20,7 +20,7 @@ $factory = new \Sokil\Vast\Factory();
 $document = $factory->create('2.0');
 // or, if you have at least PHP5.4
 $document = (new \Sokil\Vast\Factory())->create('2.0');
-// creating through Document::create and oyher factory methods are now deprecated:
+// creating through Document::create and other factory methods are now deprecated:
 $document = \Sokil\Vast\Document::create('2.0')
 
 // insert Ad section
