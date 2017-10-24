@@ -13,28 +13,6 @@ abstract class AbstractNode
      * Set cdata for given child node
      *
      * @param string $name name of node
-     * @param string $value value
-     *
-     * @return $this
-     */
-    protected function setScalarNodeValue($name, $value)
-    {
-        // get tag
-        $childDomElement = $this->getDomElement()->getElementsByTagName($name)->item(0);
-        if ($childDomElement === null) {
-            $childDomElement = $this->getDomElement()->ownerDocument->createElement($name, $value);
-            $this->getDomElement()->appendChild($childDomElement);
-        } else {
-            $childDomElement->nodeValue = $value;
-        }
-
-        return $this;
-    }
-
-    /**
-     * Set cdata for given child node
-     *
-     * @param string $name name of node
      * @param string $value value of cdata
      *
      * @return $this
@@ -59,23 +37,6 @@ abstract class AbstractNode
         }
 
         return $this;
-    }
-
-    /**
-     * Get given tag value
-     *
-     * @param string $name
-     *
-     * @return string
-     */
-    protected function getScalarNodeValue($name)
-    {
-        $domElement = $this->getDomElement()->getElementsByTagName($name)->item(0);
-        if ($domElement === null) {
-            throw new \InvalidArgumentException(sprintf('Node with tag name %s not found', $name));
-        }
-
-        return $domElement->nodeValue;
     }
 
     /**
