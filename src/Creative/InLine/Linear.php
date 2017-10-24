@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokil\Vast\Creative\Inline;
+namespace Sokil\Vast\Creative\InLine;
 
 use Sokil\Vast\Creative\AbstractLinearCreative;
 use Sokil\Vast\Creative\InLine\Linear\MediaFile;
