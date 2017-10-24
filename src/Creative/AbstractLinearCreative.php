@@ -104,7 +104,7 @@ abstract class AbstractLinearCreative extends AbstractNode
     private $trackingEventsDomElement;
 
     /**
-     * @param \DOMElement $linearCreativeDomElement instance of \Vast\Ad\(InLine|Wrapper)\Creatives\Creative\Linear
+     * @param \DOMElement $linearCreativeDomElement
      */
     public function __construct(\DOMElement $linearCreativeDomElement)
     {
@@ -112,8 +112,6 @@ abstract class AbstractLinearCreative extends AbstractNode
     }
 
     /**
-     * Get instance of \Vast\Ad\(InLine|Wrapper)\Creatives\Creative\Linear element
-     *
      * @return \DOMElement
      */
     protected function getDomElement()

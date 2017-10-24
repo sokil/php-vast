@@ -88,6 +88,10 @@ class Linear extends AbstractLinearCreative
         return implode(':', $time);
     }
 
+    /**
+     * @param int|string $time seconds or time in format "H:m:i"
+     * @return $this
+     */
     public function skipAfter($time)
     {
         if (is_numeric($time)) {
