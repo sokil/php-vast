@@ -7,12 +7,15 @@ use Sokil\Vast\Creative\InLine\Linear\MediaFile;
 
 class Linear extends AbstractLinearCreative
 {
+    /**
+     * @var \DOMElement
+     */
     private $mediaFilesDomElement;
 
     /**
      * Set duration value
      *
-     * @param mixed $duration
+     * @param int|string $duration seconds or time in format "H:m:i"
      *
      * @return $this
      */
@@ -41,7 +44,7 @@ class Linear extends AbstractLinearCreative
      */
     public function createMediaFile()
     {
-        if (!$this->mediaFilesDomElement) {
+        if (empty($this->mediaFilesDomElement)) {
             $this->mediaFilesDomElement = $this->getDomElement()->getElementsByTagName('MediaFiles')->item(0);
             if (!$this->mediaFilesDomElement) {
                 $this->mediaFilesDomElement = $this->getDomElement()->ownerDocument->createElement('MediaFiles');
