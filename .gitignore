@@ -1,4 +1,2 @@
-/nbproject
-/vendor
+vendor
 composer.lock
-build
