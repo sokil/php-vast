@@ -170,6 +170,16 @@ abstract class AbstractAdNode extends AbstractNode
     }
 
     /**
+     * @deprecated Ad may have multiple impressions, so use self::addImpression()
+     *
+     * @param string $url
+     */
+    public function setImpression($url)
+    {
+        $this->addImpression($url);
+    }
+
+    /**
      * Get previously set impression tracking url value
      *
      * @return array

@@ -29,7 +29,7 @@ $ad1 = $document
     ->setId('ad1')
     ->setAdSystem('Ad Server Name')
     ->setAdTitle('Ad Title')
-    ->setImpression('http://ad.server.com/impression');
+    ->addImpression('http://ad.server.com/impression');
 
 // create creative for ad section
 $ad1->createLinearCreative()
