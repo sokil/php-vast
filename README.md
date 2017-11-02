@@ -24,7 +24,8 @@ $document = (new \Sokil\Vast\Factory())->create('2.0');
 $document = \Sokil\Vast\Document::create('2.0');
 
 // insert Ad section
-$ad1 = $document->createInLineAdSection()
+$ad1 = $document
+    ->createInLineAdSection()
     ->setId('ad1')
     ->setAdSystem('Ad Server Name')
     ->setAdTitle('Ad Title')
