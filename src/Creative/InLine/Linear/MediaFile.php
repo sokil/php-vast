@@ -53,7 +53,7 @@ class MediaFile
         $this->domElement->setAttribute('height', $height);
         return $this;
     }
-    
+
     public function setUrl($url)
     {
         $cdata = $this->domElement->ownerDocument->createCDATASection($url);
@@ -65,5 +65,12 @@ class MediaFile
         else {
             $this->domElement->appendChild($cdata);
         }
+        return $this;
+    }
+
+    public function setBitrate($bitrate)
+    {
+        $this->domElement->setAttribute('bitrate', (int) $bitrate);
+        return $this;
     }
 }
