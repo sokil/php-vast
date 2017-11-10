@@ -65,6 +65,7 @@ class MediaFile
         else {
             $this->domElement->appendChild($cdata);
         }
+        return $this;
     }
 
     public function setBitrate($bitrate)
