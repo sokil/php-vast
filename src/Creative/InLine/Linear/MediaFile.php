@@ -68,6 +68,9 @@ class MediaFile
         return $this;
     }
 
+    /**
+     * @param int $bitrate
+     */
     public function setBitrate($bitrate)
     {
         $this->domElement->setAttribute('bitrate', (int) $bitrate);
