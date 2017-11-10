@@ -43,7 +43,7 @@ $ad1->createLinearCreative()
         ->setType('video/mp4')
         ->setHeight(100)
         ->setWidth(100)
-        ->setBidrate(2500)
+        ->setBitrate(2500)
         ->setUrl('http://server.com/media.mp4');
 
 // get dom document
