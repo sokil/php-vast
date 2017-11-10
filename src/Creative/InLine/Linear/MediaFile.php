@@ -65,5 +65,6 @@ class MediaFile
         else {
             $this->domElement->appendChild($cdata);
         }
+        return $this;
     }
 }
