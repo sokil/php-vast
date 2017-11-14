@@ -12,6 +12,14 @@ VAST Ad generator and parser library on PHP.
 * VAST 3.0 Spec: http://www.iab.com/wp-content/uploads/2015/06/VASTv3_0.pdf
 * VAST 4.0 Spec: http://www.iab.com/wp-content/uploads/2016/01/VAST_4-0_2016-01-21.pdf
 
+## Install
+
+Install library through composer:
+
+```
+composer require sokil/php-vast
+```
+
 ## Quick start
 
 ```php
