@@ -86,7 +86,7 @@ This will generate:
                             <Tracking event="pause"><![CDATA[http://ad.server.com/trackingevent/stop]]></Tracking>
                         </TrackingEvents>
                         <MediaFiles>
-                            <MediaFile delivery="progressive" type="video/mp4" height="100" width="100">
+                            <MediaFile delivery="progressive" type="video/mp4" height="100" width="100" bitrate="2500">
                                 <![CDATA[http://server.com/media.mp4]]>
                             </MediaFile>
                         </MediaFiles>
