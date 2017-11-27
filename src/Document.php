@@ -156,7 +156,7 @@ class Document extends AbstractNode
                 $type = $node->tagName;
 
                 // create ad section
-                $adTypeClassName = '\\Sokil\\Vast\\AbstractAdNode\\' . $type;
+                $adTypeClassName = '\\Sokil\\Vast\\Ad\\' . $type;
                 if (!class_exists($adTypeClassName)) {
                     throw new \Exception('Ad type ' . $type . ' not supported');
                 }
