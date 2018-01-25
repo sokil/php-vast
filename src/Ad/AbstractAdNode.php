@@ -67,6 +67,29 @@ abstract class AbstractAdNode extends AbstractNode
         return $this;
     }
 
+    /** 
+     * Format a VAST 3.0 response that groups multiple ads into a sequential pod of ads
+     *
+     * @param int $sequence a number greater than zero (0) that identifies the sequence in which an ad should play; 
+     *                      all <Ad> elements with sequence values are part of a pod and are intended to be played 
+     *                      in sequence
+     *
+     * @return InLine|Wrapper|AbstractAdNode
+     */
+    public function setSequence($sequence)
+    {
+        $this->domElement->setAttribute('sequence', $sequence);
+        return $this;
+    }
+    
+    /**
+     * @return int
+     */
+    public function getSequence()
+    {
+        return $this->domElement->getAttribute('sequence');
+    }
+    
     /**
      * /Vast/Ad/Inline/AdSystem element
      *
