@@ -1,3 +1,6 @@
+## 0.4.4 (2018-01-25)
+  * Allow Ad sequence
+
 ## 0.4 (2017-07-26)
   * Move to PSR-4
   * Added `Factory` to create document. Factory methods in `Document` are deprecated
