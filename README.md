@@ -40,21 +40,33 @@ $ad1 = $document
     ->addImpression('http://ad.server.com/impression');
 
 // create creative for ad section
-$ad1->createLinearCreative()
+$linearCreative = $ad1
+    ->createLinearCreative()
     ->setDuration(128)
     ->setVideoClicksClickThrough('http://entertainmentserver.com/landing')
     ->addVideoClicksClickTracking('http://ad.server.com/videoclicks/clicktracking')
     ->addVideoClicksCustomClick('http://ad.server.com/videoclicks/customclick')
     ->addTrackingEvent('start', 'http://ad.server.com/trackingevent/start')
-    ->addTrackingEvent('pause', 'http://ad.server.com/trackingevent/stop')
+    ->addTrackingEvent('pause', 'http://ad.server.com/trackingevent/stop');
+    
+$linearCreative
     ->createMediaFile()
-        ->setProgressiveDelivery()
-        ->setType('video/mp4')
-        ->setHeight(100)
-        ->setWidth(100)
-        ->setBitrate(2500)
-        ->setUrl('http://server.com/media.mp4');
+    ->setProgressiveDelivery()
+    ->setType('video/mp4')
+    ->setHeight(100)
+    ->setWidth(100)
+    ->setBitrate(2500)
+    ->setUrl('http://server.com/media1.mp4');
 
+$linearCreative
+    ->createMediaFile()
+    ->setProgressiveDelivery()
+    ->setType('video/mp4')
+    ->setHeight(200)
+    ->setWidth(200)
+    ->setBitrate(2500)
+    ->setUrl('http://server.com/media2.mp4');
+    
 // get dom document
 $domDocument = $document->toDomDocument();
 
@@ -87,7 +99,10 @@ This will generate:
                         </TrackingEvents>
                         <MediaFiles>
                             <MediaFile delivery="progressive" type="video/mp4" height="100" width="100" bitrate="2500">
-                                <![CDATA[http://server.com/media.mp4]]>
+                                <![CDATA[http://server.com/media1.mp4]]>
+                            </MediaFile>
+                            <MediaFile delivery="progressive" type="video/mp4" height="200" width="200" bitrate="2500">
+                                <![CDATA[http://server.com/media2.mp4]]>
                             </MediaFile>
                         </MediaFiles>
                     </Linear>
