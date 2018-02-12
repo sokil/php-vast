@@ -49,6 +49,7 @@ $linearCreative = $ad1
     ->addTrackingEvent('start', 'http://ad.server.com/trackingevent/start')
     ->addTrackingEvent('pause', 'http://ad.server.com/trackingevent/stop');
     
+// add 100x100 media file
 $linearCreative
     ->createMediaFile()
     ->setProgressiveDelivery()
@@ -58,6 +59,7 @@ $linearCreative
     ->setBitrate(2500)
     ->setUrl('http://server.com/media1.mp4');
 
+// add 200x200 media file
 $linearCreative
     ->createMediaFile()
     ->setProgressiveDelivery()
