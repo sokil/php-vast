@@ -13,7 +13,7 @@ class DocumentTest extends AbstractTestCase
     {
         $factory = new Factory();
         $document = $factory->create('2.0');
-        $this->assertInstanceOf('\Sokil\Vast\Document', $document);
+        $this->assertInstanceOf('\\Sokil\\Vast\\Document', $document);
 
         // insert Ad section
         $ad1 = $document
@@ -90,7 +90,7 @@ class DocumentTest extends AbstractTestCase
     /**
      * Test for creating media file with skipping after specific time
      */
-    public function testCreateAdSectionWithSkipAfter()
+    public function testCreateLinearCreativeWithSkipAfter()
     {
         $factory = new Factory();
         $document = $factory->create('2.0');
@@ -102,36 +102,15 @@ class DocumentTest extends AbstractTestCase
             ->setAdSystem('Ad Server Name')
             ->setAdTitle('Ad Title')
             ->addImpression('http://ad.server.com/impression');
+        $ad1->createLinearCreative()->skipAfter(1519203721);
 
-        // create creative for ad section
-        $ad1
-            ->createLinearCreative()
-            ->setDuration(128)
-            ->setVideoClicksClickThrough('http://entertainmentserver.com/landing')
-            ->addVideoClicksClickTracking('http://ad.server.com/videoclicks/clicktracking')
-            ->addVideoClicksCustomClick('http://ad.server.com/videoclicks/customclick')
-            ->addTrackingEvent('start', 'http://ad.server.com/trackingevent/start')
-            ->addTrackingEvent('pause', 'http://ad.server.com/trackingevent/stop')
-            ->skipAfter(1519203721)
-            ->createMediaFile()
-                ->setProgressiveDelivery()
-                ->setType('video/mp4')
-                ->setHeight(100)
-                ->setWidth(100)
-                ->setUrl('http://server.com/media.mp4');
-
-        $adSections = $document->getAdSections();
-        $this->assertCount(1, $adSections);
-
-        /** @var InLine $adSection */
-        $adSection = $adSections[0];
-        $this->assertInstanceOf('\\Sokil\\Vast\\Ad\\InLine', $adSection);
+        $this->assertVastXmlEquals('<?xml version="1.0" encoding="UTF-8"?><VAST version="2.0"><Ad id="ad1"><InLine><AdSystem><![CDATA[Ad Server Name]]></AdSystem><AdTitle><![CDATA[Ad Title]]></AdTitle><Impression><![CDATA[http://ad.server.com/impression]]></Impression><Creatives><Creative><Linear skipoffset="422001:02:01"/></Creative></Creatives></InLine></Ad></VAST>', $document);
     }
 
     /**
      * Test for creating media file with streaming delivery
      */
-    public function testCreateAdSectionWithStreamingDelivery()
+    public function testCreateLinearCreativeWithStreamingDelivery()
     {
         $factory = new Factory();
         $document = $factory->create('2.0');
@@ -143,30 +122,9 @@ class DocumentTest extends AbstractTestCase
             ->setAdSystem('Ad Server Name')
             ->setAdTitle('Ad Title')
             ->addImpression('http://ad.server.com/impression');
-
-        // create creative for ad section
-        $ad1
-            ->createLinearCreative()
-            ->setDuration(128)
-            ->setVideoClicksClickThrough('http://entertainmentserver.com/landing')
-            ->addVideoClicksClickTracking('http://ad.server.com/videoclicks/clicktracking')
-            ->addVideoClicksCustomClick('http://ad.server.com/videoclicks/customclick')
-            ->addTrackingEvent('start', 'http://ad.server.com/trackingevent/start')
-            ->addTrackingEvent('pause', 'http://ad.server.com/trackingevent/stop')
-            ->skipAfter(1519203721)
-            ->createMediaFile()
-                ->setStreamingDelivery()
-                ->setType('video/mp4')
-                ->setHeight(100)
-                ->setWidth(100)
-                ->setUrl('http://server.com/media.mp4');
-
-        $adSections = $document->getAdSections();
-        $this->assertCount(1, $adSections);
-
-        /** @var InLine $adSection */
-        $adSection = $adSections[0];
-        $this->assertInstanceOf('\\Sokil\\Vast\\Ad\\InLine', $adSection);
+        $ad1->createLinearCreative()->createMediaFile()->setStreamingDelivery();
+        
+        $this->assertVastXmlEquals('<?xml version="1.0" encoding="UTF-8"?><VAST version="2.0"><Ad id="ad1"><InLine><AdSystem><![CDATA[Ad Server Name]]></AdSystem><AdTitle><![CDATA[Ad Title]]></AdTitle><Impression><![CDATA[http://ad.server.com/impression]]></Impression><Creatives><Creative><Linear><MediaFiles><MediaFile delivery="streaming"/></MediaFiles></Linear></Creative></Creatives></InLine></Ad></VAST>', $document);
     }
 
     /**
@@ -184,30 +142,9 @@ class DocumentTest extends AbstractTestCase
             ->setAdSystem('Ad Server Name')
             ->setAdTitle('Ad Title')
             ->addImpression('http://ad.server.com/impression');
+        $ad1->createLinearCreative()->createMediaFile()->setDelivery('progressive');
 
-        // create creative for ad section
-        $ad1
-            ->createLinearCreative()
-            ->setDuration(128)
-            ->setVideoClicksClickThrough('http://entertainmentserver.com/landing')
-            ->addVideoClicksClickTracking('http://ad.server.com/videoclicks/clicktracking')
-            ->addVideoClicksCustomClick('http://ad.server.com/videoclicks/customclick')
-            ->addTrackingEvent('start', 'http://ad.server.com/trackingevent/start')
-            ->addTrackingEvent('pause', 'http://ad.server.com/trackingevent/stop')
-            ->skipAfter(1519203721)
-            ->createMediaFile()
-                ->setDelivery('progressive')
-                ->setType('video/mp4')
-                ->setHeight(100)
-                ->setWidth(100)
-                ->setUrl('http://server.com/media.mp4');
-
-        $adSections = $document->getAdSections();
-        $this->assertCount(1, $adSections);
-
-        /** @var InLine $adSection */
-        $adSection = $adSections[0];
-        $this->assertInstanceOf('\\Sokil\\Vast\\Ad\\InLine', $adSection);
+        $this->assertVastXmlEquals('<?xml version="1.0" encoding="UTF-8"?><VAST version="2.0"><Ad id="ad1"><InLine><AdSystem><![CDATA[Ad Server Name]]></AdSystem><AdTitle><![CDATA[Ad Title]]></AdTitle><Impression><![CDATA[http://ad.server.com/impression]]></Impression><Creatives><Creative><Linear><MediaFiles><MediaFile delivery="progressive"/></MediaFiles></Linear></Creative></Creatives></InLine></Ad></VAST>', $document);
     }
 
     /**
@@ -261,27 +198,9 @@ class DocumentTest extends AbstractTestCase
             ->setAdSystem('Ad Server Name')
             ->setAdTitle('Ad Title')
             ->addImpression('http://ad.server.com/impression');
+        $ad1->addExtension('extension_type', 'extension_value');
 
-        // create creative for ad section
-        $ad1
-            ->addExtension('extension_type', 'extension_value')
-            ->createLinearCreative()
-            ->setDuration(128)
-            ->setVideoClicksClickThrough('http://entertainmentserver.com/landing')
-            ->addVideoClicksClickTracking('http://ad.server.com/videoclicks/clicktracking')
-            ->addVideoClicksCustomClick('http://ad.server.com/videoclicks/customclick')
-            ->addTrackingEvent('start', 'http://ad.server.com/trackingevent/start')
-            ->addTrackingEvent('pause', 'http://ad.server.com/trackingevent/stop')
-            ->skipAfter(1519203721)
-            ->createMediaFile()
-                ->setType('video/mp4')
-                ->setHeight(100)
-                ->setWidth(100)
-                ->setUrl('http://server.com/media.mp4');
-
-        $adSections = $document->getAdSections();
-
-        $this->assertCount(1, $adSections);
+        $this->assertVastXmlEquals('<?xml version="1.0" encoding="UTF-8"?><VAST version="2.0"><Ad id="ad1"><InLine><AdSystem><![CDATA[Ad Server Name]]><Extensions><Extension type="extension_type"><![CDATA[extension_value]]></Extension></Extensions></AdSystem><AdTitle><![CDATA[Ad Title]]></AdTitle><Impression><![CDATA[http://ad.server.com/impression]]></Impression></InLine></Ad></VAST>', $document);
     }
 
     /**
@@ -301,7 +220,7 @@ class DocumentTest extends AbstractTestCase
             ->setSequence(0)
             ->addImpression('http://ad.server.com/impression');
 
-        $this->assertSame('0', $ad1->getSequence());
+        $this->assertSame(0, $ad1->getSequence());
     }
 
     /**

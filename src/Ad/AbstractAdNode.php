@@ -83,11 +83,11 @@ abstract class AbstractAdNode extends AbstractNode
     }
 
     /**
-     * @return string
+     * @return int
      */
     public function getSequence()
     {
-        return $this->domElement->getAttribute('sequence');
+        return (int)($this->domElement->getAttribute('sequence'));
     }
 
     /**
