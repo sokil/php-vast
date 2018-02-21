@@ -78,13 +78,230 @@ class DocumentTest extends AbstractTestCase
                 ->setUrl('http://server.com/media.mp4');
 
         $adSections = $document->getAdSections();
-        $this->assertSame(1, count($adSections));
+        $this->assertCount(1, $adSections);
 
         /** @var InLine $adSection */
         $adSection = $adSections[0];
         $this->assertInstanceOf('\\Sokil\\Vast\\Ad\\InLine', $adSection);
 
         $this->assertSame('ad1', $adSection->getId());
+    }
+
+    /**
+     * Test for creating media file with skipping after specific time
+     */
+    public function testCreateAdSectionWithSkipAfter()
+    {
+        $factory = new Factory();
+        $document = $factory->create('2.0');
+
+        // insert Ad section
+        $ad1 = $document
+            ->createInLineAdSection()
+            ->setId('ad1')
+            ->setAdSystem('Ad Server Name')
+            ->setAdTitle('Ad Title')
+            ->addImpression('http://ad.server.com/impression');
+
+        // create creative for ad section
+        $ad1
+            ->createLinearCreative()
+            ->setDuration(128)
+            ->setVideoClicksClickThrough('http://entertainmentserver.com/landing')
+            ->addVideoClicksClickTracking('http://ad.server.com/videoclicks/clicktracking')
+            ->addVideoClicksCustomClick('http://ad.server.com/videoclicks/customclick')
+            ->addTrackingEvent('start', 'http://ad.server.com/trackingevent/start')
+            ->addTrackingEvent('pause', 'http://ad.server.com/trackingevent/stop')
+            ->skipAfter(1519203721)
+            ->createMediaFile()
+                ->setProgressiveDelivery()
+                ->setType('video/mp4')
+                ->setHeight(100)
+                ->setWidth(100)
+                ->setUrl('http://server.com/media.mp4');
+
+        $adSections = $document->getAdSections();
+        $this->assertCount(1, $adSections);
+
+        /** @var InLine $adSection */
+        $adSection = $adSections[0];
+        $this->assertInstanceOf('\\Sokil\\Vast\\Ad\\InLine', $adSection);
+    }
+
+    /**
+     * Test for creating media file with streaming delivery
+     */
+    public function testCreateAdSectionWithStreamingDelivery()
+    {
+        $factory = new Factory();
+        $document = $factory->create('2.0');
+
+        // insert Ad section
+        $ad1 = $document
+            ->createInLineAdSection()
+            ->setId('ad1')
+            ->setAdSystem('Ad Server Name')
+            ->setAdTitle('Ad Title')
+            ->addImpression('http://ad.server.com/impression');
+
+        // create creative for ad section
+        $ad1
+            ->createLinearCreative()
+            ->setDuration(128)
+            ->setVideoClicksClickThrough('http://entertainmentserver.com/landing')
+            ->addVideoClicksClickTracking('http://ad.server.com/videoclicks/clicktracking')
+            ->addVideoClicksCustomClick('http://ad.server.com/videoclicks/customclick')
+            ->addTrackingEvent('start', 'http://ad.server.com/trackingevent/start')
+            ->addTrackingEvent('pause', 'http://ad.server.com/trackingevent/stop')
+            ->skipAfter(1519203721)
+            ->createMediaFile()
+                ->setStreamingDelivery()
+                ->setType('video/mp4')
+                ->setHeight(100)
+                ->setWidth(100)
+                ->setUrl('http://server.com/media.mp4');
+
+        $adSections = $document->getAdSections();
+        $this->assertCount(1, $adSections);
+
+        /** @var InLine $adSection */
+        $adSection = $adSections[0];
+        $this->assertInstanceOf('\\Sokil\\Vast\\Ad\\InLine', $adSection);
+    }
+
+    /**
+     * Test for creating media file with specific delivery
+     */
+    public function testCreateAdSectionWithDelivery()
+    {
+        $factory = new Factory();
+        $document = $factory->create('2.0');
+
+        // insert Ad section
+        $ad1 = $document
+            ->createInLineAdSection()
+            ->setId('ad1')
+            ->setAdSystem('Ad Server Name')
+            ->setAdTitle('Ad Title')
+            ->addImpression('http://ad.server.com/impression');
+
+        // create creative for ad section
+        $ad1
+            ->createLinearCreative()
+            ->setDuration(128)
+            ->setVideoClicksClickThrough('http://entertainmentserver.com/landing')
+            ->addVideoClicksClickTracking('http://ad.server.com/videoclicks/clicktracking')
+            ->addVideoClicksCustomClick('http://ad.server.com/videoclicks/customclick')
+            ->addTrackingEvent('start', 'http://ad.server.com/trackingevent/start')
+            ->addTrackingEvent('pause', 'http://ad.server.com/trackingevent/stop')
+            ->skipAfter(1519203721)
+            ->createMediaFile()
+                ->setDelivery('progressive')
+                ->setType('video/mp4')
+                ->setHeight(100)
+                ->setWidth(100)
+                ->setUrl('http://server.com/media.mp4');
+
+        $adSections = $document->getAdSections();
+        $this->assertCount(1, $adSections);
+
+        /** @var InLine $adSection */
+        $adSection = $adSections[0];
+        $this->assertInstanceOf('\\Sokil\\Vast\\Ad\\InLine', $adSection);
+    }
+
+    /**
+     * Test for creating media file with invalid delivery
+     * @expectedException        \Exception
+     * @expectedExceptionMessage Wrong delivery specified
+     */
+    public function testCreateAdSectionWithInvalidDelivery()
+    {
+        $factory = new Factory();
+        $document = $factory->create('2.0');
+
+        // insert Ad section
+        $ad1 = $document
+            ->createInLineAdSection()
+            ->setId('ad1')
+            ->setAdSystem('Ad Server Name')
+            ->setAdTitle('Ad Title')
+            ->addImpression('http://ad.server.com/impression');
+
+        // create creative for ad section
+        $ad1
+            ->createLinearCreative()
+            ->setDuration(128)
+            ->setVideoClicksClickThrough('http://entertainmentserver.com/landing')
+            ->addVideoClicksClickTracking('http://ad.server.com/videoclicks/clicktracking')
+            ->addVideoClicksCustomClick('http://ad.server.com/videoclicks/customclick')
+            ->addTrackingEvent('start', 'http://ad.server.com/trackingevent/start')
+            ->addTrackingEvent('pause', 'http://ad.server.com/trackingevent/stop')
+            ->skipAfter(1519203721)
+            ->createMediaFile()
+                ->setDelivery('invalid_delivery')
+                ->setType('video/mp4')
+                ->setHeight(100)
+                ->setWidth(100)
+                ->setUrl('http://server.com/media.mp4');
+    }
+
+    /**
+     * Test for creating linear creative with adding extension
+     */
+    public function testCreateAdSectionWithAddingExtension()
+    {
+        $factory = new Factory();
+        $document = $factory->create('2.0');
+
+        // insert Ad section
+        $ad1 = $document
+            ->createInLineAdSection()
+            ->setId('ad1')
+            ->setAdSystem('Ad Server Name')
+            ->setAdTitle('Ad Title')
+            ->addImpression('http://ad.server.com/impression');
+
+        // create creative for ad section
+        $ad1
+            ->addExtension('extension_type', 'extension_value')
+            ->createLinearCreative()
+            ->setDuration(128)
+            ->setVideoClicksClickThrough('http://entertainmentserver.com/landing')
+            ->addVideoClicksClickTracking('http://ad.server.com/videoclicks/clicktracking')
+            ->addVideoClicksCustomClick('http://ad.server.com/videoclicks/customclick')
+            ->addTrackingEvent('start', 'http://ad.server.com/trackingevent/start')
+            ->addTrackingEvent('pause', 'http://ad.server.com/trackingevent/stop')
+            ->skipAfter(1519203721)
+            ->createMediaFile()
+                ->setType('video/mp4')
+                ->setHeight(100)
+                ->setWidth(100)
+                ->setUrl('http://server.com/media.mp4');
+
+        $adSections = $document->getAdSections();
+
+        $this->assertCount(1, $adSections);
+    }
+
+    /**
+     * Test for Document with set sequence
+     */
+    public function testCreateAdSectionWithSettingSequence()
+    {
+        $factory = new Factory();
+        $document = $factory->create('2.0');
+
+        // insert Ad section
+        $ad1 = $document
+            ->createInLineAdSection()
+            ->setId('ad1')
+            ->setAdSystem('Ad Server Name')
+            ->setAdTitle('Ad Title')
+            ->setSequence(0)
+            ->addImpression('http://ad.server.com/impression');
+
+        $this->assertSame('0', $ad1->getSequence());
     }
 
     /**
@@ -206,6 +423,63 @@ class DocumentTest extends AbstractTestCase
             array('//ad.server.com/tracking/impression'),
             $ad1->getImpressions()
         );
+    }
+
+    /**
+     * test Document to output string
+     */
+    public function testToString()
+    {
+        $factory = new Factory();
+        $document = $factory->create('2.0');
+
+        $this->assertContains('<?xml version="1.0" encoding="UTF-8"?>', $document->toString());
+        $this->assertContains('<VAST version="2.0"/>', $document->toString());
+    }
+
+    /**
+     * test Document to output \DomDocument
+     */
+    public function testToDomDocument()
+    {
+        $factory = new Factory();
+        $document = $factory->create('2.0');
+
+        $this->assertInstanceOf('\DomDocument', $document->toDomDocument());
+    }
+
+    /**
+     * test Document to create another vast version from Document
+     */
+    public function testCreate()
+    {
+        $factory = new Factory();
+        $document = $factory->create('2.0');
+        $document::create('1.0');
+
+        $this->assertInstanceOf('\DomDocument', $document->toDomDocument());
+    }
+
+    /**
+     * test Document to create vast from string
+     */
+    public function testFromString()
+    {
+        $factory = new Factory();
+        $document = $factory->create('2.0');
+
+        $this->assertInstanceOf('Sokil\Vast\Document', $document::fromString('<?xml version="1.0" encoding="UTF-8"?><VAST version="2.0"/>'));
+    }
+
+    /**
+     * test Document to create vast from file
+     */
+    public function testFromFile()
+    {
+        $factory = new Factory();
+        $document = $factory->create('2.0');
+
+        $this->assertInstanceOf('Sokil\Vast\Document', $document::fromFile(__DIR__.'/vast.xml'));
     }
 
 }

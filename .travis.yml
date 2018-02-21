@@ -21,11 +21,11 @@ matrix:
       dist: precise
 
 before_script:
-  - composer update --no-interaction
-  
+  - composer install --no-interaction
+
 script:
   - composer cover
   - composer check-style
-  
+
 after_script:
   - composer coveralls
