@@ -1,3 +1,6 @@
+## 0.4.5 (2018-02-22)
+  * Method `AbstractAdNode::getSequence` now return int instead of numeric string 
+
 ## 0.4.4 (2018-01-25)
   * Allow Ad sequence
 
