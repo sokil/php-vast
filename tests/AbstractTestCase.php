@@ -2,7 +2,7 @@
 
 namespace Sokil\Vast;
 
-abstract class AbstractTestCase extends \PHPUnit_Framework_TestCase
+abstract class AbstractTestCase extends \PHPUnit\Framework\TestCase
 {
     /**
      * @param string $expectedXml

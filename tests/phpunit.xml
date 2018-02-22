@@ -6,6 +6,13 @@
     convertWarningsToExceptions="true"
     stopOnFailure="true"
   >
+
+  <testsuites>
+        <testsuite name="Tests">
+            <directory suffix="Test.php">./</directory>
+        </testsuite>
+    </testsuites>
+
   <filter>
     <whitelist processUncoveredFilesFromWhitelist="true">
         <directory suffix=".php">../src</directory>
