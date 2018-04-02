@@ -2,7 +2,9 @@
 
 namespace Sokil\Vast\Creative;
 
-abstract class Linear extends Base
+use Sokil\Vast\Document\AbstractNode;
+
+abstract class AbstractLinearCreative extends AbstractNode
 {
     /**
      * not to be confused with an impression, this event indicates that an individual creative
@@ -11,7 +13,7 @@ abstract class Linear extends Base
      * others. This event enables ad servers to track which ad creative are viewed, and therefore, which
      * platforms are more common.
      */
-    const EVENT_TYPE_CREATIVEVIEW = 'creativeView'; // 
+    const EVENT_TYPE_CREATIVEVIEW = 'creativeView';
                      
     /**
      * this event is used to indicate that an individual creative within the ad was loaded and playback
@@ -75,7 +77,8 @@ abstract class Linear extends Base
      */
     const EVENT_TYPE_CLOSELINEAR = 'closeLinear';
     
-    // the user activated a skip control to skip the creative, which is a different control than the one used to close the creative.
+    // the user activated a skip control to skip the creative, which is a
+    // different control than the one used to close the creative.
     const EVENT_TYPE_SKIP = 'skip';
     
     /**
@@ -84,10 +87,37 @@ abstract class Linear extends Base
      * HH:MM:SS or HH:MM:SS.mmm or a percentage value in the format n% . Multiple progress ev
      */
     const EVENT_TYPE_PROGRESS = 'progress';
-    
+
+    /**
+     * @var \DOMElement
+     */
+    private $linearCreativeDomElement;
+
+    /**
+     * @var \DOMElement
+     */
     private $videoClicksDomElement;
-    
+
+    /**
+     * @var \DOMElement
+     */
     private $trackingEventsDomElement;
+
+    /**
+     * @param \DOMElement $linearCreativeDomElement
+     */
+    public function __construct(\DOMElement $linearCreativeDomElement)
+    {
+        $this->linearCreativeDomElement = $linearCreativeDomElement;
+    }
+
+    /**
+     * @return \DOMElement
+     */
+    protected function getDomElement()
+    {
+        return $this->linearCreativeDomElement;
+    }
 
     /**
      * List of allowed events
@@ -127,17 +157,17 @@ abstract class Linear extends Base
     protected function getVideoClicksDomElement()
     {
         // create container
-        if ($this->videoClicksDomElement) {
+        if (!empty($this->videoClicksDomElement)) {
             return $this->videoClicksDomElement;
         }
         
-        $this->videoClicksDomElement = $this->domElement->getElementsByTagName('VideoClicks')->item(0);
-        if ($this->videoClicksDomElement) {
+        $this->videoClicksDomElement = $this->linearCreativeDomElement->getElementsByTagName('VideoClicks')->item(0);
+        if (!empty($this->videoClicksDomElement)) {
             return $this->videoClicksDomElement;
         }
         
-        $this->videoClicksDomElement = $this->domElement->ownerDocument->createElement('VideoClicks');
-        $this->domElement->firstChild->appendChild($this->videoClicksDomElement);
+        $this->videoClicksDomElement = $this->linearCreativeDomElement->ownerDocument->createElement('VideoClicks');
+        $this->linearCreativeDomElement->firstChild->appendChild($this->videoClicksDomElement);
         
         return $this->videoClicksDomElement;
     }
@@ -151,13 +181,13 @@ abstract class Linear extends Base
     public function addVideoClicksClickTracking($url)
     {
         // create ClickTracking
-        $clickTrackingDomElement = $this->domElement->ownerDocument->createElement('ClickTracking');
+        $clickTrackingDomElement = $this->getDomElement()->ownerDocument->createElement('ClickTracking');
         $this->getVideoClicksDomElement()->appendChild($clickTrackingDomElement);
-        
+
         // create cdata
-        $cdata = $this->domElement->ownerDocument->createCDATASection($url);
+        $cdata = $this->getDomElement()->ownerDocument->createCDATASection($url);
         $clickTrackingDomElement->appendChild($cdata);
-        
+
         return $this;
     }
     
@@ -170,13 +200,41 @@ abstract class Linear extends Base
     public function addVideoClicksCustomClick($url)
     {
         // create CustomClick
-        $customClickDomElement = $this->domElement->ownerDocument->createElement('CustomClick');
+        $customClickDomElement = $this->getDomElement()->ownerDocument->createElement('CustomClick');
         $this->getVideoClicksDomElement()->appendChild($customClickDomElement);
-        
+
         // create cdata
-        $cdata = $this->domElement->ownerDocument->createCDATASection($url);
+        $cdata = $this->getDomElement()->ownerDocument->createCDATASection($url);
         $customClickDomElement->appendChild($cdata);
-        
+
+        return $this;
+    }
+
+    /**
+     * Set video click through url
+     *
+     * @param string $url
+     * @return $this
+     */
+    public function setVideoClicksClickThrough($url)
+    {
+        // create cdata
+        $cdata = $this->getDomElement()->ownerDocument->createCDATASection($url);
+
+        // create ClickThrough
+        $clickThroughDomElement = $this->getVideoClicksDomElement()->getElementsByTagName('ClickThrough')->item(0);
+        if (!$clickThroughDomElement) {
+            $clickThroughDomElement = $this->getDomElement()->ownerDocument->createElement('ClickThrough');
+            $this->getVideoClicksDomElement()->appendChild($clickThroughDomElement);
+        }
+
+        // update CData
+        if ($clickThroughDomElement->hasChildNodes()) {
+            $clickThroughDomElement->replaceChild($cdata, $clickThroughDomElement->firstChild);
+        } else { // insert CData
+            $clickThroughDomElement->appendChild($cdata);
+        }
+
         return $this;
     }
 
@@ -188,17 +246,23 @@ abstract class Linear extends Base
     protected function getTrackingEventsDomElement()
     {
         // create container
-        if($this->trackingEventsDomElement) {
+        if ($this->trackingEventsDomElement) {
             return $this->trackingEventsDomElement;
         }
         
-        $this->trackingEventsDomElement = $this->domElement->getElementsByTagName('TrackingEvents')->item(0);
-        if($this->trackingEventsDomElement) {
+        $this->trackingEventsDomElement = $this->linearCreativeDomElement
+            ->getElementsByTagName('TrackingEvents')
+            ->item(0);
+
+        if ($this->trackingEventsDomElement) {
             return $this->trackingEventsDomElement;
         }
         
-        $this->trackingEventsDomElement = $this->domElement->ownerDocument->createElement('TrackingEvents');
-        $this->domElement->firstChild->appendChild($this->trackingEventsDomElement);
+        $this->trackingEventsDomElement = $this->linearCreativeDomElement
+            ->ownerDocument
+            ->createElement('TrackingEvents');
+
+        $this->linearCreativeDomElement->firstChild->appendChild($this->trackingEventsDomElement);
         
         return $this->trackingEventsDomElement;
     }
@@ -217,14 +281,14 @@ abstract class Linear extends Base
         }
         
         // create Tracking
-        $trackingDomElement = $this->domElement->ownerDocument->createElement('Tracking');
+        $trackingDomElement = $this->linearCreativeDomElement->ownerDocument->createElement('Tracking');
         $this->getTrackingEventsDomElement()->appendChild($trackingDomElement);
         
         // add event attribute
         $trackingDomElement->setAttribute('event', $event);
         
         // create cdata
-        $cdata = $this->domElement->ownerDocument->createCDATASection($url);
+        $cdata = $this->linearCreativeDomElement->ownerDocument->createCDATASection($url);
         $trackingDomElement->appendChild($cdata);
         
         return $this;

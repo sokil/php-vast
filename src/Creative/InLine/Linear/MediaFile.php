@@ -28,7 +28,7 @@ class MediaFile
     
     public function setDelivery($delivery)
     {
-        if(!in_array($delivery, array(self::DELIVERY_PROGRESSIVE, self::DELIVERY_STREAMING))) {
+        if (!in_array($delivery, array(self::DELIVERY_PROGRESSIVE, self::DELIVERY_STREAMING))) {
             throw new \Exception('Wrong delivery specified');
         }
         
@@ -53,19 +53,27 @@ class MediaFile
         $this->domElement->setAttribute('height', $height);
         return $this;
     }
-    
+
     public function setUrl($url)
     {
         $cdata = $this->domElement->ownerDocument->createCDATASection($url);
     
         // update CData
-        if($this->domElement->hasChildNodes()) {
+        if ($this->domElement->hasChildNodes()) {
             $this->domElement->replaceChild($cdata, $this->domElement->firstChild);
-        }
-        
-        // insert CData
+        } // insert CData
         else {
             $this->domElement->appendChild($cdata);
         }
+        return $this;
+    }
+
+    /**
+     * @param int $bitrate
+     */
+    public function setBitrate($bitrate)
+    {
+        $this->domElement->setAttribute('bitrate', (int) $bitrate);
+        return $this;
     }
 }
