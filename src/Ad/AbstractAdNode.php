@@ -25,6 +25,11 @@ abstract class AbstractAdNode extends AbstractNode
     private $creativesDomElement;
 
     /**
+     * @var \DomElement
+     */
+    private $extensionsDomElement;
+
+    /**
      * @param \DOMElement $domElement instance of \Vast\Ad element
      */
     public function __construct(\DOMElement $domElement)
@@ -33,7 +38,7 @@ abstract class AbstractAdNode extends AbstractNode
     }
 
     /**
-     * Instance of "\Vast\Ad\(InLine|Wrapper)" emenet
+     * Instance of "\Vast\Ad\(InLine|Wrapper)" element
      *
      * @return \DOMElement
      */
@@ -79,6 +84,7 @@ abstract class AbstractAdNode extends AbstractNode
     public function setSequence($sequence)
     {
         $this->domElement->setAttribute('sequence', $sequence);
+
         return $this;
     }
 
@@ -87,7 +93,7 @@ abstract class AbstractAdNode extends AbstractNode
      */
     public function getSequence()
     {
-        return (int)($this->domElement->getAttribute('sequence'));
+        return (int) ($this->domElement->getAttribute('sequence'));
     }
 
     /**
@@ -100,6 +106,7 @@ abstract class AbstractAdNode extends AbstractNode
     public function setAdSystem($adSystem)
     {
         $this->setScalarNodeCdata('AdSystem', $adSystem);
+
         return $this;
     }
 
@@ -118,7 +125,6 @@ abstract class AbstractAdNode extends AbstractNode
      * @param string $type
      *
      * @throws \Exception
-     *
      * @return AbstractLinearCreative
      */
     protected function buildCreative($type)
@@ -165,6 +171,7 @@ abstract class AbstractAdNode extends AbstractNode
     public function addError($url)
     {
         $this->addCdataToArrayNode('Error', $url);
+
         return $this;
     }
 
@@ -189,6 +196,7 @@ abstract class AbstractAdNode extends AbstractNode
     public function addImpression($url)
     {
         $this->addCdataToArrayNode('Impression', $url);
+
         return $this;
     }
 
@@ -210,5 +218,39 @@ abstract class AbstractAdNode extends AbstractNode
     public function getImpressions()
     {
         return $this->getValuesOfArrayNode('Impression');
+    }
+
+    /**
+     * Add extension
+     *
+     * @param string $type
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function addExtension($type, $value)
+    {
+        // get container
+        if (!$this->extensionsDomElement) {
+            // get extensions tag
+            $this->extensionsDomElement = $this->domElement->getElementsByTagName('Extensions')->item(0);
+            if (!$this->extensionsDomElement) {
+                $this->extensionsDomElement = $this->domElement->ownerDocument->createElement('Extensions');
+                $this->domElement->firstChild->appendChild($this->extensionsDomElement);
+            }
+        }
+
+        // Creative dom element
+        $extensionDomElement = $this->extensionsDomElement->ownerDocument->createElement('Extension');
+        $this->extensionsDomElement->appendChild($extensionDomElement);
+
+        // create cdata
+        $cdata = $this->domElement->ownerDocument->createCDATASection($value);
+
+        // append
+        $extensionDomElement->setAttribute('type', $type);
+        $extensionDomElement->appendChild($cdata);
+
+        return $this;
     }
 }
