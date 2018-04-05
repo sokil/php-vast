@@ -11,6 +11,7 @@ VAST Ad generator and parser library on PHP.
 * VAST 2.0 Spec: http://www.iab.net/media/file/VAST-2_0-FINAL.pdf
 * VAST 3.0 Spec: http://www.iab.com/wp-content/uploads/2015/06/VASTv3_0.pdf
 * VAST 4.0 Spec: http://www.iab.com/wp-content/uploads/2016/01/VAST_4-0_2016-01-21.pdf
+* [VAST Samples](https://github.com/InteractiveAdvertisingBureau/VAST_Samples)
 
 ## Install
 
