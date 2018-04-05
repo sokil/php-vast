@@ -10,7 +10,7 @@ abstract class AbstractAdNode extends AbstractNode
     /**
      * @var \DOMElement
      */
-    private $domElement;
+    private $adDomElement;
 
     /**
      * Creatives
@@ -30,11 +30,11 @@ abstract class AbstractAdNode extends AbstractNode
     private $extensionsDomElement;
 
     /**
-     * @param \DOMElement $domElement instance of \Vast\Ad element
+     * @param \DOMElement $adDomElement instance of \Vast\Ad element
      */
-    public function __construct(\DOMElement $domElement)
+    public function __construct(\DOMElement $adDomElement)
     {
-        $this->domElement = $domElement;
+        $this->adDomElement = $adDomElement;
     }
 
     /**
@@ -44,9 +44,8 @@ abstract class AbstractAdNode extends AbstractNode
      */
     protected function getDomElement()
     {
-        return $this->domElement->firstChild;
+        return $this->adDomElement->firstChild;
     }
-
 
     /**
      * Get id for Ad element
@@ -55,7 +54,7 @@ abstract class AbstractAdNode extends AbstractNode
      */
     public function getId()
     {
-        return $this->domElement->getAttribute('id');
+        return $this->adDomElement->getAttribute('id');
     }
 
     /**
@@ -67,7 +66,7 @@ abstract class AbstractAdNode extends AbstractNode
      */
     public function setId($id)
     {
-        $this->domElement->setAttribute('id', $id);
+        $this->adDomElement->setAttribute('id', $id);
 
         return $this;
     }
@@ -83,7 +82,7 @@ abstract class AbstractAdNode extends AbstractNode
      */
     public function setSequence($sequence)
     {
-        $this->domElement->setAttribute('sequence', $sequence);
+        $this->adDomElement->setAttribute('sequence', $sequence);
 
         return $this;
     }
@@ -93,7 +92,7 @@ abstract class AbstractAdNode extends AbstractNode
      */
     public function getSequence()
     {
-        return (int) ($this->domElement->getAttribute('sequence'));
+        return (int)($this->adDomElement->getAttribute('sequence'));
     }
 
     /**
@@ -138,10 +137,10 @@ abstract class AbstractAdNode extends AbstractNode
         // get container
         if (!$this->creativesDomElement) {
             // get creatives tag
-            $this->creativesDomElement = $this->domElement->getElementsByTagName('Creatives')->item(0);
+            $this->creativesDomElement = $this->adDomElement->getElementsByTagName('Creatives')->item(0);
             if (!$this->creativesDomElement) {
-                $this->creativesDomElement = $this->domElement->ownerDocument->createElement('Creatives');
-                $this->domElement->firstChild->appendChild($this->creativesDomElement);
+                $this->creativesDomElement = $this->adDomElement->ownerDocument->createElement('Creatives');
+                $this->adDomElement->firstChild->appendChild($this->creativesDomElement);
             }
         }
 
@@ -150,7 +149,7 @@ abstract class AbstractAdNode extends AbstractNode
         $this->creativesDomElement->appendChild($creativeDomElement);
 
         // Creative type dom element
-        $creativeTypeDomElement = $this->domElement->ownerDocument->createElement($type);
+        $creativeTypeDomElement = $this->adDomElement->ownerDocument->createElement($type);
         $creativeDomElement->appendChild($creativeTypeDomElement);
 
         // object
@@ -233,10 +232,10 @@ abstract class AbstractAdNode extends AbstractNode
         // get container
         if (!$this->extensionsDomElement) {
             // get extensions tag
-            $this->extensionsDomElement = $this->domElement->getElementsByTagName('Extensions')->item(0);
+            $this->extensionsDomElement = $this->adDomElement->getElementsByTagName('Extensions')->item(0);
             if (!$this->extensionsDomElement) {
-                $this->extensionsDomElement = $this->domElement->ownerDocument->createElement('Extensions');
-                $this->domElement->firstChild->appendChild($this->extensionsDomElement);
+                $this->extensionsDomElement = $this->adDomElement->ownerDocument->createElement('Extensions');
+                $this->adDomElement->firstChild->appendChild($this->extensionsDomElement);
             }
         }
 
@@ -245,7 +244,7 @@ abstract class AbstractAdNode extends AbstractNode
         $this->extensionsDomElement->appendChild($extensionDomElement);
 
         // create cdata
-        $cdata = $this->domElement->ownerDocument->createCDATASection($value);
+        $cdata = $this->adDomElement->ownerDocument->createCDATASection($value);
 
         // append
         $extensionDomElement->setAttribute('type', $type);
