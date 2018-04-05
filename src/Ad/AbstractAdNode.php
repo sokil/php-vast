@@ -140,7 +140,7 @@ abstract class AbstractAdNode extends AbstractNode
             $this->creativesDomElement = $this->adDomElement->getElementsByTagName('Creatives')->item(0);
             if (!$this->creativesDomElement) {
                 $this->creativesDomElement = $this->adDomElement->ownerDocument->createElement('Creatives');
-                $this->adDomElement->firstChild->appendChild($this->creativesDomElement);
+                $this->getDomElement()->appendChild($this->creativesDomElement);
             }
         }
 
@@ -235,7 +235,7 @@ abstract class AbstractAdNode extends AbstractNode
             $this->extensionsDomElement = $this->adDomElement->getElementsByTagName('Extensions')->item(0);
             if (!$this->extensionsDomElement) {
                 $this->extensionsDomElement = $this->adDomElement->ownerDocument->createElement('Extensions');
-                $this->adDomElement->firstChild->appendChild($this->extensionsDomElement);
+                $this->getDomElement()->appendChild($this->extensionsDomElement);
             }
         }
 
