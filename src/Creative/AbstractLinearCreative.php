@@ -59,7 +59,10 @@ abstract class AbstractLinearCreative extends AbstractNode
     
     // the user activated a control to reduce the creative to its original dimensions.
     const EVENT_TYPE_COLLAPSE = 'collapse';
-    
+
+    // the user activated the close control and close the creative.
+    const EVENT_TYPE_CLOSE = 'close';
+
     /**
      * the user activated a control that launched an additional portion of the
      * creative. The name of this event distinguishes it from the existing “acceptInvitation” event described in
@@ -146,6 +149,7 @@ abstract class AbstractLinearCreative extends AbstractNode
             self::EVENT_TYPE_CLOSELINEAR,
             self::EVENT_TYPE_SKIP,
             self::EVENT_TYPE_PROGRESS,
+            self::EVENT_TYPE_CLOSE,
         );
     }
 
