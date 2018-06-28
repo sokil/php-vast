@@ -1,5 +1,9 @@
-## 0.4.6 (2018-06-29)
+## 0.4.7 (2018-06-29)
   * Fixed `AbstractNode::getValuesOfArrayNode`. Affected  `AbstractAdNode::getErrors()` and `AbstractAdNode::getImpressions()` if multiple nodes in array found. Array always contain first node instead of values of all nodes.
+
+## 0.4.6 (2018-04-05)
+  * Fix adding Extension to Ad\InLine section
+  * Now Extensions can be created for Ad\Wrapper also
 
 ## 0.4.5 (2018-02-22)
   * Method `AbstractAdNode::getSequence` now return int instead of numeric string 
