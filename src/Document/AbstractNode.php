@@ -69,7 +69,7 @@ abstract class AbstractNode
 
         $values = array();
         for ($i = 0; $i < $domElements->length; $i++) {
-            $values[$i] = $domElements->item(0)->nodeValue;
+            $values[$i] = $domElements->item($i)->nodeValue;
         }
 
         return $values;

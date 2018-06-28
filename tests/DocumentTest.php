@@ -102,7 +102,10 @@ class DocumentTest extends AbstractTestCase
             ->setAdSystem('Ad Server Name')
             ->setAdTitle('Ad Title')
             ->addImpression('http://ad.server.com/impression');
-        $ad1->createLinearCreative()->skipAfter(1519203721);
+
+        $ad1
+            ->createLinearCreative()
+            ->skipAfter(1519203721);
 
         $this->assertVastXmlEquals('<?xml version="1.0" encoding="UTF-8"?><VAST version="2.0"><Ad id="ad1"><InLine><AdSystem><![CDATA[Ad Server Name]]></AdSystem><AdTitle><![CDATA[Ad Title]]></AdTitle><Impression><![CDATA[http://ad.server.com/impression]]></Impression><Creatives><Creative><Linear skipoffset="422001:02:01"/></Creative></Creatives></InLine></Ad></VAST>', $document);
     }
@@ -345,13 +348,17 @@ class DocumentTest extends AbstractTestCase
             ->setId('ad1')
             ->setAdSystem('Ad Server Name')
             ->setVASTAdTagURI('//entertainmentserver.com/vast1.xml')
-            ->addImpression('//ad.server.com/tracking/impression');
+            ->addImpression('//ad.server.com/tracking/impression1')
+            ->addImpression('//ad.server.com/tracking/impression2');
 
-        $expectedXml = '<?xml version="1.0" encoding="UTF-8"?><VAST version="2.0"><Ad id="ad1"><Wrapper><AdSystem><![CDATA[Ad Server Name]]></AdSystem><VASTAdTagURI><![CDATA[//entertainmentserver.com/vast1.xml]]></VASTAdTagURI><Impression><![CDATA[//ad.server.com/tracking/impression]]></Impression></Wrapper></Ad></VAST>';
+        $expectedXml = '<?xml version="1.0" encoding="UTF-8"?><VAST version="2.0"><Ad id="ad1"><Wrapper><AdSystem><![CDATA[Ad Server Name]]></AdSystem><VASTAdTagURI><![CDATA[//entertainmentserver.com/vast1.xml]]></VASTAdTagURI><Impression><![CDATA[//ad.server.com/tracking/impression1]]></Impression><Impression><![CDATA[//ad.server.com/tracking/impression2]]></Impression></Wrapper></Ad></VAST>';
         $this->assertVastXmlEquals($expectedXml, $document);
 
         $this->assertEquals(
-            array('//ad.server.com/tracking/impression'),
+            array(
+                '//ad.server.com/tracking/impression1',
+                '//ad.server.com/tracking/impression2',
+            ),
             $ad1->getImpressions()
         );
     }
