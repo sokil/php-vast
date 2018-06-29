@@ -40,7 +40,7 @@ $ad1 = $document
     ->setId('ad1')
     ->setAdSystem('Ad Server Name')
     ->setAdTitle('Ad Title')
-    ->addImpression('http://ad.server.com/impression');
+    ->addImpression('http://ad.server.com/impression', 'imp1');
 
 // create creative for ad section
 $linearCreative = $ad1
@@ -88,7 +88,7 @@ This will generate:
         <InLine>
             <AdSystem>Ad Server Name</AdSystem>
             <AdTitle><![CDATA[Ad Title]]></AdTitle>
-            <Impression><![CDATA[http://ad.server.com/impression]]></Impression>
+            <Impression id="imp1"><![CDATA[http://ad.server.com/impression]]></Impression>
             <Creatives>
                 <Creative>
                     <Linear>

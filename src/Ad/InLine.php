@@ -2,6 +2,7 @@
 
 namespace Sokil\Vast\Ad;
 
+use Sokil\Vast\Creative\AbstractLinearCreative;
 use Sokil\Vast\Creative\InLine\Linear;
 
 class InLine extends AbstractAdNode
@@ -32,7 +33,7 @@ class InLine extends AbstractAdNode
      * Create Linear creative
      *
      * @throws \Exception
-     * @return Linear
+     * @return AbstractLinearCreative
      */
     public function createLinearCreative()
     {

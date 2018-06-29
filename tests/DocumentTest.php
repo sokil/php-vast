@@ -21,7 +21,7 @@ class DocumentTest extends AbstractTestCase
             ->setId('ad1')
             ->setAdSystem('Ad Server Name')
             ->setAdTitle('Ad Title')
-            ->addImpression('http://ad.server.com/impression');
+            ->addImpression('http://ad.server.com/impression', 'imp1');
 
         // create creative for ad section
         $ad1
@@ -40,7 +40,7 @@ class DocumentTest extends AbstractTestCase
                 ->setBitrate(600)
                 ->setUrl('http://server.com/media.mp4');
 
-        $expectedXml = '<?xml version="1.0" encoding="UTF-8"?><VAST version="2.0"><Ad id="ad1"><InLine><AdSystem><![CDATA[Ad Server Name]]></AdSystem><AdTitle><![CDATA[Ad Title]]></AdTitle><Impression><![CDATA[http://ad.server.com/impression]]></Impression><Creatives><Creative><Linear><Duration>00:02:08</Duration><VideoClicks><ClickThrough><![CDATA[http://entertainmentserver.com/landing]]></ClickThrough><ClickTracking><![CDATA[http://ad.server.com/videoclicks/clicktracking]]></ClickTracking><CustomClick><![CDATA[http://ad.server.com/videoclicks/customclick]]></CustomClick></VideoClicks><TrackingEvents><Tracking event="start"><![CDATA[http://ad.server.com/trackingevent/start]]></Tracking><Tracking event="pause"><![CDATA[http://ad.server.com/trackingevent/stop]]></Tracking></TrackingEvents><MediaFiles><MediaFile delivery="progressive" type="video/mp4" height="100" width="100" bitrate="600"><![CDATA[http://server.com/media.mp4]]></MediaFile></MediaFiles></Linear></Creative></Creatives></InLine></Ad></VAST>';
+        $expectedXml = '<?xml version="1.0" encoding="UTF-8"?><VAST version="2.0"><Ad id="ad1"><InLine><AdSystem><![CDATA[Ad Server Name]]></AdSystem><AdTitle><![CDATA[Ad Title]]></AdTitle><Impression id="imp1"><![CDATA[http://ad.server.com/impression]]></Impression><Creatives><Creative><Linear><Duration>00:02:08</Duration><VideoClicks><ClickThrough><![CDATA[http://entertainmentserver.com/landing]]></ClickThrough><ClickTracking><![CDATA[http://ad.server.com/videoclicks/clicktracking]]></ClickTracking><CustomClick><![CDATA[http://ad.server.com/videoclicks/customclick]]></CustomClick></VideoClicks><TrackingEvents><Tracking event="start"><![CDATA[http://ad.server.com/trackingevent/start]]></Tracking><Tracking event="pause"><![CDATA[http://ad.server.com/trackingevent/stop]]></Tracking></TrackingEvents><MediaFiles><MediaFile delivery="progressive" type="video/mp4" height="100" width="100" bitrate="600"><![CDATA[http://server.com/media.mp4]]></MediaFile></MediaFiles></Linear></Creative></Creatives></InLine></Ad></VAST>';
         $this->assertVastXmlEquals($expectedXml, $document);
     }
 
@@ -363,6 +363,8 @@ class DocumentTest extends AbstractTestCase
         );
     }
 
+
+
     /**
      * test Document to output string
      */
@@ -406,7 +408,10 @@ class DocumentTest extends AbstractTestCase
         $factory = new Factory();
         $document = $factory->create('2.0');
 
-        $this->assertInstanceOf('Sokil\Vast\Document', $document::fromString('<?xml version="1.0" encoding="UTF-8"?><VAST version="2.0"/>'));
+        $this->assertInstanceOf(
+            'Sokil\Vast\Document',
+            $document::fromString('<?xml version="1.0" encoding="UTF-8"?><VAST version="2.0"/>')
+        );
     }
 
     /**
@@ -417,7 +422,7 @@ class DocumentTest extends AbstractTestCase
         $factory = new Factory();
         $document = $factory->create('2.0');
 
-        $this->assertInstanceOf('Sokil\Vast\Document', $document::fromFile(__DIR__.'/vast.xml'));
+        $this->assertInstanceOf('Sokil\Vast\Document', $document::fromFile(__DIR__ . '/vast.xml'));
     }
 
 }

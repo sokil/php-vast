@@ -10,6 +10,11 @@ abstract class AbstractAdNode extends AbstractNode
     /**
      * @var \DOMElement
      */
+    private $domElement;
+
+    /**
+     * @var \DOMElement
+     */
     private $adDomElement;
 
     /**
@@ -35,6 +40,21 @@ abstract class AbstractAdNode extends AbstractNode
     public function __construct(\DOMElement $adDomElement)
     {
         $this->adDomElement = $adDomElement;
+
+        $this->domElement = $this->adDomElement->getElementsByTagName($this->getType())->item(0);
+    }
+
+    /**
+     * Return type of ad (InLine or Wrapper)
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        $parts = explode('\\', get_class($this));
+        $type = array_pop($parts);
+
+        return $type;
     }
 
     /**
@@ -44,7 +64,7 @@ abstract class AbstractAdNode extends AbstractNode
      */
     protected function getDomElement()
     {
-        return $this->adDomElement->firstChild;
+        return $this->domElement;
     }
 
     /**
@@ -96,7 +116,7 @@ abstract class AbstractAdNode extends AbstractNode
     }
 
     /**
-     * /Vast/Ad/Inline/AdSystem element
+     * Set /Vast/Ad/Inline/AdSystem element
      *
      * @param string $adSystem
      *
@@ -107,6 +127,18 @@ abstract class AbstractAdNode extends AbstractNode
         $this->setScalarNodeCdata('AdSystem', $adSystem);
 
         return $this;
+    }
+
+    /**
+     * Get /Vast/Ad/Inline/AdSystem element
+     *
+     * @return string
+     */
+    public function getAdSystem()
+    {
+        $adSystem = $this->getScalarNodeValue('AdSystem');
+
+        return $adSystem;
     }
 
     /**
@@ -169,7 +201,7 @@ abstract class AbstractAdNode extends AbstractNode
      */
     public function addError($url)
     {
-        $this->addCdataToArrayNode('Error', $url);
+        $this->addCdataNode('Error', $url);
 
         return $this;
     }
@@ -188,13 +220,26 @@ abstract class AbstractAdNode extends AbstractNode
      * Add Impression tracking url
      * Allowed multiple impressions
      *
-     * @param string $url
+     * @param string $url A URI that directs the video player to a tracking resource file that the video player
+     *        ust use to notify the ad server when the impression occurs.
+     * @param string|null $id An ad server id for the impression. Impression URIs of the same id for an ad should
+     *        be requested at the same time or as close in time as possible to help prevent
+     *        discrepancies.
      *
      * @return $this
      */
-    public function addImpression($url)
+    public function addImpression($url, $id = null)
     {
-        $this->addCdataToArrayNode('Impression', $url);
+        $attributes = array();
+        if ($id !== null) {
+            $attributes['id'] = $id;
+        }
+
+        $this->addCdataNode(
+            'Impression',
+            $url,
+            $attributes
+        );
 
         return $this;
     }

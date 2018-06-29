@@ -5,12 +5,14 @@ namespace Sokil\Vast\Document;
 abstract class AbstractNode
 {
     /**
+     * Root DOM element, represented by this Node class.
+     *
      * @return \DOMElement
      */
     abstract protected function getDomElement();
 
     /**
-     * Set cdata for given child node
+     * Set cdata for given child node or create new child node
      *
      * @param string $name name of node
      * @param string $value value of cdata
@@ -40,12 +42,30 @@ abstract class AbstractNode
     }
 
     /**
+     * @param string $name
+     *
+     * @return string|null null if node not found
+     */
+    protected function getScalarNodeValue($name)
+    {
+        $domElements = $this->getDomElement()->getElementsByTagName($name);
+        if ($domElements->length === 0) {
+            return null;
+        }
+
+        return $domElements->item(0)->nodeValue;
+    }
+
+    /**
+     * Append new child node to node
+     *
      * @param string $nodeName
      * @param string $value
+     * @param array $attributes
      *
      * @return $this
      */
-    protected function addCdataToArrayNode($nodeName, $value)
+    protected function addCdataNode($nodeName, $value, array $attributes = array())
     {
         // create element
         $domElement = $this->getDomElement()->ownerDocument->createElement($nodeName);
@@ -54,6 +74,11 @@ abstract class AbstractNode
         // create cdata
         $cdata = $this->getDomElement()->ownerDocument->createCDATASection($value);
         $domElement->appendChild($cdata);
+
+        // add attributes
+        foreach ($attributes as $attributeId => $attributeValue) {
+            $domElement->setAttribute($attributeId, $attributeValue);
+        }
 
         return $this;
     }
