@@ -44,13 +44,15 @@ abstract class AbstractNode
     /**
      * @param string $name
      *
-     * @return string|null null if node not found
+     * @return string
+     *
+     * @throws \InvalidArgumentException when node not found
      */
     protected function getScalarNodeValue($name)
     {
         $domElements = $this->getDomElement()->getElementsByTagName($name);
         if ($domElements->length === 0) {
-            return null;
+            throw new \InvalidArgumentException(sprintf('Unknown scalar node %s', $name));
         }
 
         return $domElements->item(0)->nodeValue;
