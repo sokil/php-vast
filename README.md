@@ -10,7 +10,10 @@ VAST Ad generator and parser library on PHP.
 ## Specs
 * VAST 2.0 Spec: http://www.iab.net/media/file/VAST-2_0-FINAL.pdf
 * VAST 3.0 Spec: http://www.iab.com/wp-content/uploads/2015/06/VASTv3_0.pdf
-* VAST 4.0 Spec: http://www.iab.com/wp-content/uploads/2016/01/VAST_4-0_2016-01-21.pdf
+* VAST 4.0 Spec: 
+  * http://www.iab.com/wp-content/uploads/2016/01/VAST_4-0_2016-01-21.pdf
+  * https://www.iab.com/wp-content/uploads/2016/04/VAST4.0_Updated_April_2016.pdf
+* [VAST Samples](https://github.com/InteractiveAdvertisingBureau/VAST_Samples)
 
 ## Install
 
@@ -37,7 +40,7 @@ $ad1 = $document
     ->setId('ad1')
     ->setAdSystem('Ad Server Name')
     ->setAdTitle('Ad Title')
-    ->addImpression('http://ad.server.com/impression');
+    ->addImpression('http://ad.server.com/impression', 'imp1');
 
 // create creative for ad section
 $linearCreative = $ad1
@@ -85,7 +88,7 @@ This will generate:
         <InLine>
             <AdSystem>Ad Server Name</AdSystem>
             <AdTitle><![CDATA[Ad Title]]></AdTitle>
-            <Impression><![CDATA[http://ad.server.com/impression]]></Impression>
+            <Impression id="imp1"><![CDATA[http://ad.server.com/impression]]></Impression>
             <Creatives>
                 <Creative>
                     <Linear>

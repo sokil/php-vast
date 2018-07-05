@@ -61,7 +61,7 @@ abstract class AbstractLinearCreative extends AbstractNode
     const EVENT_TYPE_COLLAPSE = 'collapse';
     
     /**
-     * the user activated a control that launched an additional portion of the
+     * The user activated a control that launched an additional portion of the
      * creative. The name of this event distinguishes it from the existing “acceptInvitation” event described in
      * the 2008 IAB Digital Video In-Stream Ad Metrics Definitions, which defines the “acceptInivitation”
      * metric as applying to non-linear ads only. The “acceptInvitationLinear” event extends the metric for use
@@ -70,10 +70,11 @@ abstract class AbstractLinearCreative extends AbstractNode
     const EVENT_TYPE_ACCEPTINVITATIONLINEAR = 'acceptInvitationLinear';
     
     /**
-     * the user clicked the close button on the creative. The name of this event distinguishes it
+     * The user clicked the close button on the creative. The name of this event distinguishes it
      * from the existing “close” event described in the 2008 IAB Digital Video In-Stream Ad Metrics
      * Definitions, which defines the “close” metric as applying to non-linear ads only. The “closeLinear” event
      * extends the “close” event for use in Linear creative.
+     * Available in VAST v.3, not available in VAST v.4
      */
     const EVENT_TYPE_CLOSELINEAR = 'closeLinear';
     

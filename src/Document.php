@@ -162,7 +162,6 @@ class Document extends AbstractNode
                 }
 
                 $this->vastAdNodeList[] = new $adTypeClassName($adDomElement);
-                break;
             }
         }
         
@@ -179,7 +178,7 @@ class Document extends AbstractNode
      */
     public function addErrors($url)
     {
-        $this->addCdataToArrayNode('Error', $url);
+        $this->addCdataNode('Error', $url);
         return $this;
     }
 
