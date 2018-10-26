@@ -444,11 +444,11 @@ class DocumentTest extends AbstractTestCase
         $creative
             ->setDuration(10)
             ->createAdParameters()
-            ->setParams([
-                'list' => [
-                    ['param1' => 'value1', 'param2' => 'value2']
-                ],
-            ])
+            ->setParams(array(
+                'list' => array(
+                    array('param1' => 'value1', 'param2' => 'value2')
+                ),
+            ))
         ;
         $creative->createMediaFile()
             ->setApiFramework('VPAID')
