@@ -5,7 +5,7 @@ namespace Sokil\Vast\Creative\InLine\Linear;
 class MediaFile
 {
     const DELIVERY_PROGRESSIVE = 'progressive';
-    const DELIVERY_STREAMING = 'streaming';
+    const DELIVERY_STREAMING   = 'streaming';
     
     private $domElement;
     
@@ -70,10 +70,22 @@ class MediaFile
 
     /**
      * @param int $bitrate
+     * @return $this
      */
     public function setBitrate($bitrate)
     {
         $this->domElement->setAttribute('bitrate', (int) $bitrate);
+        return $this;
+    }
+
+    /**
+     * @param string $value
+     * @return $this
+     */
+    public function setApiFramework($value)
+    {
+        $this->domElement->setAttribute('apiFramework', (string) $value);
+
         return $this;
     }
 }

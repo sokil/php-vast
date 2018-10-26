@@ -425,4 +425,37 @@ class DocumentTest extends AbstractTestCase
         $this->assertInstanceOf('Sokil\Vast\Document', $document::fromFile(__DIR__ . '/vast.xml'));
     }
 
+    /**
+     * VPAID creative test
+     */
+    public function testVpaidCreative()
+    {
+        $factory = new Factory();
+        $document = $factory->create('3.0');
+
+        $ad = $document
+            ->createInLineAdSection()
+            ->setId('test-vpaid')
+            ->setAdSystem('Ad Server Name')
+            ->setAdTitle('VPAIDPreRoll')
+        ;
+        /** @var \Sokil\Vast\Creative\InLine\Linear $creative */
+        $creative = $ad->createLinearCreative();
+        $creative
+            ->setDuration(10)
+            ->createAdParameters()
+            ->setParams([
+                'list' => [
+                    ['param1' => 'value1', 'param2' => 'value2']
+                ],
+            ])
+        ;
+        $creative->createMediaFile()
+            ->setApiFramework('VPAID')
+            ->setType('application/javascript')
+            ->setUrl('https://example.com/vpaid.js?v434')
+        ;
+
+        $this->assertFileVsDocument('vpaid.xml', $document);
+    }
 }
