@@ -80,7 +80,8 @@ class Linear extends AbstractLinearCreative
         }
 
         // object
-        return (new AdParameters($this->adParametersDomElement))->setParams($params);
+        $adParams = new AdParameters($this->adParametersDomElement);
+        return $adParams->setParams($params);
     }
 
     /**
