@@ -5,7 +5,7 @@ namespace Sokil\Vast\Creative\InLine\Linear;
 class MediaFile
 {
     const DELIVERY_PROGRESSIVE = 'progressive';
-    const DELIVERY_STREAMING   = 'streaming';
+    const DELIVERY_STREAMING = 'streaming';
     
     private $domElement;
     
