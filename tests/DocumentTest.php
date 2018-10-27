@@ -443,8 +443,7 @@ class DocumentTest extends AbstractTestCase
         $creative = $ad->createLinearCreative();
         $creative
             ->setDuration(10)
-            ->createAdParameters()
-            ->setParams(array(
+            ->setAdParameters(array(
                 'list' => array(
                     array('param1' => 'value1', 'param2' => 'value2')
                 ),
