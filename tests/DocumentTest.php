@@ -442,7 +442,6 @@ class DocumentTest extends AbstractTestCase
         /** @var \Sokil\Vast\Creative\InLine\Linear $creative */
         $creative = $ad->createLinearCreative();
         $creative
-            ->setDuration(10)
             ->setAdParameters(array(
                 'list' => array(
                     array('param1' => 'value1', 'param2' => 'value2')
