@@ -69,19 +69,9 @@ class Linear extends AbstractLinearCreative
     /**
      * @param array|string $params
      *
-     * @return $this
-     */
-    public function setAdParameters($params)
-    {
-        $this->createAdParameters()->setParams($params);
-
-        return $this;
-    }
-
-    /**
      * @return AdParameters
      */
-    protected function createAdParameters()
+    public function createAdParameters($params)
     {
         $this->adParametersDomElement = $this->getDomElement()->getElementsByTagName('AdParameters')->item(0);
         if (!$this->adParametersDomElement) {
@@ -90,7 +80,7 @@ class Linear extends AbstractLinearCreative
         }
 
         // object
-        return new AdParameters($this->adParametersDomElement);
+        return (new AdParameters($this->adParametersDomElement))->setParams($params);
     }
 
     /**
