@@ -79,6 +79,8 @@ class MediaFile
     }
 
     /**
+     * Please note that this attribute is deprecated since VAST 4.1 along with VPAID
+     *
      * @param string $value
      * @return $this
      */

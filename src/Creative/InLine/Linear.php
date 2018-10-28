@@ -81,6 +81,7 @@ class Linear extends AbstractLinearCreative
 
         // object
         $adParams = new AdParameters($this->adParametersDomElement);
+
         return $adParams->setParams($params);
     }
 
