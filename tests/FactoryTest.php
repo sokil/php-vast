@@ -7,7 +7,7 @@ class FactoryTest extends AbstractTestCase
     public function testFromFile()
     {
         $factory = new Factory();
-        $vastDocument = $factory->fromFile(__DIR__ . '/vast.xml');
+        $vastDocument = $factory->fromFile(__DIR__ . '/data/vast.xml');
 
         // check if loaded
         $this->assertInstanceOf(
@@ -38,7 +38,7 @@ class FactoryTest extends AbstractTestCase
     public function testFromString()
     {
         $factory = new Factory();
-        $vastDocument = $factory->fromString(file_get_contents(__DIR__ . '/vast.xml'));
+        $vastDocument = $factory->fromString(file_get_contents(__DIR__ . '/data/vast.xml'));
 
         $this->assertInstanceOf(
             'Sokil\Vast\Document',

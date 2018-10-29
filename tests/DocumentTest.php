@@ -422,7 +422,7 @@ class DocumentTest extends AbstractTestCase
         $factory = new Factory();
         $document = $factory->create('2.0');
 
-        $this->assertInstanceOf('Sokil\Vast\Document', $document::fromFile(__DIR__ . '/vast.xml'));
+        $this->assertInstanceOf('Sokil\Vast\Document', $document::fromFile(__DIR__ . '/data/vast.xml'));
     }
 
     /**
