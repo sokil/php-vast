@@ -106,7 +106,7 @@ class DocumentTest extends AbstractTestCase
             ->createLinearCreative()
             ->skipAfter(1519203721);
 
-        $this->assertVastXmlEquals('<?xml version="1.0" encoding="UTF-8"?><VAST version="2.0"><Ad id="ad1"><InLine><AdSystem><![CDATA[Ad Server Name]]></AdSystem><AdTitle><![CDATA[Ad Title]]></AdTitle><Impression><![CDATA[http://ad.server.com/impression]]></Impression><Creatives><Creative><Linear skipoffset="422001:02:01"/></Creative></Creatives></InLine></Ad></VAST>', $document);
+        $this->assertFileVsDocument('linearCreativeWithSkipAfter.xml', $document);
     }
 
     /**
