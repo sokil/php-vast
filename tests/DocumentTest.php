@@ -297,8 +297,7 @@ class DocumentTest extends AbstractTestCase
             ->setVASTAdTagURI('//entertainmentserver.com/vast1.xml')
             ->addError('//ad.server.com/tracking/error');
 
-        $expectedXml = '<?xml version="1.0" encoding="UTF-8"?><VAST version="2.0"><Ad id="ad1"><Wrapper><AdSystem><![CDATA[Ad Server Name]]></AdSystem><VASTAdTagURI><![CDATA[//entertainmentserver.com/vast1.xml]]></VASTAdTagURI><Error><![CDATA[//ad.server.com/tracking/error]]></Error></Wrapper></Ad></VAST>';
-        $this->assertVastXmlEquals($expectedXml, $document);
+        $this->assertFileVsDocument('errorInWrapper.xml', $document);
 
         $this->assertEquals(
             array('//ad.server.com/tracking/error'),
@@ -322,8 +321,7 @@ class DocumentTest extends AbstractTestCase
             ->setAdSystem('Ad Server Name')
             ->addError('//ad.server.com/tracking/error');
 
-        $expectedXml = '<?xml version="1.0" encoding="UTF-8"?><VAST version="2.0"><Ad id="ad1"><InLine><AdSystem><![CDATA[Ad Server Name]]></AdSystem><Error><![CDATA[//ad.server.com/tracking/error]]></Error></InLine></Ad></VAST>';
-        $this->assertVastXmlEquals($expectedXml, $document);
+        $this->assertFileVsDocument('errorInInline.xml', $document);
 
         $this->assertEquals(
             array('//ad.server.com/tracking/error'),
