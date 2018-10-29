@@ -9,6 +9,7 @@ abstract class AbstractTestCase extends \PHPUnit\Framework\TestCase
     /**
      * @param string $expectedXml
      * @param Document $actualVastDocument
+     * @deprecated in favor of assertFileVsDocument()
      */
     protected function assertVastXmlEquals($expectedXml, Document $actualVastDocument)
     {
