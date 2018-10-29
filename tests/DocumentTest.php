@@ -259,7 +259,7 @@ class DocumentTest extends AbstractTestCase
                 ->addVideoClicksCustomClick('//ad.server.com/videoclicks/customclick')
                 ->addTrackingEvent('start', '//ad.server.com/trackingevent/start')
                 ->addTrackingEvent('pause', '//ad.server.com/trackingevent/stop');
-        
+
         $this->assertFileVsDocument('wrapper.xml', $document);
     }
 
@@ -272,8 +272,7 @@ class DocumentTest extends AbstractTestCase
         $document = $factory->create('3.0');
         $document->addErrors('//ad.server.com/tracking/error/noad');
 
-        $expectedXml = '<?xml version="1.0" encoding="UTF-8"?><VAST version="3.0"><Error><![CDATA[//ad.server.com/tracking/error/noad]]></Error></VAST>';
-        $this->assertVastXmlEquals($expectedXml, $document);
+        $this->assertFileVsDocument('error.xml', $document);
 
         $this->assertEquals(
             array('//ad.server.com/tracking/error/noad'),
