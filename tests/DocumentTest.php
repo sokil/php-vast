@@ -347,8 +347,7 @@ class DocumentTest extends AbstractTestCase
             ->addImpression('//ad.server.com/tracking/impression1')
             ->addImpression('//ad.server.com/tracking/impression2');
 
-        $expectedXml = '<?xml version="1.0" encoding="UTF-8"?><VAST version="2.0"><Ad id="ad1"><Wrapper><AdSystem><![CDATA[Ad Server Name]]></AdSystem><VASTAdTagURI><![CDATA[//entertainmentserver.com/vast1.xml]]></VASTAdTagURI><Impression><![CDATA[//ad.server.com/tracking/impression1]]></Impression><Impression><![CDATA[//ad.server.com/tracking/impression2]]></Impression></Wrapper></Ad></VAST>';
-        $this->assertVastXmlEquals($expectedXml, $document);
+        $this->assertFileVsDocument('impressionInWrapper.xml', $document);
 
         $this->assertEquals(
             array(
