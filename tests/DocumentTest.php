@@ -125,7 +125,7 @@ class DocumentTest extends AbstractTestCase
             ->setAdTitle('Ad Title')
             ->addImpression('http://ad.server.com/impression');
         $ad1->createLinearCreative()->createMediaFile()->setStreamingDelivery();
-        
+
         $this->assertFileVsDocument('linearCreativeWithStreamingDelivery.xml', $document);
     }
 
@@ -146,7 +146,7 @@ class DocumentTest extends AbstractTestCase
             ->addImpression('http://ad.server.com/impression');
         $ad1->createLinearCreative()->createMediaFile()->setDelivery('progressive');
 
-        $this->assertVastXmlEquals('<?xml version="1.0" encoding="UTF-8"?><VAST version="2.0"><Ad id="ad1"><InLine><AdSystem><![CDATA[Ad Server Name]]></AdSystem><AdTitle><![CDATA[Ad Title]]></AdTitle><Impression><![CDATA[http://ad.server.com/impression]]></Impression><Creatives><Creative><Linear><MediaFiles><MediaFile delivery="progressive"/></MediaFiles></Linear></Creative></Creatives></InLine></Ad></VAST>', $document);
+        $this->assertFileVsDocument('adWithDelivery.xml', $document);
     }
 
     /**
