@@ -4,6 +4,7 @@ namespace Sokil\Vast\Creative\InLine;
 
 use Sokil\Vast\Creative\AbstractLinearCreative;
 use Sokil\Vast\Creative\InLine\Linear\MediaFile;
+use Sokil\Vast\Creative\InLine\Linear\AdParameters;
 
 class Linear extends AbstractLinearCreative
 {
@@ -11,6 +12,11 @@ class Linear extends AbstractLinearCreative
      * @var \DOMElement
      */
     private $mediaFilesDomElement;
+
+    /**
+     * @var \DOMElement
+     */
+    private $adParametersDomElement;
 
     /**
      * Set duration value
@@ -58,6 +64,25 @@ class Linear extends AbstractLinearCreative
 
         // object
         return new MediaFile($mediaFileDomElement);
+    }
+
+    /**
+     * @param array|string $params
+     *
+     * @return AdParameters
+     */
+    public function createAdParameters($params)
+    {
+        $this->adParametersDomElement = $this->getDomElement()->getElementsByTagName('AdParameters')->item(0);
+        if (!$this->adParametersDomElement) {
+            $this->adParametersDomElement = $this->getDomElement()->ownerDocument->createElement('AdParameters');
+            $this->getDomElement()->firstChild->appendChild($this->adParametersDomElement);
+        }
+
+        // object
+        $adParams = new AdParameters($this->adParametersDomElement);
+
+        return $adParams->setParams($params);
     }
 
     /**

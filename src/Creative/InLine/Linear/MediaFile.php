@@ -70,10 +70,24 @@ class MediaFile
 
     /**
      * @param int $bitrate
+     * @return $this
      */
     public function setBitrate($bitrate)
     {
         $this->domElement->setAttribute('bitrate', (int) $bitrate);
+        return $this;
+    }
+
+    /**
+     * Please note that this attribute is deprecated since VAST 4.1 along with VPAID
+     *
+     * @param string $value
+     * @return $this
+     */
+    public function setApiFramework($value)
+    {
+        $this->domElement->setAttribute('apiFramework', (string) $value);
+
         return $this;
     }
 }
