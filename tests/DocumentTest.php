@@ -202,7 +202,8 @@ class DocumentTest extends AbstractTestCase
             ->addImpression('http://ad.server.com/impression');
         $ad1->addExtension('extension_type', 'extension_value');
 
-        $this->assertVastXmlEquals('<?xml version="1.0" encoding="UTF-8"?><VAST version="2.0"><Ad id="ad1"><InLine><AdSystem><![CDATA[Ad Server Name]]></AdSystem><AdTitle><![CDATA[Ad Title]]></AdTitle><Impression><![CDATA[http://ad.server.com/impression]]></Impression><Extensions><Extension type="extension_type"><![CDATA[extension_value]]></Extension></Extensions></InLine></Ad></VAST>', $document);
+        $this->assertFileVsDocument('inlineAdWithExtension.xml', $document);
+
         $document = $factory->create('2.0');
 
         // insert Ad section
@@ -214,7 +215,7 @@ class DocumentTest extends AbstractTestCase
             ->addImpression('http://ad.server.com/impression');
         $ad1->addExtension('extension_type', 'extension_value');
 
-        $this->assertVastXmlEquals('<?xml version="1.0" encoding="UTF-8"?><VAST version="2.0"><Ad id="ad1"><Wrapper><VASTAdTagURI><![CDATA[//entertainmentserver.com/vast1.xml]]></VASTAdTagURI><AdSystem><![CDATA[Ad Server Name]]></AdSystem><Impression><![CDATA[http://ad.server.com/impression]]></Impression><Extensions><Extension type="extension_type"><![CDATA[extension_value]]></Extension></Extensions></Wrapper></Ad></VAST>', $document);
+        $this->assertFileVsDocument('wrapperAdWithExtension.xml', $document);
     }
 
     /**
