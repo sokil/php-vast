@@ -259,9 +259,8 @@ class DocumentTest extends AbstractTestCase
                 ->addVideoClicksCustomClick('//ad.server.com/videoclicks/customclick')
                 ->addTrackingEvent('start', '//ad.server.com/trackingevent/start')
                 ->addTrackingEvent('pause', '//ad.server.com/trackingevent/stop');
-
-        $expectedXml = '<?xml version="1.0" encoding="UTF-8"?><VAST version="2.0"><Ad id="ad1"><Wrapper><VASTAdTagURI><![CDATA[//entertainmentserver.com/vast2.xml]]></VASTAdTagURI><AdSystem><![CDATA[Ad Server Name]]></AdSystem><Creatives><Creative><Linear><VideoClicks><ClickTracking><![CDATA[//ad.server.com/videoclicks/clicktracking]]></ClickTracking><CustomClick><![CDATA[//ad.server.com/videoclicks/customclick]]></CustomClick></VideoClicks><TrackingEvents><Tracking event="start"><![CDATA[//ad.server.com/trackingevent/start]]></Tracking><Tracking event="pause"><![CDATA[//ad.server.com/trackingevent/stop]]></Tracking></TrackingEvents></Linear></Creative></Creatives></Wrapper></Ad></VAST>';
-        $this->assertVastXmlEquals($expectedXml, $document);
+        
+        $this->assertFileVsDocument('wrapper.xml', $document);
     }
 
     /**
