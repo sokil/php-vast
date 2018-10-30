@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <VAST version="4.0">
+    <Error><![CDATA[//ad.server.com/tracking/error/noad]]></Error>
     <Ad id="ad1">
         <InLine>
             <AdSystem><![CDATA[Ad Server Name]]></AdSystem>
