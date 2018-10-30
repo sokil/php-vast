@@ -45,19 +45,6 @@ abstract class AbstractAdNode extends AbstractNode
     }
 
     /**
-     * Return type of ad (InLine or Wrapper)
-     *
-     * @return string
-     */
-    public function getType()
-    {
-        $parts = explode('\\', get_class($this));
-        $type = array_pop($parts);
-
-        return $type;
-    }
-
-    /**
      * Instance of "\Vast\Ad\(InLine|Wrapper)" element
      *
      * @return \DOMElement
@@ -160,11 +147,7 @@ abstract class AbstractAdNode extends AbstractNode
      */
     protected function buildCreative($type)
     {
-        // check type
         $creativeClassName = $this->buildCreativeClassName($type);
-        if (!class_exists($creativeClassName)) {
-            throw new \Exception('Wrong creative specified: ' . var_export($creativeClassName, true));
-        }
 
         // get container
         if (!$this->creativesDomElement) {
