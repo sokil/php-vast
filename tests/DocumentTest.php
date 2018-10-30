@@ -462,6 +462,32 @@ class DocumentTest extends AbstractTestCase
     }
 
     /**
+     * @expectedException        \InvalidArgumentException
+     * @expectedExceptionMessage Unknown scalar node NonExistentTag
+     */
+    public function testScalarNodeValue()
+    {
+        $class = new \ReflectionClass('Sokil\Vast\Ad\InLine');
+        $method = $class->getMethod('getScalarNodeValue');
+        $method->setAccessible(true);
+
+        $factory = new Factory();
+        $vastDocument = $factory->fromFile(__DIR__ . '/data/vast.xml');
+
+        // check if loaded
+        $this->assertInstanceOf(
+            'Sokil\Vast\Document',
+            $vastDocument
+        );
+
+        // get first ad section
+        $adSections = $vastDocument->getAdSections();
+        $adSection = $adSections[0];
+
+        $method->invokeArgs($adSection, array('NonExistentTag'));
+    }
+
+    /**
      * VPAID creative test
      */
     public function testVpaidCreative()
