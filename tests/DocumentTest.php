@@ -465,7 +465,7 @@ class DocumentTest extends AbstractTestCase
      * @expectedException        \InvalidArgumentException
      * @expectedExceptionMessage Unknown scalar node NonExistentTag
      */
-    public function testScalarNodeValue()
+    public function testBrokenScalarNodeValue()
     {
         $class = new \ReflectionClass('Sokil\Vast\Ad\InLine');
         $method = $class->getMethod('getScalarNodeValue');
