@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VAST version="2.0">
+    <Ad id="ad1">
+        <InLine>
+            <AdSystem><![CDATA[Ad Server Name]]></AdSystem>
+            <AdTitle><![CDATA[Ad Title]]></AdTitle>
+            <Impression><![CDATA[http://ad.server.com/impression]]></Impression>
+            <Extensions>
+                <Extension type="extension_type"><![CDATA[extension_value]]></Extension>
+            </Extensions>
+        </InLine>
+    </Ad>
+</VAST>
