@@ -209,6 +209,22 @@ abstract class AbstractLinearCreative extends AbstractNode
     }
 
     /**
+     * Get list of VideoClicks->CustomClick urls
+     *
+     * @return array
+     */
+    public function getVideoClicksCustomClick()
+    {
+        $elements = $this->getVideoClicksDomElement()->getElementsByTagName('CustomClick');
+        $result = array();
+        foreach ($elements as $el) {
+            $result[] = $el->nodeValue;
+        }
+
+        return $result;
+    }
+
+    /**
      * Get VideoClicks->ClickThrough url
      *
      * @return string
