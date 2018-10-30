@@ -424,10 +424,16 @@ class DocumentTest extends AbstractTestCase
         $document = $factory->fromFile(__DIR__ . '/data/vast.xml');
 
         self::assertInstanceOf('Sokil\Vast\Document', $document);
+    }
 
+    /**
+     * @expectedException        \Exception
+     * @expectedExceptionMessage Ad type WrongAdSection not supported
+     */
+    public function testFromBrokenFile()
+    {
+        $factory = new Factory();
         $document = $factory->fromFile(__DIR__ . '/data/vastBroken.xml');
-        $this->expectException(\Exception::class);
-        $this->expectExceptionMessage('Ad type WrongAdSection not supported');
         $document->getAdSections();
     }
 
