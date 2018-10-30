@@ -27,6 +27,7 @@ class DocumentTest extends AbstractTestCase
         $ad1
             ->createLinearCreative()
             ->setDuration(128)
+            ->setVideoClicksClickThrough('wrongLink')
             ->setVideoClicksClickThrough('http://entertainmentserver.com/landing')
             ->addVideoClicksClickTracking('http://ad.server.com/videoclicks/clicktracking')
             ->addVideoClicksCustomClick('http://ad.server.com/videoclicks/customclick')
