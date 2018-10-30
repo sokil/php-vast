@@ -441,7 +441,7 @@ class DocumentTest extends AbstractTestCase
      * @expectedException        \Exception
      * @expectedExceptionMessage Wrong event "BrokenEvent" specified
      */
-    public function test()
+    public function testBrokenEvent()
     {
         $factory = new Factory();
         $document = $factory->create('2.0');
