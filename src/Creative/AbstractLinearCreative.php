@@ -341,4 +341,35 @@ abstract class AbstractLinearCreative extends AbstractNode
         
         return $this;
     }
+
+    /**
+     * Get all tracking events
+     *
+     * @return array
+     */
+    public function getTrackingEvents()
+    {
+        $result = array();
+        $trackingDomList = $this->getTrackingEventsDomElement()->getElementsByTagName('Tracking');
+
+        if (0 === $trackingDomList->length) {
+            return $result;
+        }
+
+        /** @var \DOMElement $el */
+        foreach ($trackingDomList as $el) {
+            $eventName = $el->getAttribute('event');
+            if ('' === $eventName) {
+                continue; // skip unlabeled event
+            }
+
+            if (!array_key_exists($eventName, $result)) {
+                $result[$eventName] = array();
+            }
+
+            $result[$eventName][] = $el->nodeValue;
+        }
+
+        return $result;
+    }
 }

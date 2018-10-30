@@ -546,6 +546,69 @@ class DocumentTest extends AbstractTestCase
     }
 
     /**
+     * test tracking events retrieval
+     */
+    public function testTrackingEvents()
+    {
+        $factory = new Factory();
+        $document = $factory->fromFile(__DIR__ . '/data/vastTrackingEvents.xml');
+
+        self::assertInstanceOf('Sokil\Vast\Document', $document);
+
+        $adSections = $document->getAdSections();
+
+        // test with normal tracking events
+        /** @var InLine $adSection */
+        $inlineAd = $adSections[0];
+        $creatives = $inlineAd->getCreatives();
+        /** @var \Sokil\Vast\Creative\AbstractLinearCreative $creative */
+        $creative = $creatives[0];
+        self::assertSame(
+            array(
+                'start' => array('http://ad.server.com/trackingevent/start', ),
+                'pause' => array('http://ad.server.com/trackingevent/pause', ),
+            ),
+            $creative->getTrackingEvents()
+        );
+
+        // test with no tracking events
+        /** @var InLine $adSection */
+        $inlineAd = $adSections[1];
+        $creatives = $inlineAd->getCreatives();
+        /** @var \Sokil\Vast\Creative\AbstractLinearCreative $creative */
+        $creative = $creatives[0];
+        self::assertEquals(
+            array(),
+            $creative->getTrackingEvents()
+        );
+
+        // test with empty tracking events tag
+        /** @var InLine $adSection */
+        $inlineAd = $adSections[2];
+        $creatives = $inlineAd->getCreatives();
+        /** @var \Sokil\Vast\Creative\AbstractLinearCreative $creative */
+        $creative = $creatives[0];
+        self::assertEquals(
+            array(),
+            $creative->getTrackingEvents()
+        );
+
+        // test with multiurls and w/o attribute
+        /** @var InLine $adSection */
+        $inlineAd = $adSections[3];
+        $creatives = $inlineAd->getCreatives();
+        /** @var \Sokil\Vast\Creative\AbstractLinearCreative $creative */
+        $creative = $creatives[0];
+        self::assertEquals(
+            array(
+                'start' => array('http://ad.server.com/trackingevent/start', ),
+                'pause' => array('http://ad.server.com/trackingevent/pause', 'http://ad.server.com/trackingevent/pauseAlt'),
+            ),
+            $creative->getTrackingEvents()
+        );
+    }
+
+    /**
      * @expectedException        \Exception
      * @expectedExceptionMessage Ad type WrongAdSection not supported
      */
