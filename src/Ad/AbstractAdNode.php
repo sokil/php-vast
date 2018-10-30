@@ -35,13 +35,13 @@ abstract class AbstractAdNode extends AbstractNode
     private $extensionsDomElement;
 
     /**
-     * @param \DOMElement $adDomElement instance of \Vast\Ad element
+     * @param \DOMElement $domElement instance of \Vast\Ad\Inline|\Vast\Ad\Wrapper element
      */
-    public function __construct(\DOMElement $adDomElement)
+    public function __construct(\DOMElement $domElement)
     {
-        $this->adDomElement = $adDomElement;
+        $this->adDomElement = $domElement->parentNode;
 
-        $this->domElement = $this->adDomElement->getElementsByTagName($this->getType())->item(0);
+        $this->domElement = $domElement;//$this->adDomElement->getElementsByTagName($this->getType())->item(0);
     }
 
     /**

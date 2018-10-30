@@ -71,47 +71,13 @@ class Document extends AbstractNode
     }
     
     /**
-     * Create "Ad" section on "VAST" node
-     *
-     * @param string $type
-     *
-     * @throws \InvalidArgumentException
-     *
-     * @return AbstractAdNode
-     */
-    private function createAdSection($type)
-    {
-        // Check Ad type
-        $adTypeClassName = '\\Sokil\\Vast\\Ad\\' . $type;
-        if (!class_exists($adTypeClassName)) {
-            throw new \InvalidArgumentException(sprintf('Ad type %s not supported', $type));
-        }
-        
-        // create dom node
-        $adDomElement = $this->domDocument->createElement('Ad');
-        $this->domDocument->documentElement->appendChild($adDomElement);
-
-        // create type element
-        $adTypeDomElement = $this->domDocument->createElement($type);
-        $adDomElement->appendChild($adTypeDomElement);
-        
-        // create ad section
-        $adSection = new $adTypeClassName($adDomElement);
-        
-        // cache
-        $this->vastAdNodeList[] = $adSection;
-        
-        return $adSection;
-    }
-    
-    /**
      * Create inline Ad section
      *
      * @return \Sokil\Vast\Ad\InLine
      */
-    public function createInLineAdSection()
+    public function createInLineAdSection(\DOMElement $domEl = null)
     {
-        return $this->createAdSection('InLine');
+        return $this->createAdSection($this->createAdSectionDomEl('InLine'));
     }
     
     /**
@@ -121,7 +87,57 @@ class Document extends AbstractNode
      */
     public function createWrapperAdSection()
     {
-        return $this->createAdSection('Wrapper');
+        return $this->createAdSection(
+            $this->createAdSectionDomEl('Wrapper')
+        );
+    }
+
+    /**
+     * Create ad node and ad section node of given type
+     *
+     * @param string $type inline|wrapper
+     *
+     * @return \DOMElement
+     */
+    private function createAdSectionDomEl($type)
+    {
+        // create dom node
+        $adDomElement = $this->domDocument->createElement('Ad');
+        $this->domDocument->documentElement->appendChild($adDomElement);
+
+        // create type element
+        $adTypeDomElement = $this->domDocument->createElement($type);
+        $adDomElement->appendChild($adTypeDomElement);
+
+        return $adTypeDomElement;
+    }
+
+    /**
+     * Create ad section object from given DOM node
+     *
+     * @param \DOMElement $domEl
+     *
+     * @return \Sokil\Vast\Ad\InLine|\Sokil\Vast\Ad\Wrapper
+     * @throws \Exception
+     */
+    protected function createAdSection(\DOMElement $domEl)
+    {
+        // create ad section
+        switch (\strtolower($domEl->tagName)) {
+            case 'wrapper':
+                $adSection = new \Sokil\Vast\Ad\Wrapper($domEl);
+                break;
+            case 'inline':
+                $adSection = new \Sokil\Vast\Ad\InLine($domEl);
+                break;
+            default:
+                throw new \Exception('Ad type ' . $domEl->tagName . ' not supported');
+        }
+
+        // cache
+        $this->vastAdNodeList[] = $adSection;
+
+        return $adSection;
     }
 
     /**
@@ -153,15 +169,7 @@ class Document extends AbstractNode
                     continue;
                 }
 
-                $type = $node->tagName;
-
-                // create ad section
-                $adTypeClassName = '\\Sokil\\Vast\\Ad\\' . $type;
-                if (!class_exists($adTypeClassName)) {
-                    throw new \Exception('Ad type ' . $type . ' not supported');
-                }
-
-                $this->vastAdNodeList[] = new $adTypeClassName($adDomElement);
+                $this->createAdSection($node);
             }
         }
         
