@@ -699,5 +699,31 @@ class DocumentTest extends AbstractTestCase
         ;
 
         $this->assertFileVsDocument('vpaid.xml', $document);
+
+        // with adParams update
+        $document = $factory->create('3.0');
+        $ad = $document
+            ->createInLineAdSection()
+            ->setId('test-vpaid')
+            ->setAdSystem('Ad Server Name')
+            ->setAdTitle('VPAIDPreRoll')
+        ;
+        /** @var \Sokil\Vast\Creative\InLine\Linear $creative */
+        $creative = $ad->createLinearCreative();
+        $adParams = $creative
+            ->createAdParameters(array('wrongParams'))
+        ;
+        $adParams->setParams(array(
+            'list' => array(
+                array('param1' => 'value1', 'param2' => 'value2')
+            ),
+        ));
+        $creative->createMediaFile()
+            ->setApiFramework('VPAID')
+            ->setType('application/javascript')
+            ->setUrl('https://example.com/vpaid.js?v434')
+        ;
+
+        $this->assertFileVsDocument('vpaid.xml', $document);
     }
 }
