@@ -193,7 +193,7 @@ abstract class AbstractLinearCreative extends AbstractNode
     }
 
     /**
-     * Get list of VideoClick->ClickTracking urls
+     * Get list of VideoClicks->ClickTracking urls
      *
      * @return array
      */
@@ -206,6 +206,21 @@ abstract class AbstractLinearCreative extends AbstractNode
         }
 
         return $result;
+    }
+
+    /**
+     * Get VideoClicks->ClickThrough url
+     *
+     * @return string
+     */
+    public function getVideoClicksClickThrough()
+    {
+        $elements = $this->getVideoClicksDomElement()->getElementsByTagName('ClickThrough');
+        if ($elements->length) {
+            return $elements->item(0)->nodeValue;
+        }
+
+        return '';
     }
     
     /**

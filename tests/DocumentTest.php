@@ -434,6 +434,7 @@ class DocumentTest extends AbstractTestCase
         self::assertInstanceOf('\\Sokil\\Vast\\Ad\\InLine', $inlineAd);
         $creatives = $inlineAd->getCreatives();
         self::assertTrue(is_array($creatives));
+        /** @var \Sokil\Vast\Creative\AbstractLinearCreative $creative */
         $creative = $creatives[0];
         self::assertInstanceOf('Sokil\Vast\Creative\InLine\Linear', $creative);
         $links = $creative->getVideoClicksClickTracking();
@@ -442,6 +443,10 @@ class DocumentTest extends AbstractTestCase
                 'http://ad.server.com/videoclicks/clicktracking',
             ),
             $links
+        );
+        self::assertEquals(
+            'http://entertainmentserver.com/landing',
+            $creative->getVideoClicksClickThrough()
         );
     }
 
