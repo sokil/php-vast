@@ -278,6 +278,8 @@ class DocumentTest extends AbstractTestCase
             array('//ad.server.com/tracking/error/noad'),
             $document->getErrors()
         );
+
+        self::assertEquals($document->getAdSections(), array());
     }
 
     /**
