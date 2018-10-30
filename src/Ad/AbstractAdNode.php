@@ -191,6 +191,67 @@ abstract class AbstractAdNode extends AbstractNode
         return $creative;
     }
 
+    /**
+     * Load creatives from DOM to cache
+     *
+     * @return void
+     */
+    protected function loadCreativesFromDom()
+    {
+        // get container
+        if (!$this->creativesDomElement) {
+            // get creatives tag
+            $this->creativesDomElement = $this->adDomElement->getElementsByTagName('Creatives')->item(0);
+            if (!$this->creativesDomElement) {
+                $this->creativesDomElement = $this->adDomElement->ownerDocument->createElement('Creatives');
+                $this->getDomElement()->appendChild($this->creativesDomElement);
+            }
+        }
+
+        /** @var \DOMNodeList $creatives */
+        $creatives = $this->creativesDomElement->getElementsByTagName('Creative');
+        if (0 === $creatives->length) {
+            return;
+        }
+        foreach ($creatives as $creative) {
+            if (0 === $creative->childNodes->length) {
+                continue; // skip empty <Creative/>
+            }
+            $el = new \DOMText();
+            foreach ($creative->childNodes as $childNode) {
+                // skip whitespace..
+                if (!($childNode instanceof \DOMText)) {
+                    $el = $childNode;
+                    break; // .. and stop at first non text node, as there should be only one such child
+                }
+            }
+
+            if ($el instanceof \DOMText) {
+                continue; // skip <Creative>    </Creative>
+            }
+
+            // reuse variable from foreach
+            $creativeClassName = $this->buildCreativeClassName($el->tagName);
+
+            $creative = new $creativeClassName($el);
+            $this->creatives[] = $creative;
+        }
+    }
+
+    /**
+     * Get creatives list
+     *
+     * @return array
+     */
+    public function getCreatives()
+    {
+        if (empty($this->creatives)) {
+            $this->loadCreativesFromDom();
+        }
+
+        return $this->creatives;
+    }
+
         /**
      * Add Error tracking url.
      * Allowed multiple error elements.

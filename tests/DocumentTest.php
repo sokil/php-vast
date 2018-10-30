@@ -425,6 +425,24 @@ class DocumentTest extends AbstractTestCase
         $document = $factory->fromFile(__DIR__ . '/data/vast.xml');
 
         self::assertInstanceOf('Sokil\Vast\Document', $document);
+
+        $adSections = $document->getAdSections();
+        $this->assertCount(1, $adSections);
+
+        /** @var InLine $adSection */
+        $inlineAd = $adSections[0];
+        self::assertInstanceOf('\\Sokil\\Vast\\Ad\\InLine', $inlineAd);
+        $creatives = $inlineAd->getCreatives();
+        self::assertTrue(is_array($creatives));
+        $creative = $creatives[0];
+        self::assertInstanceOf('Sokil\Vast\Creative\InLine\Linear', $creative);
+        $links = $creative->getVideoClicksClickTracking();
+        self::assertEquals(
+            array(
+                'http://ad.server.com/videoclicks/clicktracking',
+            ),
+            $links
+        );
     }
 
     /**

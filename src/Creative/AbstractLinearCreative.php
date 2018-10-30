@@ -191,6 +191,22 @@ abstract class AbstractLinearCreative extends AbstractNode
 
         return $this;
     }
+
+    /**
+     * Get list of VideoClick->ClickTracking urls
+     *
+     * @return array
+     */
+    public function getVideoClicksClickTracking()
+    {
+        $elements = $this->getVideoClicksDomElement()->getElementsByTagName('ClickTracking');
+        $result = array();
+        foreach ($elements as $el) {
+            $result[] = $el->nodeValue;
+        }
+
+        return $result;
+    }
     
     /**
      * Add custom click url
