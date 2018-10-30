@@ -456,6 +456,96 @@ class DocumentTest extends AbstractTestCase
     }
 
     /**
+     * test cases with empty creatives
+     */
+    public function testEmptyCreatives()
+    {
+        $factory = new Factory();
+        $document = $factory->fromFile(__DIR__ . '/data/vastEmpty.xml');
+
+        self::assertInstanceOf('Sokil\Vast\Document', $document);
+
+        $adSections = $document->getAdSections();
+        $this->assertCount(4, $adSections);
+
+        // <creatives> with spaces
+        /** @var InLine $adSection */
+        $inlineAd = $adSections[0];
+        self::assertInstanceOf('\\Sokil\\Vast\\Ad\\InLine', $inlineAd);
+        $creatives = $inlineAd->getCreatives();
+        self::assertTrue(is_array($creatives));
+
+        // <creatives> w/o spaces
+        /** @var InLine $adSection */
+        $inlineAd = $adSections[1];
+        self::assertInstanceOf('\\Sokil\\Vast\\Ad\\InLine', $inlineAd);
+        $creatives = $inlineAd->getCreatives();
+        self::assertTrue(is_array($creatives));
+
+        // w/o creatives
+        /** @var InLine $adSection */
+        $inlineAd = $adSections[2];
+        self::assertInstanceOf('\\Sokil\\Vast\\Ad\\InLine', $inlineAd);
+        $creatives = $inlineAd->getCreatives();
+        self::assertTrue(is_array($creatives));
+
+        // with empty creatives
+        /** @var InLine $adSection */
+        $inlineAd = $adSections[3];
+        self::assertInstanceOf('\\Sokil\\Vast\\Ad\\InLine', $inlineAd);
+        $creatives = $inlineAd->getCreatives();
+        self::assertTrue(is_array($creatives));
+    }
+
+    /**
+     * test empty videoclicks conditions
+     */
+    public function testEmptyVideoClicks()
+    {
+        $factory = new Factory();
+        $document = $factory->fromFile(__DIR__ . '/data/vastEmptyVideoClicks.xml');
+
+        self::assertInstanceOf('Sokil\Vast\Document', $document);
+
+        $adSections = $document->getAdSections();
+        /** @var InLine $adSection */
+        $inlineAd = $adSections[0];
+        $creatives = $inlineAd->getCreatives();
+
+        // test with empty VideoClicks tag
+        /** @var \Sokil\Vast\Creative\AbstractLinearCreative $creative */
+        $creative = $creatives[0];
+        self::assertEquals(
+            array(), $creative->getVideoClicksCustomClick()
+        );
+        self::assertEquals(
+            array(),
+            $creative->getVideoClicksCustomClick()
+        );
+        self::assertEquals(
+            '',
+            $creative->getVideoClicksClickThrough()
+        );
+
+        // test w/o VideoClicks tag/** @var InLine $adSection */
+        $inlineAd = $adSections[1];
+        $creatives = $inlineAd->getCreatives();
+        /** @var \Sokil\Vast\Creative\AbstractLinearCreative $creative */
+        $creative = $creatives[0];
+        self::assertEquals(
+            array(), $creative->getVideoClicksCustomClick()
+        );
+        self::assertEquals(
+            array(),
+            $creative->getVideoClicksCustomClick()
+        );
+        self::assertEquals(
+            '',
+            $creative->getVideoClicksClickThrough()
+        );
+    }
+
+    /**
      * @expectedException        \Exception
      * @expectedExceptionMessage Ad type WrongAdSection not supported
      */

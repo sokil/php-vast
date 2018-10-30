@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VAST version="4.0">
+    <Error><![CDATA[//ad.server.com/tracking/error/noad]]></Error>
+    <Ad id="ad0">
+        <InLine>
+            <AdSystem><![CDATA[Ad Server Name]]></AdSystem>
+            <AdTitle><![CDATA[Ad Title]]></AdTitle>
+            <Impression id="imp1"><![CDATA[http://ad.server.com/impression1]]></Impression>
+            <Impression id="imp2"><![CDATA[http://ad.server.com/impression2]]></Impression>
+            <Impression id="imp3"><![CDATA[http://ad.server.com/impression3]]></Impression>
+            <Creatives>
+            </Creatives>
+        </InLine>
+    </Ad>
+    <Ad id="ad1">
+        <InLine>
+            <AdSystem><![CDATA[Ad Server Name]]></AdSystem>
+            <AdTitle><![CDATA[Ad Title]]></AdTitle>
+            <Impression id="imp1"><![CDATA[http://ad.server.com/impression1]]></Impression>
+            <Impression id="imp2"><![CDATA[http://ad.server.com/impression2]]></Impression>
+            <Impression id="imp3"><![CDATA[http://ad.server.com/impression3]]></Impression>
+            <Creatives></Creatives>
+        </InLine>
+    </Ad>
+    <Ad id="ad2">
+        <InLine>
+            <AdSystem><![CDATA[Ad Server Name]]></AdSystem>
+            <AdTitle><![CDATA[Ad Title]]></AdTitle>
+            <Impression id="imp1"><![CDATA[http://ad.server.com/impression1]]></Impression>
+            <Impression id="imp2"><![CDATA[http://ad.server.com/impression2]]></Impression>
+            <Impression id="imp3"><![CDATA[http://ad.server.com/impression3]]></Impression>
+        </InLine>
+    </Ad>
+    <Ad id="ad3">
+        <InLine>
+            <AdSystem><![CDATA[Ad Server Name]]></AdSystem>
+            <AdTitle><![CDATA[Ad Title]]></AdTitle>
+            <Impression id="imp1"><![CDATA[http://ad.server.com/impression1]]></Impression>
+            <Impression id="imp2"><![CDATA[http://ad.server.com/impression2]]></Impression>
+            <Impression id="imp3"><![CDATA[http://ad.server.com/impression3]]></Impression>
+            <Creatives>
+                <Creative></Creative>
+                <Creative>    </Creative>
+            </Creatives>
+        </InLine>
+    </Ad>
+</VAST>
