@@ -14,7 +14,9 @@
     "require-dev": {
         "phpunit/phpunit": "^4.8 | ^6.5",
         "satooshi/php-coveralls": ">=0.7.1 <2.0",
-        "squizlabs/php_codesniffer": "^2.3"
+        "squizlabs/php_codesniffer": "^2.3",
+        "InteractiveAdvertisingBureau/VAST_Samples": "dev-master"
+
     },
     "autoload": {
         "psr-4": {
@@ -26,6 +28,19 @@
         "cover": "./vendor/bin/phpunit -c ./tests/phpunit.xml --coverage-clover build/logs/clover.xml",
         "coveralls": "coveralls -v",
         "check-style": "./vendor/bin/phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src",
-        "fix-style": "./vendor/bin/phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src"
-    }
+        "fix-style": "./vendor/bin/phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src",
+        "post-install-cmd": "rm -f tests/data/iab && ln -s ../../vendor/InteractiveAdvertisingBureau/VAST_Samples tests/data/iab"
+    },
+    "repositories": [{
+        "type": "package",
+        "package": {
+            "name": "InteractiveAdvertisingBureau/VAST_Samples",
+            "version": "master",
+            "source": {
+                "url": "https://github.com/InteractiveAdvertisingBureau/VAST_Samples",
+                "type": "git",
+                "reference": "master"
+            }
+        }
+    }]
 }
