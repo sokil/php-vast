@@ -420,6 +420,15 @@ class DocumentTest extends AbstractTestCase
         $document = $factory->create('2.0');
 
         $this->assertInstanceOf('Sokil\Vast\Document', $document::fromFile(__DIR__ . '/data/vast.xml'));
+
+        $document = $factory->fromFile(__DIR__ . '/data/vast.xml');
+
+        self::assertInstanceOf('Sokil\Vast\Document', $document);
+
+        $document = $factory->fromFile(__DIR__ . '/data/vastBroken.xml');
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Ad type WrongAdSection not supported');
+        $document->getAdSections();
     }
 
     /**

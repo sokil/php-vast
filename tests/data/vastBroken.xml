@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VAST version="4.0">
+    <Error><![CDATA[//ad.server.com/tracking/error/noad]]></Error>
+    <Ad id="ad1">
+        <InLine>
+            <AdSystem><![CDATA[Ad Server Name]]></AdSystem>
+            <AdTitle><![CDATA[Ad Title]]></AdTitle>
+            <Impression id="imp1"><![CDATA[http://ad.server.com/impression1]]></Impression>
+            <Impression id="imp2"><![CDATA[http://ad.server.com/impression2]]></Impression>
+            <Impression id="imp3"><![CDATA[http://ad.server.com/impression3]]></Impression>
+            <Creatives>
+                <Creative>
+                    <Linear>
+                        <Duration>00:02:08</Duration>
+                        <VideoClicks>
+                            <ClickThrough><![CDATA[http://entertainmentserver.com/landing]]></ClickThrough>
+                            <ClickTracking><![CDATA[http://ad.server.com/videoclicks/clicktracking]]></ClickTracking>
+                            <CustomClick><![CDATA[http://ad.server.com/videoclicks/customclick]]></CustomClick>
+                        </VideoClicks>
+                        <TrackingEvents>
+                            <Tracking event="start"><![CDATA[http://ad.server.com/trackingevent/start]]></Tracking>
+                            <Tracking event="pause"><![CDATA[http://ad.server.com/trackingevent/stop]]></Tracking>
+                        </TrackingEvents>
+                        <MediaFiles>
+                            <MediaFile delivery="progressive" type="video/mp4" height="100" width="100" bitrate="2500">
+                                <![CDATA[http://server.com/media1.mp4]]>
+                            </MediaFile>
+                            <MediaFile delivery="progressive" type="video/mp4" height="200" width="200" bitrate="2500">
+                                <![CDATA[http://server.com/media2.mp4]]>
+                            </MediaFile>
+                        </MediaFiles>
+                    </Linear>
+                </Creative>
+            </Creatives>
+        </InLine>
+    </Ad>
+    <Ad id="ad2">
+        <WrongAdSection>
+            <AdSystem><![CDATA[Ad Server Name]]></AdSystem>
+            <AdTitle><![CDATA[Ad Title]]></AdTitle>
+        </WrongAdSection>
+    </Ad>
+</VAST>
