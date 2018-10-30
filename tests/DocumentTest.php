@@ -438,6 +438,30 @@ class DocumentTest extends AbstractTestCase
     }
 
     /**
+     * @expectedException        \Exception
+     * @expectedExceptionMessage Wrong event "BrokenEvent" specified
+     */
+    public function test()
+    {
+        $factory = new Factory();
+        $document = $factory->create('2.0');
+
+        // insert Ad section
+        $ad1 = $document
+            ->createInLineAdSection()
+            ->setId('ad1')
+            ->setAdSystem('Ad Server Name')
+            ->setAdTitle('Ad Title')
+            ->addImpression('http://ad.server.com/impression', 'imp1');
+
+        // create creative for ad section
+        $ad1
+            ->createLinearCreative()
+            ->addTrackingEvent('BrokenEvent', 'http://ad.server.com/trackingevent/BrokenEvent')
+        ;
+    }
+
+    /**
      * VPAID creative test
      */
     public function testVpaidCreative()
