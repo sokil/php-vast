@@ -1,3 +1,6 @@
+## 0.5.1 (2018-10-31)
+  * Allow specify `adParameter` and `apiFramework`. 
+
 ## 0.4.8 (2018-06-29)
   * Fixed 'Document::getAdSections()'. Previously root DOM element was set to first child which may be text node. Now it points to `InLine` or `Wrapper` element.
   * Now may be specified id of `Impression` in `AbstractAdNode::addImpression`
