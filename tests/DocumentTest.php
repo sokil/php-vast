@@ -432,22 +432,23 @@ class DocumentTest extends AbstractTestCase
             ->createInLineAdSection()
             ->setId('test-vpaid')
             ->setAdSystem('Ad Server Name')
-            ->setAdTitle('VPAIDPreRoll')
-        ;
-        /** @var \Sokil\Vast\Creative\InLine\Linear $creative */
+            ->setAdTitle('VPAIDPreRoll');
+
         $creative = $ad->createLinearCreative();
         $creative
-            ->createAdParameters(array(
+            ->setAdParameters(array(
+                'param' => 42,
+            ))
+            ->setAdParameters(array(
                 'list' => array(
                     array('param1' => 'value1', 'param2' => 'value2')
                 ),
-            ))
-        ;
+            ));
+
         $creative->createMediaFile()
             ->setApiFramework('VPAID')
             ->setType('application/javascript')
-            ->setUrl('https://example.com/vpaid.js?v434')
-        ;
+            ->setUrl('https://example.com/vpaid.js?v434');
 
         $this->assertFileVsDocument('vpaid.xml', $document);
     }

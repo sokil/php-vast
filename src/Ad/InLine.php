@@ -2,7 +2,6 @@
 
 namespace Sokil\Vast\Ad;
 
-use Sokil\Vast\Creative\AbstractLinearCreative;
 use Sokil\Vast\Creative\InLine\Linear;
 
 class InLine extends AbstractAdNode
@@ -12,7 +11,7 @@ class InLine extends AbstractAdNode
      *
      * @param string $value
      *
-     * @return \Sokil\Vast\Ad\InLine
+     * @return InLine
      */
     public function setAdTitle($value)
     {
@@ -33,10 +32,14 @@ class InLine extends AbstractAdNode
      * Create Linear creative
      *
      * @throws \Exception
-     * @return AbstractLinearCreative
+     *
+     * @return Linear
      */
     public function createLinearCreative()
     {
-        return $this->buildCreative('Linear');
+        /** @var Linear $creative */
+        $creative = $this->buildCreative('Linear');
+
+        return $creative;
     }
 }

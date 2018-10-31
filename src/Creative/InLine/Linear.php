@@ -69,9 +69,9 @@ class Linear extends AbstractLinearCreative
     /**
      * @param array|string $params
      *
-     * @return AdParameters
+     * @return self
      */
-    public function createAdParameters($params)
+    public function setAdParameters($params)
     {
         $this->adParametersDomElement = $this->getDomElement()->getElementsByTagName('AdParameters')->item(0);
         if (!$this->adParametersDomElement) {
@@ -79,10 +79,21 @@ class Linear extends AbstractLinearCreative
             $this->getDomElement()->firstChild->appendChild($this->adParametersDomElement);
         }
 
-        // object
-        $adParams = new AdParameters($this->adParametersDomElement);
+        if (is_array($params)) {
+            $params = json_encode($params);
+        }
 
-        return $adParams->setParams($params);
+        $cdata = $this->adParametersDomElement->ownerDocument->createCDATASection($params);
+
+        // update CData
+        if ($this->adParametersDomElement->hasChildNodes()) {
+            $this->adParametersDomElement->replaceChild($cdata, $this->adParametersDomElement->firstChild);
+        } // insert CData
+        else {
+            $this->adParametersDomElement->appendChild($cdata);
+        }
+
+        return $this;
     }
 
     /**
