@@ -17,6 +17,7 @@
                         <TrackingEvents>
                             <Tracking event="start"><![CDATA[http://ad.server.com/trackingevent/start]]></Tracking>
                             <Tracking event="pause"><![CDATA[http://ad.server.com/trackingevent/stop]]></Tracking>
+                            <Tracking event="progress" offset="00:00:10"><![CDATA[http://ad.server.com/trackingevent/progress]]></Tracking>
                         </TrackingEvents>
                         <MediaFiles>
                             <MediaFile delivery="progressive" type="video/mp4" height="100" width="100" bitrate="600">

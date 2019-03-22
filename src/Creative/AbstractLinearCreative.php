@@ -271,11 +271,12 @@ abstract class AbstractLinearCreative extends AbstractNode
     /**
      * @param string $event
      * @param string $url
+     * @param string $offset
      *
      * @return $this
      * @throws \Exception
      */
-    public function addTrackingEvent($event, $url)
+    public function addTrackingEvent($event, $url, $offset = null)
     {
         if (!in_array($event, $this->getEventList())) {
             throw new \Exception(sprintf('Wrong event "%s" specified', $event));
@@ -287,11 +288,49 @@ abstract class AbstractLinearCreative extends AbstractNode
         
         // add event attribute
         $trackingDomElement->setAttribute('event', $event);
-        
+
+        // add offset attribute
+        if (isset($offset)) {
+            if (is_numeric($offset)) {
+                $offset = $this->secondsToString($offset);
+            }
+            $trackingDomElement->setAttribute('offset', $offset);
+        }
+
         // create cdata
         $cdata = $this->linearCreativeDomElement->ownerDocument->createCDATASection($url);
         $trackingDomElement->appendChild($cdata);
         
         return $this;
     }
+
+
+    /**
+     * Convert seconds to H:m:i
+     * Hours could be more than 24
+     *
+     * @param mixed $seconds
+     *
+     * @return string
+     */
+    protected function secondsToString($seconds)
+    {
+        $seconds = (int) $seconds;
+
+        $time = array();
+
+        // get hours
+        $hours = floor($seconds / 3600);
+        $time[] = str_pad($hours, 2, '0', STR_PAD_LEFT);
+
+        // get minutes
+        $seconds = $seconds % 3600;
+        $time[] = str_pad(floor($seconds / 60), 2, '0', STR_PAD_LEFT);
+
+        // get seconds
+        $time[] = str_pad($seconds % 60, 2, '0', STR_PAD_LEFT);
+
+        return implode(':', $time);
+    }
+
 }
