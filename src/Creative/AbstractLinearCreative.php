@@ -297,7 +297,7 @@ abstract class AbstractLinearCreative extends AbstractNode
 
     /**
      * @param string $url
-     * @param int|string $offset seconds or time in format "H:m:i"
+     * @param int|string $offset seconds or time in format "H:m:i" or percents in format "n%"
      *
      * @return $this
      */
