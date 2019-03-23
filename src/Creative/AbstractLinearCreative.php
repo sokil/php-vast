@@ -271,12 +271,11 @@ abstract class AbstractLinearCreative extends AbstractNode
     /**
      * @param string $event
      * @param string $url
-     * @param string $offset
      *
      * @return $this
      * @throws \Exception
      */
-    public function addTrackingEvent($event, $url, $offset = null)
+    public function addTrackingEvent($event, $url)
     {
         if (!in_array($event, $this->getEventList())) {
             throw new \Exception(sprintf('Wrong event "%s" specified', $event));
@@ -289,21 +288,40 @@ abstract class AbstractLinearCreative extends AbstractNode
         // add event attribute
         $trackingDomElement->setAttribute('event', $event);
 
+        // create cdata
+        $cdata = $this->linearCreativeDomElement->ownerDocument->createCDATASection($url);
+        $trackingDomElement->appendChild($cdata);
+
+        return $this;
+    }
+
+    /**
+     * @param string $url
+     * @param int|string $offset seconds or time in format "H:m:i"
+     *
+     * @return $this
+     */
+    public function addProgressTrackingEvent($url, $offset)
+    {
+        // create Tracking
+        $trackingDomElement = $this->linearCreativeDomElement->ownerDocument->createElement('Tracking');
+        $this->getTrackingEventsDomElement()->appendChild($trackingDomElement);
+
+        // add event attribute
+        $trackingDomElement->setAttribute('event', self::EVENT_TYPE_PROGRESS);
+
         // add offset attribute
-        if (isset($offset)) {
-            if (is_numeric($offset)) {
-                $offset = $this->secondsToString($offset);
-            }
-            $trackingDomElement->setAttribute('offset', $offset);
+        if (is_numeric($offset)) {
+            $offset = $this->secondsToString($offset);
         }
+        $trackingDomElement->setAttribute('offset', $offset);
 
         // create cdata
         $cdata = $this->linearCreativeDomElement->ownerDocument->createCDATASection($url);
         $trackingDomElement->appendChild($cdata);
-        
+
         return $this;
     }
-
 
     /**
      * Convert seconds to H:m:i
@@ -332,5 +350,4 @@ abstract class AbstractLinearCreative extends AbstractNode
 
         return implode(':', $time);
     }
-
 }
