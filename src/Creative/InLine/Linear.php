@@ -97,34 +97,6 @@ class Linear extends AbstractLinearCreative
     }
 
     /**
-     * Convert seconds to H:m:i
-     * Hours could be more than 24
-     *
-     * @param mixed $seconds
-     *
-     * @return string
-     */
-    private function secondsToString($seconds)
-    {
-        $seconds = (int) $seconds;
-
-        $time = array();
-
-        // get hours
-        $hours = floor($seconds / 3600);
-        $time[] = str_pad($hours, 2, '0', STR_PAD_LEFT);
-
-        // get minutes
-        $seconds = $seconds % 3600;
-        $time[] = str_pad(floor($seconds / 60), 2, '0', STR_PAD_LEFT);
-
-        // get seconds
-        $time[] = str_pad($seconds % 60, 2, '0', STR_PAD_LEFT);
-
-        return implode(':', $time);
-    }
-
-    /**
      * @param int|string $time seconds or time in format "H:m:i"
      * @return $this
      */

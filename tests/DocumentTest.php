@@ -32,6 +32,7 @@ class DocumentTest extends AbstractTestCase
             ->addVideoClicksCustomClick('http://ad.server.com/videoclicks/customclick')
             ->addTrackingEvent('start', 'http://ad.server.com/trackingevent/start')
             ->addTrackingEvent('pause', 'http://ad.server.com/trackingevent/stop')
+            ->addProgressTrackingEvent('http://ad.server.com/trackingevent/progress', 10)
             ->createMediaFile()
                 ->setProgressiveDelivery()
                 ->setType('video/mp4')

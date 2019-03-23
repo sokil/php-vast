@@ -287,11 +287,67 @@ abstract class AbstractLinearCreative extends AbstractNode
         
         // add event attribute
         $trackingDomElement->setAttribute('event', $event);
-        
+
         // create cdata
         $cdata = $this->linearCreativeDomElement->ownerDocument->createCDATASection($url);
         $trackingDomElement->appendChild($cdata);
-        
+
         return $this;
+    }
+
+    /**
+     * @param string $url
+     * @param int|string $offset seconds or time in format "H:m:i" or percents in format "n%"
+     *
+     * @return $this
+     */
+    public function addProgressTrackingEvent($url, $offset)
+    {
+        // create Tracking
+        $trackingDomElement = $this->linearCreativeDomElement->ownerDocument->createElement('Tracking');
+        $this->getTrackingEventsDomElement()->appendChild($trackingDomElement);
+
+        // add event attribute
+        $trackingDomElement->setAttribute('event', self::EVENT_TYPE_PROGRESS);
+
+        // add offset attribute
+        if (is_numeric($offset)) {
+            $offset = $this->secondsToString($offset);
+        }
+        $trackingDomElement->setAttribute('offset', $offset);
+
+        // create cdata
+        $cdata = $this->linearCreativeDomElement->ownerDocument->createCDATASection($url);
+        $trackingDomElement->appendChild($cdata);
+
+        return $this;
+    }
+
+    /**
+     * Convert seconds to H:m:i
+     * Hours could be more than 24
+     *
+     * @param mixed $seconds
+     *
+     * @return string
+     */
+    protected function secondsToString($seconds)
+    {
+        $seconds = (int) $seconds;
+
+        $time = array();
+
+        // get hours
+        $hours = floor($seconds / 3600);
+        $time[] = str_pad($hours, 2, '0', STR_PAD_LEFT);
+
+        // get minutes
+        $seconds = $seconds % 3600;
+        $time[] = str_pad(floor($seconds / 60), 2, '0', STR_PAD_LEFT);
+
+        // get seconds
+        $time[] = str_pad($seconds % 60, 2, '0', STR_PAD_LEFT);
+
+        return implode(':', $time);
     }
 }
