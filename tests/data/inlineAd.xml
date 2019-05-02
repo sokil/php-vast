@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<VAST version="2.0">
+<VAST version="4.1">
     <Ad id="ad1">
         <InLine>
             <AdSystem><![CDATA[Ad Server Name]]></AdSystem>
@@ -7,6 +7,7 @@
             <Impression id="imp1"><![CDATA[http://ad.server.com/impression]]></Impression>
             <Creatives>
                 <Creative>
+                    <UniversalAdId idRegistry="vendin.org">15051996</UniversalAdId>
                     <Linear>
                         <Duration>00:02:08</Duration>
                         <VideoClicks>
