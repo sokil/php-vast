@@ -115,12 +115,17 @@ class Linear extends AbstractLinearCreative
     }
 
 
+    /**
+     * @param int|string $idRegistry
+     * @param int|string $universalAdId
+     * @return $this
+     */
     public function setUniversalAdId($idRegistry, $universalAdId)
     {
-        $durationDomElement = $this->getDomElement()->ownerDocument->createElement('UniversalAdId');
-        $durationDomElement->nodeValue = $universalAdId;
-        $durationDomElement->setAttribute("idRegistry", $idRegistry);
-        $this->getDomElement()->insertBefore($durationDomElement, $this->getDomElement()->firstChild);
+        $universalAdIdDomElement = $this->getDomElement()->ownerDocument->createElement('UniversalAdId');
+        $universalAdIdDomElement->nodeValue = $universalAdId;
+        $universalAdIdDomElement->setAttribute("idRegistry", $idRegistry);
+        $this->getDomElement()->insertBefore($universalAdIdDomElement, $this->getDomElement()->firstChild);
 
         return $this;
     }
