@@ -2,49 +2,27 @@
 
 namespace Sokil\Vast;
 
-use Sokil\Vast\Document;
-
 abstract class AbstractTestCase extends \PHPUnit\Framework\TestCase
 {
     /**
-     * Minify XML
+     * @param string $filename
      *
-     * @param string $xml
      * @return string
      */
-    protected function minifyXml($xml)
+    private function getFullXMLFixturePath($filename)
     {
-        $document = new \DOMDocument();
-        $document->preserveWhiteSpace = false;
-        $document->loadXML($xml);
-
-        return $document->saveXML();
+        return __DIR__ . '/data/' . $filename;
     }
 
     /**
-     * Get minified xml string using file from data/ dir
-     *
-     * @param $filename
-     * @return string
+     * @param $expectedXml
+     * @param $actualXml
      */
-    protected function minifiedXmlFromData($filename)
+    protected function assertVastDocumentSameWithXmlFixture($expectedXmlFixturePath, Document $actualXmlDomDocument)
     {
-        $xml = file_get_contents(__DIR__ . '/data/' . $filename);
-
-        return $this->minifyXml($xml);
-    }
-
-    /**
-     * Assert xml equals between file from data/ dir and given Document
-     *
-     * @param string   $filename
-     * @param Document $document
-     */
-    protected function assertFileVsDocument($filename, Document $document)
-    {
-        self::assertEquals(
-            $this->minifiedXmlFromData($filename),
-            (string) $document
+        $this->assertXmlStringEqualsXmlFile(
+            $this->getFullXMLFixturePath($expectedXmlFixturePath),
+            $actualXmlDomDocument->toDomDocument()
         );
     }
 }

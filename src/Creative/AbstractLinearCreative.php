@@ -90,6 +90,8 @@ abstract class AbstractLinearCreative extends AbstractNode
     const EVENT_TYPE_PROGRESS = 'progress';
 
     /**
+     * Dom Element of <Creative></Creative>
+     *
      * @var \DOMElement
      */
     private $linearCreativeDomElement;

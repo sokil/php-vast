@@ -41,7 +41,29 @@ class DocumentTest extends AbstractTestCase
                 ->setBitrate(600)
                 ->setUrl('http://server.com/media.mp4');
 
-        $this->assertFileVsDocument('inlineAd.xml', $document);
+        $this->assertVastDocumentSameWithXmlFixture('inlineAd.xml', $document);
+    }
+
+    /**
+     * Test for inline ad
+     */
+    public function testReplaceVideoClicksClickThrough()
+    {
+        $factory = new Factory();
+        $document = $factory->create('2.0');
+
+        // insert Ad section
+        $ad1 = $document->createInLineAdSection();
+
+        // create creative for ad section
+        $ad1->createLinearCreative()
+            ->setVideoClicksClickThrough('http://entertainmentserver.com/landing1')
+            ->setVideoClicksClickThrough('http://entertainmentserver.com/landing2');
+
+        $this->assertVastDocumentSameWithXmlFixture(
+            'replacedClickThrough.xml',
+            $document
+        );
     }
 
     /**
@@ -107,7 +129,7 @@ class DocumentTest extends AbstractTestCase
             ->createLinearCreative()
             ->skipAfter(1519203721);
 
-        $this->assertFileVsDocument('linearCreativeWithSkipAfter.xml', $document);
+        $this->assertVastDocumentSameWithXmlFixture('linearCreativeWithSkipAfter.xml', $document);
     }
 
     /**
@@ -127,7 +149,7 @@ class DocumentTest extends AbstractTestCase
             ->addImpression('http://ad.server.com/impression');
         $ad1->createLinearCreative()->createMediaFile()->setStreamingDelivery();
 
-        $this->assertFileVsDocument('linearCreativeWithStreamingDelivery.xml', $document);
+        $this->assertVastDocumentSameWithXmlFixture('linearCreativeWithStreamingDelivery.xml', $document);
     }
 
     /**
@@ -147,7 +169,7 @@ class DocumentTest extends AbstractTestCase
             ->addImpression('http://ad.server.com/impression');
         $ad1->createLinearCreative()->createMediaFile()->setDelivery('progressive');
 
-        $this->assertFileVsDocument('adWithDelivery.xml', $document);
+        $this->assertVastDocumentSameWithXmlFixture('adWithDelivery.xml', $document);
     }
 
     /**
@@ -203,7 +225,7 @@ class DocumentTest extends AbstractTestCase
             ->addImpression('http://ad.server.com/impression');
         $ad1->addExtension('extension_type', 'extension_value');
 
-        $this->assertFileVsDocument('inlineAdWithExtension.xml', $document);
+        $this->assertVastDocumentSameWithXmlFixture('inlineAdWithExtension.xml', $document);
 
         $document = $factory->create('2.0');
 
@@ -216,7 +238,7 @@ class DocumentTest extends AbstractTestCase
             ->addImpression('http://ad.server.com/impression');
         $ad1->addExtension('extension_type', 'extension_value');
 
-        $this->assertFileVsDocument('wrapperAdWithExtension.xml', $document);
+        $this->assertVastDocumentSameWithXmlFixture('wrapperAdWithExtension.xml', $document);
     }
 
     /**
@@ -261,7 +283,7 @@ class DocumentTest extends AbstractTestCase
                 ->addTrackingEvent('start', '//ad.server.com/trackingevent/start')
                 ->addTrackingEvent('pause', '//ad.server.com/trackingevent/stop');
 
-        $this->assertFileVsDocument('wrapper.xml', $document);
+        $this->assertVastDocumentSameWithXmlFixture('wrapper.xml', $document);
     }
 
     /**
@@ -273,7 +295,7 @@ class DocumentTest extends AbstractTestCase
         $document = $factory->create('3.0');
         $document->addErrors('//ad.server.com/tracking/error/noad');
 
-        $this->assertFileVsDocument('error.xml', $document);
+        $this->assertVastDocumentSameWithXmlFixture('error.xml', $document);
 
         $this->assertEquals(
             array('//ad.server.com/tracking/error/noad'),
@@ -298,7 +320,7 @@ class DocumentTest extends AbstractTestCase
             ->setVASTAdTagURI('//entertainmentserver.com/vast1.xml')
             ->addError('//ad.server.com/tracking/error');
 
-        $this->assertFileVsDocument('errorInWrapper.xml', $document);
+        $this->assertVastDocumentSameWithXmlFixture('errorInWrapper.xml', $document);
 
         $this->assertEquals(
             array('//ad.server.com/tracking/error'),
@@ -322,7 +344,7 @@ class DocumentTest extends AbstractTestCase
             ->setAdSystem('Ad Server Name')
             ->addError('//ad.server.com/tracking/error');
 
-        $this->assertFileVsDocument('errorInInline.xml', $document);
+        $this->assertVastDocumentSameWithXmlFixture('errorInInline.xml', $document);
 
         $this->assertEquals(
             array('//ad.server.com/tracking/error'),
@@ -348,7 +370,7 @@ class DocumentTest extends AbstractTestCase
             ->addImpression('//ad.server.com/tracking/impression1')
             ->addImpression('//ad.server.com/tracking/impression2');
 
-        $this->assertFileVsDocument('impressionInWrapper.xml', $document);
+        $this->assertVastDocumentSameWithXmlFixture('impressionInWrapper.xml', $document);
 
         $this->assertEquals(
             array(
@@ -451,6 +473,6 @@ class DocumentTest extends AbstractTestCase
             ->setType('application/javascript')
             ->setUrl('https://example.com/vpaid.js?v434');
 
-        $this->assertFileVsDocument('vpaid.xml', $document);
+        $this->assertVastDocumentSameWithXmlFixture('vpaid.xml', $document);
     }
 }

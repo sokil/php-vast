@@ -176,11 +176,11 @@ abstract class AbstractAdNode extends AbstractNode
             }
         }
 
-        // Creative dom element
+        // Creative dom element: <Creative></Creative>
         $creativeDomElement = $this->creativesDomElement->ownerDocument->createElement('Creative');
         $this->creativesDomElement->appendChild($creativeDomElement);
 
-        // Creative type dom element
+        // Creative type dom element: <Creative><Linear></Linear></Creative>
         $creativeTypeDomElement = $this->adDomElement->ownerDocument->createElement($type);
         $creativeDomElement->appendChild($creativeTypeDomElement);
 
