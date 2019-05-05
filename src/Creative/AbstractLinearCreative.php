@@ -115,6 +115,8 @@ abstract class AbstractLinearCreative extends AbstractNode
     }
 
     /**
+     * Dom Element of <Creative></Creative>
+     *
      * @return \DOMElement
      */
     protected function getDomElement()
