@@ -116,6 +116,10 @@ class Linear extends AbstractLinearCreative
 
 
     /**
+     * <UniversalAdId> required element for the purpose of tracking ad creative, he added in VAST 4.0 spec.
+     * Paragraph 3.7.1
+     * https://iabtechlab.com/wp-content/uploads/2018/11/VAST4.1-final-Nov-8-2018.pdf
+     *
      * @param int|string $idRegistry
      * @param int|string $universalAdId
      * @return $this
