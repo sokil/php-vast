@@ -31,7 +31,7 @@ class Linear extends AbstractLinearCreative
         $durationDomElement = $this->getDomElement()->getElementsByTagName('Duration')->item(0);
         if (!$durationDomElement) {
             $durationDomElement = $this->getDomElement()->ownerDocument->createElement('Duration');
-            $this->getDomElement()->firstChild->appendChild($durationDomElement);
+            $this->getDomElement()->getElementsByTagName('Linear')->item(0)->appendChild($durationDomElement);
         }
 
         // set value
@@ -54,7 +54,10 @@ class Linear extends AbstractLinearCreative
             $this->mediaFilesDomElement = $this->getDomElement()->getElementsByTagName('MediaFiles')->item(0);
             if (!$this->mediaFilesDomElement) {
                 $this->mediaFilesDomElement = $this->getDomElement()->ownerDocument->createElement('MediaFiles');
-                $this->getDomElement()->firstChild->appendChild($this->mediaFilesDomElement);
+                $this->getDomElement()
+                    ->getElementsByTagName('Linear')
+                    ->item(0)
+                    ->appendChild($this->mediaFilesDomElement);
             }
         }
 
@@ -76,7 +79,7 @@ class Linear extends AbstractLinearCreative
         $this->adParametersDomElement = $this->getDomElement()->getElementsByTagName('AdParameters')->item(0);
         if (!$this->adParametersDomElement) {
             $this->adParametersDomElement = $this->getDomElement()->ownerDocument->createElement('AdParameters');
-            $this->getDomElement()->firstChild->appendChild($this->adParametersDomElement);
+            $this->getDomElement()->getElementsByTagName('Linear')->item(0)->appendChild($this->adParametersDomElement);
         }
 
         if (is_array($params)) {
@@ -106,7 +109,27 @@ class Linear extends AbstractLinearCreative
             $time = $this->secondsToString($time);
         }
 
-        $this->getDomElement()->firstChild->setAttribute('skipoffset', $time);
+        $this->getDomElement()->getElementsByTagName('Linear')->item(0)->setAttribute('skipoffset', $time);
+
+        return $this;
+    }
+
+
+    /**
+     * <UniversalAdId> required element for the purpose of tracking ad creative, he added in VAST 4.0 spec.
+     * Paragraph 3.7.1
+     * https://iabtechlab.com/wp-content/uploads/2018/11/VAST4.1-final-Nov-8-2018.pdf
+     *
+     * @param int|string $idRegistry
+     * @param int|string $universalAdId
+     * @return $this
+     */
+    public function setUniversalAdId($idRegistry, $universalAdId)
+    {
+        $universalAdIdDomElement = $this->getDomElement()->ownerDocument->createElement('UniversalAdId');
+        $universalAdIdDomElement->nodeValue = $universalAdId;
+        $universalAdIdDomElement->setAttribute("idRegistry", $idRegistry);
+        $this->getDomElement()->insertBefore($universalAdIdDomElement, $this->getDomElement()->firstChild);
 
         return $this;
     }

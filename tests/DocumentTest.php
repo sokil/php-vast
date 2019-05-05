@@ -12,7 +12,7 @@ class DocumentTest extends AbstractTestCase
     public function testCreateInLineAdSection()
     {
         $factory = new Factory();
-        $document = $factory->create('2.0');
+        $document = $factory->create('4.1');
         $this->assertInstanceOf('\\Sokil\\Vast\\Document', $document);
 
         // insert Ad section
@@ -27,6 +27,7 @@ class DocumentTest extends AbstractTestCase
         $ad1
             ->createLinearCreative()
             ->setDuration(128)
+            ->setUniversalAdId('ad-server.com', '15051996')
             ->setVideoClicksClickThrough('http://entertainmentserver.com/landing')
             ->addVideoClicksClickTracking('http://ad.server.com/videoclicks/clicktracking')
             ->addVideoClicksCustomClick('http://ad.server.com/videoclicks/customclick')

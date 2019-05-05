@@ -172,7 +172,10 @@ abstract class AbstractLinearCreative extends AbstractNode
         }
         
         $this->videoClicksDomElement = $this->linearCreativeDomElement->ownerDocument->createElement('VideoClicks');
-        $this->linearCreativeDomElement->firstChild->appendChild($this->videoClicksDomElement);
+        $this->linearCreativeDomElement
+            ->getElementsByTagName('Linear')
+            ->item(0)
+            ->appendChild($this->videoClicksDomElement);
         
         return $this->videoClicksDomElement;
     }
@@ -267,7 +270,10 @@ abstract class AbstractLinearCreative extends AbstractNode
             ->ownerDocument
             ->createElement('TrackingEvents');
 
-        $this->linearCreativeDomElement->firstChild->appendChild($this->trackingEventsDomElement);
+        $this->linearCreativeDomElement
+            ->getElementsByTagName('Linear')
+            ->item(0)
+            ->appendChild($this->trackingEventsDomElement);
         
         return $this->trackingEventsDomElement;
     }
