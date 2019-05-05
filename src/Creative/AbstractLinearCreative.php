@@ -238,10 +238,7 @@ abstract class AbstractLinearCreative extends AbstractNode
 
         // update CData
         if ($clickThroughDomElement->hasChildNodes()) {
-            $clickThroughDomElement->replaceChild(
-                $cdata,
-                $clickThroughDomElement->getElementsByTagName('Linear')->item(0)
-            );
+            $clickThroughDomElement->replaceChild($cdata, $clickThroughDomElement->firstChild);
         } else { // insert CData
             $clickThroughDomElement->appendChild($cdata);
         }
