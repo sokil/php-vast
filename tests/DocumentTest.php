@@ -27,7 +27,7 @@ class DocumentTest extends AbstractTestCase
         $ad1
             ->createLinearCreative()
             ->setDuration(128)
-            ->setUniversalAdId('vendin.org', '15051996')
+            ->setUniversalAdId('ad-server.com', '15051996')
             ->setVideoClicksClickThrough('http://entertainmentserver.com/landing')
             ->addVideoClicksClickTracking('http://ad.server.com/videoclicks/clicktracking')
             ->addVideoClicksCustomClick('http://ad.server.com/videoclicks/customclick')
