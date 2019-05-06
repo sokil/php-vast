@@ -1,3 +1,10 @@
+## 0.5.3 (2019-05-06)
+  * UniversalAdId added due to VAST 4.0 specification. UniversalAdId required in response beginning with VAST 4.0 (paragraph 3.7.1)
+  
+https://iabtechlab.com/wp-content/uploads/2018/11/VAST4.1-final-Nov-8-2018.pdf
+## 0.5.2 (2019-03-23)
+  * Add offset to progress event tracking. See specification 2.3.2.3 "Progress Event".
+
 ## 0.5.1 (2018-10-31)
   * Allow specify `adParameter` and `apiFramework`. 
 
