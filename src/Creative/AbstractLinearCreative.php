@@ -7,6 +7,12 @@ use Sokil\Vast\Document\AbstractNode;
 abstract class AbstractLinearCreative extends AbstractNode
 {
     /**
+     * this event should be used to indicate when the player considers that it has loaded
+     * and buffered the creative’s media and assets either fully or to the extent that it is ready to play the media.
+     */
+    const EVENT_TYPE_LOADED = 'loaded';
+
+    /**
      * not to be confused with an impression, this event indicates that an individual creative
      * portion of the ad was viewed. An impression indicates the first frame of the ad was displayed; however
      * an ad may be composed of multiple creative, or creative that only play on some platforms and not
@@ -132,6 +138,7 @@ abstract class AbstractLinearCreative extends AbstractNode
     public static function getEventList()
     {
         return array(
+            self::EVENT_TYPE_LOADED,
             self::EVENT_TYPE_CREATIVEVIEW,
             self::EVENT_TYPE_START,
             self::EVENT_TYPE_FIRSTQUARTILE,
