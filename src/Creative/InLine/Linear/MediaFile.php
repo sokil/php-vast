@@ -54,6 +54,13 @@ class MediaFile
         return $this;
     }
 
+    public function setCustom($attribute, $value)
+    {
+        $this->domElement->setAttribute($attribute, $value);
+
+        return $this;
+    }
+
     public function setUrl($url)
     {
         $cdata = $this->domElement->ownerDocument->createCDATASection($url);

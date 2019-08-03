@@ -46,6 +46,46 @@ class DocumentTest extends AbstractTestCase
     }
 
     /**
+     * Test for custom attribute
+     */
+    public function testCustomCreateInLineAdSection()
+    {
+        $factory = new Factory();
+        $document = $factory->create('4.1');
+        $this->assertInstanceOf('\\Sokil\\Vast\\Document', $document);
+
+        // insert Ad section
+        $ad1 = $document
+            ->createInLineAdSection()
+            ->setId('ad1')
+            ->setAdSystem('Ad Server Name')
+            ->setAdTitle('Ad Title')
+            ->addImpression('http://ad.server.com/impression', 'imp1');
+
+        // create creative for ad section
+        $ad1
+            ->createLinearCreative()
+            ->setDuration(128)
+            ->setUniversalAdId('ad-server.com', '15051996')
+            ->setVideoClicksClickThrough('http://entertainmentserver.com/landing')
+            ->addVideoClicksClickTracking('http://ad.server.com/videoclicks/clicktracking')
+            ->addVideoClicksCustomClick('http://ad.server.com/videoclicks/customclick')
+            ->addTrackingEvent('start', 'http://ad.server.com/trackingevent/start')
+            ->addTrackingEvent('pause', 'http://ad.server.com/trackingevent/stop')
+            ->addProgressTrackingEvent('http://ad.server.com/trackingevent/progress', 10)
+            ->createMediaFile()
+                ->setProgressiveDelivery()
+                ->setType('video/mp4')
+                ->setHeight(100)
+                ->setWidth(100)
+                ->setBitrate(600)
+                ->setCustom('minBitrate', 700)
+                ->setUrl('http://server.com/media.mp4');
+
+        $this->assertVastDocumentSameWithXmlFixture('inlineAdCustom.xml', $document);
+    }
+
+    /**
      * Test for inline ad
      */
     public function testReplaceVideoClicksClickThrough()
