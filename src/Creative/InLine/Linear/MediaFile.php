@@ -1,14 +1,29 @@
 <?php
 
+/**
+ * This file is part of the PHP-VAST package.
+ *
+ * (c) Dmytro Sokil <dmytro.sokil@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Sokil\Vast\Creative\InLine\Linear;
 
 class MediaFile
 {
     const DELIVERY_PROGRESSIVE = 'progressive';
     const DELIVERY_STREAMING = 'streaming';
-    
+
+    /**
+     * @var \DomElement
+     */
     private $domElement;
-    
+
+    /**
+     * @param \DomElement $domElement
+     */
     public function __construct(\DomElement $domElement)
     {
         $this->domElement = $domElement;
