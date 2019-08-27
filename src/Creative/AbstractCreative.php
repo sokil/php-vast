@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Sokil\Vast\Creative\Wrapper;
+namespace Sokil\Vast\Creative;
 
-use Sokil\Vast\Creative\AbstractLinearCreative;
+use Sokil\Vast\Document\AbstractNode;
 
-class Linear extends AbstractLinearCreative
+abstract class AbstractCreative extends AbstractNode
 {
 
 }

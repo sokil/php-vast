@@ -1,11 +1,25 @@
 <?php
 
+/**
+ * This file is part of the PHP-VAST package.
+ *
+ * (c) Dmytro Sokil <dmytro.sokil@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Sokil\Vast\Creative;
 
-use Sokil\Vast\Document\AbstractNode;
+use Sokil\Vast\ElementBuilder;
 
-abstract class AbstractLinearCreative extends AbstractNode
+abstract class AbstractLinearCreative extends AbstractCreative
 {
+    /**
+     * @var ElementBuilder
+     */
+    protected $vastElementBuilder;
+
     /**
      * this event should be used to indicate when the player considers that it has loaded
      * and buffered the creative’s media and assets either fully or to the extent that it is ready to play the media.
@@ -114,10 +128,12 @@ abstract class AbstractLinearCreative extends AbstractNode
 
     /**
      * @param \DOMElement $linearCreativeDomElement
+     * @param ElementBuilder $vastElementBuilder
      */
-    public function __construct(\DOMElement $linearCreativeDomElement)
+    public function __construct(\DOMElement $linearCreativeDomElement, ElementBuilder $vastElementBuilder)
     {
         $this->linearCreativeDomElement = $linearCreativeDomElement;
+        $this->vastElementBuilder = $vastElementBuilder;
     }
 
     /**

@@ -1,9 +1,19 @@
 <?php
 
+/**
+ * This file is part of the PHP-VAST package.
+ *
+ * (c) Dmytro Sokil <dmytro.sokil@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Sokil\Vast\Ad;
 
-use Sokil\Vast\Creative\AbstractLinearCreative;
+use Sokil\Vast\Creative\AbstractCreative;
 use Sokil\Vast\Document\AbstractNode;
+use Sokil\Vast\ElementBuilder;
 
 abstract class AbstractAdNode extends AbstractNode
 {
@@ -11,6 +21,11 @@ abstract class AbstractAdNode extends AbstractNode
      * @var \DOMElement
      */
     private $domElement;
+
+    /**
+     * @var ElementBuilder
+     */
+    protected $vastElementBuilder;
 
     /**
      * @var \DOMElement
@@ -36,12 +51,13 @@ abstract class AbstractAdNode extends AbstractNode
 
     /**
      * @param \DOMElement $adDomElement instance of \Vast\Ad element
+     * @param ElementBuilder $vastElementBuilder
      */
-    public function __construct(\DOMElement $adDomElement)
+    public function __construct(\DOMElement $adDomElement, ElementBuilder $vastElementBuilder)
     {
         $this->adDomElement = $adDomElement;
-
         $this->domElement = $this->adDomElement->getElementsByTagName($this->getType())->item(0);
+        $this->vastElementBuilder = $vastElementBuilder;
     }
 
     /**
@@ -142,13 +158,19 @@ abstract class AbstractAdNode extends AbstractNode
     }
 
     /**
-     * Build class name for creative of given type
+     * @return string[]
+     */
+    abstract protected function getAvailableCreativeTypes();
+
+    /**
+     * Build object for creative of given type
      *
      * @param string $type
+     * @param \DOMElement $creativeDomElement
      *
-     * @return string
+     * @return AbstractCreative
      */
-    abstract protected function buildCreativeClassName($type);
+    abstract protected function buildCreativeElement($type, \DOMElement $creativeDomElement);
 
     /**
      * Create "creative" object of given type
@@ -156,14 +178,14 @@ abstract class AbstractAdNode extends AbstractNode
      * @param string $type
      *
      * @throws \Exception
-     * @return AbstractLinearCreative
+     *
+     * @return AbstractCreative
      */
-    protected function buildCreative($type)
+    final protected function buildCreative($type)
     {
         // check type
-        $creativeClassName = $this->buildCreativeClassName($type);
-        if (!class_exists($creativeClassName)) {
-            throw new \Exception('Wrong creative specified: ' . var_export($creativeClassName, true));
+        if (!in_array($type, $this->getAvailableCreativeTypes())) {
+            throw new \InvalidArgumentException(sprintf('Wrong creative specified: %s', $type));
         }
 
         // get container
@@ -185,7 +207,8 @@ abstract class AbstractAdNode extends AbstractNode
         $creativeDomElement->appendChild($creativeTypeDomElement);
 
         // object
-        $creative = new $creativeClassName($creativeDomElement);
+        $creative = $this->buildCreativeElement($type, $creativeDomElement);
+
         $this->creatives[] = $creative;
 
         return $creative;
