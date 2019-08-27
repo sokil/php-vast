@@ -185,7 +185,7 @@ abstract class AbstractAdNode extends AbstractNode
     {
         // check type
         if (!in_array($type, $this->getAvailableCreativeTypes())) {
-            throw new \Exception('Wrong creative specified: ' . $creative);
+            throw new \InvalidArgumentException(sprintf('Wrong creative specified: %s', $type));
         }
 
         // get container
