@@ -11,10 +11,16 @@
 
 namespace Sokil\Vast\Ad;
 
-use Sokil\Vast\Creative\InLine\Linear;
+use Sokil\Vast\Creative\AbstractCreative;
+use Sokil\Vast\Creative\InLine\Linear as InLineAdLinearCreative;
 
 class InLine extends AbstractAdNode
 {
+    /**
+     * @private
+     */
+    const CREATIVE_TYPE_LINEAR = 'Linear';
+
     /**
      * Set Ad title
      *
@@ -30,11 +36,32 @@ class InLine extends AbstractAdNode
     }
 
     /**
-     * @inheritdoc
+     * @return string[]
      */
-    protected function buildCreativeClassName($type)
+    protected function getAvailableCreativeTypes()
     {
-        return '\\Sokil\\Vast\\Creative\\InLine\\' . $type;
+        return array(
+            self::CREATIVE_TYPE_LINEAR,
+        );
+    }
+
+    /**
+     * @param string $type
+     * @param \DOMElement $creativeDomElement
+     *
+     * @return AbstractCreative|InLineAdLinearCreative
+     */
+    protected function buildCreativeElement($type, \DOMElement $creativeDomElement)
+    {
+        switch ($type) {
+            case self::CREATIVE_TYPE_LINEAR:
+                $creative = $this->vastElementBuilder->createInLineAdLinearCreative($creativeDomElement);
+                break;
+            default:
+                throw new \RuntimeException(sprintf('Unknown Wrapper creative type %s', $type));
+        }
+
+        return $creative;
     }
 
     /**
@@ -42,12 +69,12 @@ class InLine extends AbstractAdNode
      *
      * @throws \Exception
      *
-     * @return Linear
+     * @return InLineAdLinearCreative
      */
     public function createLinearCreative()
     {
-        /** @var Linear $creative */
-        $creative = $this->buildCreative('Linear');
+        /** @var InLineAdLinearCreative $creative */
+        $creative = $this->buildCreative(self::CREATIVE_TYPE_LINEAR);
 
         return $creative;
     }

@@ -75,7 +75,7 @@ class Linear extends AbstractLinearCreative
         $this->mediaFilesDomElement->appendChild($mediaFileDomElement);
 
         // object
-        return new MediaFile($mediaFileDomElement);
+        return $this->vastElementBuilder->createInLineAdLinearCreativeMediaFile($mediaFileDomElement);
     }
 
     /**
