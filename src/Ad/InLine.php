@@ -17,9 +17,22 @@ use Sokil\Vast\Creative\InLine\Linear as InLineAdLinearCreative;
 class InLine extends AbstractAdNode
 {
     /**
+     * @public
+     */
+    const TAG_NAME = 'InLine';
+
+    /**
      * @private
      */
     const CREATIVE_TYPE_LINEAR = 'Linear';
+
+    /**
+     * @return string
+     */
+    public function getAdSubElementTagName()
+    {
+        return self::TAG_NAME;
+    }
 
     /**
      * Set Ad title

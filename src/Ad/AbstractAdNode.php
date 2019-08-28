@@ -56,7 +56,7 @@ abstract class AbstractAdNode extends AbstractNode
     public function __construct(\DOMElement $adDomElement, ElementBuilder $vastElementBuilder)
     {
         $this->adDomElement = $adDomElement;
-        $this->domElement = $this->adDomElement->getElementsByTagName($this->getType())->item(0);
+        $this->domElement = $this->adDomElement->getElementsByTagName($this->getAdSubElementTagName())->item(0);
         $this->vastElementBuilder = $vastElementBuilder;
     }
 
@@ -65,13 +65,7 @@ abstract class AbstractAdNode extends AbstractNode
      *
      * @return string
      */
-    public function getType()
-    {
-        $parts = explode('\\', get_class($this));
-        $type = array_pop($parts);
-
-        return $type;
-    }
+    abstract public function getAdSubElementTagName();
 
     /**
      * Instance of "\Vast\Ad\(InLine|Wrapper)" element

@@ -17,9 +17,22 @@ use Sokil\Vast\Creative\Wrapper\Linear as WrapperAdLinearCreative;
 class Wrapper extends AbstractAdNode
 {
     /**
+     * @public
+     */
+    const TAG_NAME = 'Wrapper';
+
+    /**
      * @private
      */
     const CREATIVE_TYPE_LINEAR = 'Linear';
+
+    /**
+     * @return string
+     */
+    public function getAdSubElementTagName()
+    {
+        return self::TAG_NAME;
+    }
 
     /**
      * URI of ad tag of downstream Secondary Ad Server

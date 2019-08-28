@@ -19,16 +19,6 @@ use Sokil\Vast\Document\AbstractNode;
 class Document extends AbstractNode
 {
     /**
-     * @private
-     */
-    const AD_SUB_ELEMENT_INLINE = 'InLine';
-
-    /**
-     * @private
-     */
-    const AD_SUB_ELEMENT_WRAPPER = 'Wrapper';
-
-    /**
      * @var \DOMDocument
      */
     private $domDocument;
@@ -113,7 +103,7 @@ class Document extends AbstractNode
     private function createAdSection($type)
     {
         // Check Ad type
-        if (!in_array($type, array(self::AD_SUB_ELEMENT_INLINE, self::AD_SUB_ELEMENT_WRAPPER))) {
+        if (!in_array($type, array(InLine::TAG_NAME, Wrapper::TAG_NAME))) {
             throw new \InvalidArgumentException(sprintf('Ad type %s not supported', $type));
         }
 
@@ -127,10 +117,10 @@ class Document extends AbstractNode
 
         // create ad section
         switch ($type) {
-            case self::AD_SUB_ELEMENT_INLINE:
+            case InLine::TAG_NAME:
                 $adSection = $this->vastElementBuilder->createInLineAdNode($adDomElement);
                 break;
-            case self::AD_SUB_ELEMENT_WRAPPER:
+            case Wrapper::TAG_NAME:
                 $adSection = $this->vastElementBuilder->createWrapperAdNode($adDomElement);
                 break;
             default:
@@ -150,7 +140,7 @@ class Document extends AbstractNode
      */
     public function createInLineAdSection()
     {
-        return $this->createAdSection(self::AD_SUB_ELEMENT_INLINE);
+        return $this->createAdSection(InLine::TAG_NAME);
     }
     
     /**
@@ -160,7 +150,7 @@ class Document extends AbstractNode
      */
     public function createWrapperAdSection()
     {
-        return $this->createAdSection(self::AD_SUB_ELEMENT_WRAPPER);
+        return $this->createAdSection(Wrapper::TAG_NAME);
     }
 
     /**
@@ -196,10 +186,10 @@ class Document extends AbstractNode
 
                 // create ad section
                 switch ($type) {
-                    case self::AD_SUB_ELEMENT_INLINE:
+                    case InLine::TAG_NAME:
                         $adSection = $this->vastElementBuilder->createInLineAdNode($adDomElement);
                         break;
-                    case self::AD_SUB_ELEMENT_WRAPPER:
+                    case Wrapper::TAG_NAME:
                         $adSection = $this->vastElementBuilder->createWrapperAdNode($adDomElement);
                         break;
                     default:
