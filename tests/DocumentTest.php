@@ -27,6 +27,8 @@ class DocumentTest extends AbstractTestCase
         $ad1
             ->createLinearCreative()
             ->setDuration(128)
+            ->setId('013d876d-14fc-49a2-aefd-744fce68365b')
+            ->setAdId('pre')
             ->setUniversalAdId('ad-server.com', '15051996')
             ->setVideoClicksClickThrough('http://entertainmentserver.com/landing')
             ->addVideoClicksClickTracking('http://ad.server.com/videoclicks/clicktracking')
@@ -299,7 +301,7 @@ class DocumentTest extends AbstractTestCase
         $this->assertVastDocumentSameWithXmlFixture('error.xml', $document);
 
         $this->assertEquals(
-            array('//ad.server.com/tracking/error/noad'),
+            ['//ad.server.com/tracking/error/noad'],
             $document->getErrors()
         );
     }
@@ -324,7 +326,7 @@ class DocumentTest extends AbstractTestCase
         $this->assertVastDocumentSameWithXmlFixture('errorInWrapper.xml', $document);
 
         $this->assertEquals(
-            array('//ad.server.com/tracking/error'),
+            ['//ad.server.com/tracking/error'],
             $wrapperAd->getErrors()
         );
     }
@@ -348,7 +350,7 @@ class DocumentTest extends AbstractTestCase
         $this->assertVastDocumentSameWithXmlFixture('errorInInline.xml', $document);
 
         $this->assertEquals(
-            array('//ad.server.com/tracking/error'),
+            ['//ad.server.com/tracking/error'],
             $ad1->getErrors()
         );
     }
@@ -374,15 +376,13 @@ class DocumentTest extends AbstractTestCase
         $this->assertVastDocumentSameWithXmlFixture('impressionInWrapper.xml', $document);
 
         $this->assertEquals(
-            array(
+            [
                 '//ad.server.com/tracking/impression1',
                 '//ad.server.com/tracking/impression2',
-            ),
+            ],
             $ad1->getImpressions()
         );
     }
-
-
 
     /**
      * test Document to output string
@@ -460,14 +460,14 @@ class DocumentTest extends AbstractTestCase
 
         $creative = $ad->createLinearCreative();
         $creative
-            ->setAdParameters(array(
+            ->setAdParameters([
                 'param' => 42,
-            ))
-            ->setAdParameters(array(
-                'list' => array(
-                    array('param1' => 'value1', 'param2' => 'value2')
-                ),
-            ));
+            ])
+            ->setAdParameters([
+                'list' => [
+                    ['param1' => 'value1', 'param2' => 'value2']
+                ],
+            ]);
 
         $creative->createMediaFile()
             ->setApiFramework('VPAID')
