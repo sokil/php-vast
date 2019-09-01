@@ -90,6 +90,8 @@ class DocumentTest extends AbstractTestCase
         $ad1
             ->createLinearCreative()
             ->setDuration(128)
+            ->setId('013d876d-14fc-49a2-aefd-744fce68365b')
+            ->setAdId('pre')
             ->setVideoClicksClickThrough('http://entertainmentserver.com/landing')
             ->addVideoClicksClickTracking('http://ad.server.com/videoclicks/clicktracking')
             ->addVideoClicksCustomClick('http://ad.server.com/videoclicks/customclick')
@@ -197,6 +199,8 @@ class DocumentTest extends AbstractTestCase
         $ad1
             ->createLinearCreative()
             ->setDuration(128)
+            ->setId('013d876d-14fc-49a2-aefd-744fce68365b')
+            ->setAdId('pre')
             ->setVideoClicksClickThrough('http://entertainmentserver.com/landing')
             ->addVideoClicksClickTracking('http://ad.server.com/videoclicks/clicktracking')
             ->addVideoClicksCustomClick('http://ad.server.com/videoclicks/customclick')
