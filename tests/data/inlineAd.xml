@@ -6,7 +6,7 @@
             <AdTitle><![CDATA[Ad Title]]></AdTitle>
             <Impression id="imp1"><![CDATA[http://ad.server.com/impression]]></Impression>
             <Creatives>
-                <Creative>
+                <Creative id="013d876d-14fc-49a2-aefd-744fce68365b" adId="pre">
                     <UniversalAdId idRegistry="ad-server.com">15051996</UniversalAdId>
                     <Linear>
                         <Duration>00:02:08</Duration>
