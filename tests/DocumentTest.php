@@ -326,7 +326,7 @@ class DocumentTest extends AbstractTestCase
         $this->assertVastDocumentSameWithXmlFixture('errorInWrapper.xml', $document);
 
         $this->assertEquals(
-            ['//ad.server.com/tracking/error'],
+            array('//ad.server.com/tracking/error'),
             $wrapperAd->getErrors()
         );
     }
@@ -350,7 +350,7 @@ class DocumentTest extends AbstractTestCase
         $this->assertVastDocumentSameWithXmlFixture('errorInInline.xml', $document);
 
         $this->assertEquals(
-            ['//ad.server.com/tracking/error'],
+            array('//ad.server.com/tracking/error'),
             $ad1->getErrors()
         );
     }
@@ -376,10 +376,10 @@ class DocumentTest extends AbstractTestCase
         $this->assertVastDocumentSameWithXmlFixture('impressionInWrapper.xml', $document);
 
         $this->assertEquals(
-            [
+            array(
                 '//ad.server.com/tracking/impression1',
                 '//ad.server.com/tracking/impression2',
-            ],
+            ),
             $ad1->getImpressions()
         );
     }
@@ -460,14 +460,14 @@ class DocumentTest extends AbstractTestCase
 
         $creative = $ad->createLinearCreative();
         $creative
-            ->setAdParameters([
+            ->setAdParameters(array(
                 'param' => 42,
-            ])
-            ->setAdParameters([
-                'list' => [
-                    ['param1' => 'value1', 'param2' => 'value2']
-                ],
-            ]);
+            ))
+            ->setAdParameters(array(
+                'list' => array(
+                    array('param1' => 'value1', 'param2' => 'value2')
+                ),
+            ));
 
         $creative->createMediaFile()
             ->setApiFramework('VPAID')
