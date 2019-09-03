@@ -27,6 +27,8 @@ class DocumentTest extends AbstractTestCase
         $ad1
             ->createLinearCreative()
             ->setDuration(128)
+            ->setId('013d876d-14fc-49a2-aefd-744fce68365b')
+            ->setAdId('pre')
             ->setUniversalAdId('ad-server.com', '15051996')
             ->setVideoClicksClickThrough('http://entertainmentserver.com/landing')
             ->addVideoClicksClickTracking('http://ad.server.com/videoclicks/clicktracking')
@@ -381,8 +383,6 @@ class DocumentTest extends AbstractTestCase
             $ad1->getImpressions()
         );
     }
-
-
 
     /**
      * test Document to output string

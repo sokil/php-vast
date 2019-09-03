@@ -123,7 +123,6 @@ class Linear extends AbstractLinearCreative
         return $this;
     }
 
-
     /**
      * <UniversalAdId> required element for the purpose of tracking ad creative, he added in VAST 4.0 spec.
      * Paragraph 3.7.1
@@ -139,6 +138,32 @@ class Linear extends AbstractLinearCreative
         $universalAdIdDomElement->nodeValue = $universalAdId;
         $universalAdIdDomElement->setAttribute("idRegistry", $idRegistry);
         $this->getDomElement()->insertBefore($universalAdIdDomElement, $this->getDomElement()->firstChild);
+
+        return $this;
+    }
+
+    /**
+     * Set 'id' attribute of 'creative' element
+     *
+     * @param string $id
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->getDomElement()->setAttribute('id', $id);
+
+        return $this;
+    }
+
+    /**
+     * Set 'adId' attribute of 'creative' element
+     *
+     * @param string $adId
+     * @return $this
+     */
+    public function setAdId($adId)
+    {
+        $this->getDomElement()->setAttribute('adId', $adId);
 
         return $this;
     }
