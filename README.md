@@ -31,10 +31,6 @@ composer require sokil/php-vast
 // create document
 $factory = new \Sokil\Vast\Factory();
 $document = $factory->create('2.0');
-// or, if you have at least PHP5.4
-$document = (new \Sokil\Vast\Factory())->create('2.0');
-// creating through Document::create and other factory methods are now deprecated:
-$document = \Sokil\Vast\Document::create('2.0');
 
 // insert Ad section
 $ad1 = $document
@@ -48,6 +44,8 @@ $ad1 = $document
 $linearCreative = $ad1
     ->createLinearCreative()
     ->setDuration(128)
+    ->setId('013d876d-14fc-49a2-aefd-744fce68365b')
+    ->setAdId('pre')
     ->setVideoClicksClickThrough('http://entertainmentserver.com/landing')
     ->addVideoClicksClickTracking('http://ad.server.com/videoclicks/clicktracking')
     ->addVideoClicksCustomClick('http://ad.server.com/videoclicks/customclick')
@@ -118,4 +116,79 @@ This will generate:
         </InLine>
     </Ad>
 </VAST>
+```
+
+## Custom Specification Support
+
+VAST document elements completely described in it's specifications. But some Ad servers may add support of custom elements and attributes. This library strictly follows specification, generally because two dialects of VAST may conflict with each other. But you may write our own dialect by overriding element builder and cretae any elements and attributes you want.
+
+VAST dialect may be described in `\Sokil\Vast\ElementBuilder` class. By overriding it you may create instances of your own classes, and add there any setters.
+
+First let's create class for `MediaFile` and add some custom attribute:
+
+```php
+<?php
+
+namespace Acme\Vast\ElementBuilder\Element;
+
+use Sokil\Vast\Creative\InLine\Linear\MediaFile;
+
+class AcmeMediaFile extends MediaFile
+{
+    public function setMinDiration($seconds)
+    {
+        $seconds = (int)$seconds;
+        if ($seconds <= 0) {
+            thow new \InvalidArgumentException('Invalid min duration specified, must be positive int')
+        }
+        
+        $this->domElement->setAttribute('minDuration', $seconds);
+        
+        return $this;
+    }
+}
+```
+
+Now we need to override default element builder and create own `MediaFile` factory method:
+
+```php
+<?php
+
+namespace Acme\Vast\ElementBuilder;
+
+use Sokil\Vast\ElementBuilder;
+use Acme\Vast\ElementBuilder\Element\AcmeMediaFile;
+
+class AcmeElementBuilder extends ElementBuilder
+{
+    /**
+     * <Ad><InLine><Creatives><Creative><Linear><MediaFile>
+     *
+     * @param \DOMElement $mediaFileDomElement
+     *
+     * @return AcmeMediaFile
+     */
+    public function createInLineAdLinearCreativeMediaFile(\DOMElement $mediaFileDomElement)
+    {
+        return new AcmeMediaFile($mediaFileDomElement);
+    }
+}
+```
+
+Now we need to confugure VAST factory to use overridden element builder:
+
+```php
+<?php
+
+use Acme\Vast\ElementBuilder\AcmeElementBuilder;
+use Sokil\Vast\Factory;
+
+$elementBuilder = new AcmeElementBuilder();
+$factory = new Factory($elementBuilder);
+
+$ad = $document->createInLineAdSection();
+$creative = $ad->createLinearCreative();
+$mediaFile = $creative->createMediaFile();
+
+$mediaFile->setMinDiration(10);
 ```
