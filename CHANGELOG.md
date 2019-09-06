@@ -1,3 +1,7 @@
+## 0.6 (2019-09-06)
+  * Added support of `id` and `adId` attributes of `creative` element.
+  * Added ability to create own elements and attributes through custom `ElementBuilder`, see [Custom Specification Support](https://github.com/sokil/php-vast#custom-specification-support) section of manual.
+
 ## 0.5.3 (2019-05-06)
   * UniversalAdId added due to VAST 4.0 specification. UniversalAdId required in response beginning with VAST 4.0 (paragraph 3.7.1)
 
