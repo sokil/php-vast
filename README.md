@@ -118,6 +118,7 @@ This will generate:
 </VAST>
 ```
 
+
 ## Custom Specification Support
 
 VAST document elements completely described in it's specifications. But some Ad servers may add support of custom elements and attributes. This library strictly follows specification, generally because two dialects of VAST may conflict with each other. But you may write our own dialect by overriding element builder and cretae any elements and attributes you want.
@@ -186,9 +187,13 @@ use Sokil\Vast\Factory;
 $elementBuilder = new AcmeElementBuilder();
 $factory = new Factory($elementBuilder);
 
+$document = $factory->create('4.1');
+
 $ad = $document->createInLineAdSection();
 $creative = $ad->createLinearCreative();
 $mediaFile = $creative->createMediaFile();
 
 $mediaFile->setMinDiration(10);
 ```
+
+If you has AD server and want to add support of your custom tag, create your own library with custom elements and element builder, or add pull requrest to this library. 
