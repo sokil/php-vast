@@ -12,6 +12,8 @@
 namespace Sokil\Vast\Creative\InLine;
 
 use Sokil\Vast\Creative\AbstractLinearCreative;
+
+use Sokil\Vast\Creative\InLine\Linear\ClosedCaption;
 use Sokil\Vast\Creative\InLine\Linear\MediaFile;
 use Sokil\Vast\Creative\InLine\Linear\AdParameters;
 
@@ -78,6 +80,42 @@ class Linear extends AbstractLinearCreative
         return $this->vastElementBuilder->createInLineAdLinearCreativeMediaFile($mediaFileDomElement);
     }
 
+    /**
+     * @return ClosedCaption
+     */
+    public function createClosedCaption()
+    {
+        if (empty($this->mediaFilesDomElement)) {
+            $this->mediaFilesDomElement = $this->getDomElement()->getElementsByTagName('MediaFiles')->item(0);
+            if (!$this->mediaFilesDomElement) {
+                $this->mediaFilesDomElement = $this->getDomElement()->ownerDocument->createElement('MediaFiles');
+                $this->getDomElement()
+                    ->getElementsByTagName('Linear')
+                    ->item(0)
+                    ->appendChild($this->mediaFilesDomElement);
+            }
+        }
+
+        if (empty($this->CCFilesDomElement)) {
+            $this->CCFilesDomElement = $this->getDomElement()->getElementsByTagName('ClosedCaptionFiles')->item(0);
+            if (!$this->CCFilesDomElement) {
+                $this->CCFilesDomElement = $this->getDomElement()->ownerDocument->createElement('ClosedCaptionFiles');
+                $this->getDomElement()
+                    ->getElementsByTagName('MediaFiles')
+                    ->item(0)
+                    ->appendChild($this->CCFilesDomElement);
+            }
+        }
+
+        // dom
+        $CCFileDomElement = $this->CCFilesDomElement->ownerDocument->createElement('ClosedCaptionFile');
+        $this->CCFilesDomElement->appendChild($CCFileDomElement);
+
+        // object
+        return new ClosedCaption($CCFileDomElement);
+    }
+    
+        
     /**
      * @param array|string $params
      *
