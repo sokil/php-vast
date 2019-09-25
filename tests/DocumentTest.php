@@ -208,6 +208,7 @@ class DocumentTest extends AbstractTestCase
           ->createClosedCaption()
           ->setLanguage('es-DO')
           ->setType('text/vtt')
+          ->setUrl('http://example.com/closedCaption.vtt')
           ->setUrl('http://example.com/closedCaption2.vtt');
         
         $linear->createMediaFile()->setStreamingDelivery();
