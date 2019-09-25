@@ -154,6 +154,66 @@ class DocumentTest extends AbstractTestCase
 
         $this->assertVastDocumentSameWithXmlFixture('linearCreativeWithStreamingDelivery.xml', $document);
     }
+    
+    /**
+     * Test for creating media file with Closed Captions
+     */
+    public function testCreateLinearCreativeWithClosedCaptions()
+    {
+        $factory = new Factory();
+        $document = $factory->create('4.1');
+
+        // insert Ad section
+        $ad1 = $document
+            ->createInLineAdSection()
+            ->setId('ad1')
+            ->setAdSystem('Ad Server Name')
+            ->setAdTitle('Ad Title')
+            ->addImpression('http://ad.server.com/impression');
+        $ad1
+          ->createLinearCreative()
+          ->createClosedCaption()
+          ->setLanguage('en')
+          ->setType('text/srt')
+          ->setUrl('http://http://example.com/test.srt');
+
+        $this->assertVastDocumentSameWithXmlFixture('linearCreativeWithClosedCaption.xml', $document);
+    }
+    
+    /**
+     * Test for creating media file with Closed Captions and Media Files
+     */
+    public function testCreateLinearCreativeWithClosedCaptionsAndMedia()
+    {
+        $factory = new Factory();
+        $document = $factory->create('4.1');
+
+        // insert Ad section
+        $ad1 = $document
+            ->createInLineAdSection()
+            ->setId('ad1')
+            ->setAdSystem('Ad Server Name')
+            ->setAdTitle('Ad Title')
+            ->addImpression('http://ad.server.com/impression');
+        
+        $linear = $ad1->createLinearCreative();
+        
+        $linear
+          ->createClosedCaption()
+          ->setLanguage('en')
+          ->setType('text/srt')
+          ->setUrl('http://example.com/test.srt');
+        
+        $linear
+          ->createClosedCaption()
+          ->setLanguage('es-DO')
+          ->setType('text/vtt')
+          ->setUrl('http://example.com/closedCaption2.vtt');
+        
+        $linear->createMediaFile()->setStreamingDelivery();
+
+        $this->assertVastDocumentSameWithXmlFixture('linearCreativeWithClosedCaptionAndMediaFile.xml', $document);
+    }
 
     /**
      * Test for creating media file with specific delivery

@@ -118,14 +118,93 @@ This will generate:
 </VAST>
 ```
 
+## Closed Caption Support
+
+Closed Captions as per VAST 4.1 specification are supported as follows
+
+```php
+// create document
+$factory = new \Sokil\Vast\Factory();
+$document = $factory->create('4.1'); //Note that closed caption support starts from VAST 4.1
+
+// insert Ad section
+$ad1 = $document
+    ->createInLineAdSection()
+    ->setId('ad1')
+    ->setAdSystem('Ad Server Name')
+    ->setAdTitle('Ad Title')
+    ->addImpression('http://ad.server.com/impression', 'imp1');
+
+// create creative for ad section
+$linearCreative = $ad1
+    ->createLinearCreative()
+    ->setDuration(128)
+    ->setId('013d876d-14fc-49a2-aefd-744fce68365b')
+    ->setAdId('pre')
+
+// add closed caption file
+$linearCreative
+    ->createClosedCaptionFile()
+    ->setLanguage('en-US')
+    ->setType('text/srt')
+    ->setUrl('http://server.com/cc.srt');
+    
+// add 100x100 media file
+$linearCreative
+    ->createMediaFile()
+    ->setProgressiveDelivery()
+    ->setType('video/mp4')
+    ->setHeight(100)
+    ->setWidth(100)
+    ->setBitrate(2500)
+    ->setUrl('http://server.com/media1.mp4');
+    
+// get dom document
+$domDocument = $document->toDomDocument();
+
+// get XML string
+echo $document;
+```
+
+This will generate:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<VAST version="4.1">
+    <Ad id="ad1">
+        <InLine>
+            <AdSystem>Ad Server Name</AdSystem>
+            <AdTitle><![CDATA[Ad Title]]></AdTitle>
+            <Impression id="imp1"><![CDATA[http://ad.server.com/impression]]></Impression>
+            <Creatives>
+                <Creative>
+                    <Linear>
+                        <Duration>00:02:08</Duration>
+                        <MediaFiles>
+                            <ClosedCaptionFiles>
+                              <ClosedCaptionFile language="en-US" type="text/srt">
+                                  <![CDATA[http://server.com/cc.srt]]>
+                              </ClosedCaptionFile>
+                            </ClosedCaptionFiles>
+                            <MediaFile delivery="progressive" type="video/mp4" height="100" width="100" bitrate="2500">
+                                <![CDATA[http://server.com/media1.mp4]]>
+                            </MediaFile>
+                        </MediaFiles>
+                    </Linear>
+                </Creative>
+            </Creatives>
+        </InLine>
+    </Ad>
+</VAST>
+```
 
 ## Custom Specification Support
 
-VAST document elements completely described in it's specifications. But some Ad servers may add support of custom elements and attributes. This library strictly follows specification, generally because two dialects of VAST may conflict with each other. But you may write our own dialect by overriding element builder and cretae any elements and attributes you want.
+VAST document elements are completely described in it's specification, but some Ad servers may add support for custom elements and attributes. This library strictly follows specification, generally because two dialects of VAST may conflict with each other. You may write our own dialect by overriding element builder and create any elements and attributes you want.
 
-VAST dialect may be described in `\Sokil\Vast\ElementBuilder` class. By overriding it you may create instances of your own classes, and add there any setters.
+The VAST dialect is described in `\Sokil\Vast\ElementBuilder` class. By overriding it you may create instances of your own classes and add there any setters.
 
-First let's create class for `MediaFile` and add some custom attribute:
+First let's create a class for `MediaFile` and add some custom attributes:
 
 ```php
 <?php
@@ -150,7 +229,7 @@ class AcmeMediaFile extends MediaFile
 }
 ```
 
-Now we need to override default element builder and create own `MediaFile` factory method:
+Now we need to override the default element builder and create our own `MediaFile` factory method:
 
 ```php
 <?php
@@ -196,4 +275,4 @@ $mediaFile = $creative->createMediaFile();
 $mediaFile->setMinDiration(10);
 ```
 
-If you has AD server and want to add support of your custom tag, create your own library with custom elements and element builder, or add pull requrest to this library. 
+If you have an AD server and want to add support for your custom tag, create your own library with custom elements and element builder, or add a pull request to this library. 
