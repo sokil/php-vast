@@ -11,7 +11,7 @@
                         <MediaFiles>
                             <ClosedCaptionFiles>
                               <ClosedCaptionFile language="en" type="text/srt"><![CDATA[http://example.com/test.srt]]></ClosedCaptionFile>
-                                                            <ClosedCaptionFile language="es-DO" type="text/vtt"><![CDATA[http://example.com/closedcaption2.vtt]]></ClosedCaptionFile>
+                              <ClosedCaptionFile language="es-DO" type="text/vtt"><![CDATA[http://example.com/closedcaption2.vtt]]></ClosedCaptionFile>
                             </ClosedCaptionFiles>
                             <MediaFile delivery="streaming"/>
                         </MediaFiles>

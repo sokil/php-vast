@@ -14,7 +14,7 @@
 namespace Sokil\Vast\Creative\InLine\Linear;
 
 class ClosedCaption
-{   
+{
     /**
      * @var \DomElement
      */
