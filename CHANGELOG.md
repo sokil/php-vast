@@ -1,3 +1,10 @@
+## 2.0 (2019-09-26)
+* Support PHP 7.1.3 and above
+
+## 1.0 (2019-09-26)
+* Support Closed Caption Files
+* Version 1.0 supports PHP 5.3 - 7.3
+
 ## 0.6 (2019-09-06)
   * Added support of `id` and `adId` attributes of `creative` element.
   * Added ability to create own elements and attributes through custom `ElementBuilder`, see [Custom Specification Support](https://github.com/sokil/php-vast#custom-specification-support) section of manual.
