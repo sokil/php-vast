@@ -61,63 +61,60 @@ class Linear extends AbstractLinearCreative
     }
     
     /**
-     * Creates a DOM element if it doesn't exist already
-     *
-     * @param \DOMElement $domElement The variable holding the DOM element
-     * @param string $tagName The name of the DOM element to be created
-     * @param string $parentTagName The name of the parent tag that the element will be appended to
-     *  if it doesn't exist
-     *
-     * @return \DOMElement $domElement
+     * @return  \DOMElement MediaFiles
      */
-    private function createDomElement($domElement, $tagName, $parentTagName){
-      if (empty($domElement)) {
-          $domElement = $this->getDomElement()->getElementsByTagName($tagName)->item(0);
-          if (!$domElement) {
-              $domElement = $this->getDomElement()->ownerDocument->createElement($tagName);
+    private function getMediaFilesElement(){
+      if (empty($this->mediaFilesDomElement)) {
+          $this->mediaFilesDomElement = $this->getDomElement()->getElementsByTagName('MediaFiles')->item(0);
+          if (!$this->mediaFilesDomElement) {
+              $this->mediaFilesDomElement = $this->getDomElement()->ownerDocument->createElement('MediaFiles');
               $this->getDomElement()
-                  ->getElementsByTagName($parentTagName)
+                  ->getElementsByTagName('Linear')
                   ->item(0)
-                  ->appendChild($domElement);
+                  ->appendChild($this->mediaFilesDomElement);
           }
       }
-      return $domElement;
+      return $this->mediaFilesDomElement;
     }
       
     /**
-     * @return MediaFile
+     * @return \DOMElement MediaFile
      */
     public function createMediaFile()
     {
-        // create needed DOM element
-        $mediaFilesDomElement = $this->createDomElement($this->mediaFilesDomElement, 'MediaFiles', 'Linear');
+        // get needed DOM element
+        $mediaFilesDomElement = $this->getMediaFilesElement();
 
-        // dom
+        // create MediaFile and append to MediaFiles
         $mediaFileDomElement = $mediaFilesDomElement->ownerDocument->createElement('MediaFile');
         $mediaFilesDomElement->appendChild($mediaFileDomElement);
 
         // object
         return $this->vastElementBuilder->createInLineAdLinearCreativeMediaFile($mediaFileDomElement);
     }
-
+    
     /**
-     * @return ClosedCaptionFile
+     * @return \DOMElement ClosedCaptionFile
      */
-    public function createClosedCaptionFile()
+    public function createClosedCaptionFile() 
     {
-        // create needed DOM elements
-        $mediaFilesDomElement = $this->createDomElement($this->mediaFilesDomElement, 'MediaFiles', 'Linear');
-        $closedCaptionFilesDomElement =$this->createDomElement($this->closedCaptionFilesDomElement, 'ClosedCaptionFiles', 'MediaFiles');
+        //ensure closedCaptionFilesDomElement existence
+        if (empty($this->closedCaptionFilesDomElement)) {
+           $mediaFilesElement = $this->getMediaFilesElement();
+            $this->closedCaptionFilesDomElement = $mediaFilesElement->getElementsByTagName('ClosedCaptionFiles')->item(0);	
+            if (!$this->closedCaptionFilesDomElement) {	
+                $this->closedCaptionFilesDomElement = $this->getDomElement()->ownerDocument->createElement('ClosedCaptionFiles');	
+                $mediaFilesElement->appendChild($this->closedCaptionFilesDomElement);	
+            }	
+        }
         
-        // dom
-        $closedCaptionFileDomElement = $closedCaptionFilesDomElement->ownerDocument->createElement('ClosedCaptionFile');
-        $closedCaptionFilesDomElement->appendChild($closedCaptionFileDomElement);
+        //create closedCaptionFileDomElement and append to closedCaptionFilesDomElement
+        $closedCaptionFileDomElement = $this->closedCaptionFilesDomElement->ownerDocument->createElement('ClosedCaptionFile');
+        $this->closedCaptionFilesDomElement->appendChild($closedCaptionFileDomElement);
 
-        // object
         return $this->vastElementBuilder->createInLineAdLinearCreativeClosedCaptionFile($closedCaptionFileDomElement);
     }
     
-        
     /**
      * @param array|string $params
      *
