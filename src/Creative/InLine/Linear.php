@@ -12,6 +12,7 @@
 namespace Sokil\Vast\Creative\InLine;
 
 use Sokil\Vast\Creative\AbstractLinearCreative;
+use Sokil\Vast\Creative\InLine\Linear\ClosedCaptionFile;
 use Sokil\Vast\Creative\InLine\Linear\MediaFile;
 use Sokil\Vast\Creative\InLine\Linear\AdParameters;
 
@@ -21,6 +22,11 @@ class Linear extends AbstractLinearCreative
      * @var \DOMElement
      */
     private $mediaFilesDomElement;
+    
+    /**
+     * @var \DOMElement
+     */
+    private $closedCaptionFilesDomElement;
 
     /**
      * @var \DOMElement
@@ -53,31 +59,62 @@ class Linear extends AbstractLinearCreative
 
         return $this;
     }
-
+    
     /**
-     * @return MediaFile
+     * @return  \DOMElement MediaFiles
+     */
+    private function getMediaFilesElement(){
+      if (empty($this->mediaFilesDomElement)) {
+          $this->mediaFilesDomElement = $this->getDomElement()->getElementsByTagName('MediaFiles')->item(0);
+          if (!$this->mediaFilesDomElement) {
+              $this->mediaFilesDomElement = $this->getDomElement()->ownerDocument->createElement('MediaFiles');
+              $this->getDomElement()
+                  ->getElementsByTagName('Linear')
+                  ->item(0)
+                  ->appendChild($this->mediaFilesDomElement);
+          }
+      }
+      return $this->mediaFilesDomElement;
+    }
+      
+    /**
+     * @return \DOMElement MediaFile
      */
     public function createMediaFile()
     {
-        if (empty($this->mediaFilesDomElement)) {
-            $this->mediaFilesDomElement = $this->getDomElement()->getElementsByTagName('MediaFiles')->item(0);
-            if (!$this->mediaFilesDomElement) {
-                $this->mediaFilesDomElement = $this->getDomElement()->ownerDocument->createElement('MediaFiles');
-                $this->getDomElement()
-                    ->getElementsByTagName('Linear')
-                    ->item(0)
-                    ->appendChild($this->mediaFilesDomElement);
-            }
-        }
+        // get needed DOM element
+        $mediaFilesDomElement = $this->getMediaFilesElement();
 
-        // dom
-        $mediaFileDomElement = $this->mediaFilesDomElement->ownerDocument->createElement('MediaFile');
-        $this->mediaFilesDomElement->appendChild($mediaFileDomElement);
+        // create MediaFile and append to MediaFiles
+        $mediaFileDomElement = $mediaFilesDomElement->ownerDocument->createElement('MediaFile');
+        $mediaFilesDomElement->appendChild($mediaFileDomElement);
 
         // object
         return $this->vastElementBuilder->createInLineAdLinearCreativeMediaFile($mediaFileDomElement);
     }
+    
+    /**
+     * @return \DOMElement ClosedCaptionFile
+     */
+    public function createClosedCaptionFile() 
+    {
+        //ensure closedCaptionFilesDomElement existence
+        if (empty($this->closedCaptionFilesDomElement)) {
+           $mediaFilesElement = $this->getMediaFilesElement();
+            $this->closedCaptionFilesDomElement = $mediaFilesElement->getElementsByTagName('ClosedCaptionFiles')->item(0);	
+            if (!$this->closedCaptionFilesDomElement) {	
+                $this->closedCaptionFilesDomElement = $this->getDomElement()->ownerDocument->createElement('ClosedCaptionFiles');	
+                $mediaFilesElement->appendChild($this->closedCaptionFilesDomElement);	
+            }	
+        }
+        
+        //create closedCaptionFileDomElement and append to closedCaptionFilesDomElement
+        $closedCaptionFileDomElement = $this->closedCaptionFilesDomElement->ownerDocument->createElement('ClosedCaptionFile');
+        $this->closedCaptionFilesDomElement->appendChild($closedCaptionFileDomElement);
 
+        return $this->vastElementBuilder->createInLineAdLinearCreativeClosedCaptionFile($closedCaptionFileDomElement);
+    }
+    
     /**
      * @param array|string $params
      *
