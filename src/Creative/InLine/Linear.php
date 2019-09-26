@@ -60,28 +60,28 @@ class Linear extends AbstractLinearCreative
         return $this;
     }
     
-    
     /**
      * Creates a DOM element if it doesn't exist already
      *
-     * @param string $domElementName The variable that hold the DOM element
+     * @param \DOMElement $domElement The variable holding the DOM element
      * @param string $tagName The name of the DOM element to be created
      * @param string $parentTagName The name of the parent tag that the element will be appended to
      *  if it doesn't exist
      *
-     * @return VOID
+     * @return \DOMElement $domElement
      */
     private function createDomElement($domElement, $tagName, $parentTagName){
-      if (empty($this->{$domElement})) {
-          $this->{$domElement} = $this->getDomElement()->getElementsByTagName($tagName)->item(0);
-          if (!$this->{$domElement}) {
-              $this->{$domElement} = $this->getDomElement()->ownerDocument->createElement($tagName);
+      if (empty($domElement)) {
+          $domElement = $this->getDomElement()->getElementsByTagName($tagName)->item(0);
+          if (!$domElement) {
+              $domElement = $this->getDomElement()->ownerDocument->createElement($tagName);
               $this->getDomElement()
                   ->getElementsByTagName($parentTagName)
                   ->item(0)
-                  ->appendChild($this->{$domElement});
+                  ->appendChild($domElement);
           }
       }
+      return $domElement;
     }
       
     /**
@@ -89,11 +89,12 @@ class Linear extends AbstractLinearCreative
      */
     public function createMediaFile()
     {
-        $this->createDomElement('mediaFilesDomElement', 'MediaFiles', 'Linear');
+        // create needed DOM element
+        $mediaFilesDomElement = $this->createDomElement($this->mediaFilesDomElement, 'MediaFiles', 'Linear');
 
         // dom
-        $mediaFileDomElement = $this->mediaFilesDomElement->ownerDocument->createElement('MediaFile');
-        $this->mediaFilesDomElement->appendChild($mediaFileDomElement);
+        $mediaFileDomElement = $mediaFilesDomElement->ownerDocument->createElement('MediaFile');
+        $mediaFilesDomElement->appendChild($mediaFileDomElement);
 
         // object
         return $this->vastElementBuilder->createInLineAdLinearCreativeMediaFile($mediaFileDomElement);
@@ -104,13 +105,13 @@ class Linear extends AbstractLinearCreative
      */
     public function createClosedCaptionFile()
     {
-        // 
-        $this->createDomElement('mediaFilesDomElement', 'MediaFiles', 'Linear');
-        $this->createDomElement('closedCaptionFilesDomElement', 'ClosedCaptionFiles', 'MediaFiles');
+        // create needed DOM elements
+        $mediaFilesDomElement = $this->createDomElement($this->mediaFilesDomElement, 'MediaFiles', 'Linear');
+        $closedCaptionFilesDomElement =$this->createDomElement($this->closedCaptionFilesDomElement, 'ClosedCaptionFiles', 'MediaFiles');
         
         // dom
-        $closedCaptionFileDomElement = $this->closedCaptionFilesDomElement->ownerDocument->createElement('ClosedCaptionFile');
-        $this->closedCaptionFilesDomElement->appendChild($closedCaptionFileDomElement);
+        $closedCaptionFileDomElement = $closedCaptionFilesDomElement->ownerDocument->createElement('ClosedCaptionFile');
+        $closedCaptionFilesDomElement->appendChild($closedCaptionFileDomElement);
 
         // object
         return $this->vastElementBuilder->createInLineAdLinearCreativeClosedCaptionFile($closedCaptionFileDomElement);
