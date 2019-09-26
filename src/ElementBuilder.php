@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * This file is part of the PHP-VAST package.
@@ -30,7 +31,7 @@ class ElementBuilder
      *
      * @return Document
      */
-    public function createDocument(\DomDocument $xmlDocument)
+    public function createDocument(\DomDocument $xmlDocument): Document
     {
         return new Document(
             $xmlDocument,
@@ -45,7 +46,7 @@ class ElementBuilder
      *
      * @return InLine
      */
-    public function createInLineAdNode(\DomElement $adElement)
+    public function createInLineAdNode(\DomElement $adElement): InLine
     {
         return new InLine($adElement, $this);
     }
@@ -57,7 +58,7 @@ class ElementBuilder
      *
      * @return Wrapper
      */
-    public function createWrapperAdNode(\DomElement $adElement)
+    public function createWrapperAdNode(\DomElement $adElement): Wrapper
     {
         return new Wrapper($adElement, $this);
     }
@@ -69,7 +70,7 @@ class ElementBuilder
      *
      * @return InLineAdLinearCreative
      */
-    public function createInLineAdLinearCreative(\DOMElement $creativeDomElement)
+    public function createInLineAdLinearCreative(\DOMElement $creativeDomElement): InLineAdLinearCreative
     {
         return new InLineAdLinearCreative($creativeDomElement, $this);
     }
@@ -81,7 +82,7 @@ class ElementBuilder
      *
      * @return WrapperAdLinearCreative
      */
-    public function createWrapperAdLinearCreative(\DOMElement $creativeDomElement)
+    public function createWrapperAdLinearCreative(\DOMElement $creativeDomElement): WrapperAdLinearCreative
     {
         return new WrapperAdLinearCreative($creativeDomElement, $this);
     }
@@ -93,7 +94,7 @@ class ElementBuilder
      *
      * @return MediaFile
      */
-    public function createInLineAdLinearCreativeMediaFile(\DOMElement $mediaFileDomElement)
+    public function createInLineAdLinearCreativeMediaFile(\DOMElement $mediaFileDomElement): MediaFile
     {
         return new MediaFile($mediaFileDomElement);
     }
@@ -105,7 +106,7 @@ class ElementBuilder
      *
      * @return ClosedCaptionFile
      */
-    public function createInLineAdLinearCreativeClosedCaptionFile(\DOMElement $mediaFileDomElement)
+    public function createInLineAdLinearCreativeClosedCaptionFile(\DOMElement $mediaFileDomElement): ClosedCaptionFile
     {
         return new ClosedCaptionFile($mediaFileDomElement);
     }

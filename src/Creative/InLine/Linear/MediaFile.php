@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * This file is part of the PHP-VAST package.
@@ -13,8 +14,8 @@ namespace Sokil\Vast\Creative\InLine\Linear;
 
 class MediaFile
 {
-    const DELIVERY_PROGRESSIVE = 'progressive';
-    const DELIVERY_STREAMING = 'streaming';
+    public const DELIVERY_PROGRESSIVE = 'progressive';
+    public const DELIVERY_STREAMING = 'streaming';
 
     /**
      * @var \DomElement
@@ -28,48 +29,95 @@ class MediaFile
     {
         $this->domElement = $domElement;
     }
-    
-    public function setProgressiveDelivery()
+
+    /**
+     * @return MediaFile
+     */
+    public function setProgressiveDelivery(): self
     {
-        $this->domElement->setAttribute('delivery', self::DELIVERY_PROGRESSIVE);
+        $this->setDelivery(self::DELIVERY_PROGRESSIVE);
+
         return $this;
     }
-    
-    public function setStreamingDelivery()
+
+    /**
+     * @return MediaFile
+     */
+    public function setStreamingDelivery(): self
     {
-        $this->domElement->setAttribute('delivery', self::DELIVERY_STREAMING);
+        $this->setDelivery(self::DELIVERY_STREAMING);
+
         return $this;
     }
-    
-    public function setDelivery($delivery)
+
+    /**
+     * Either “progressive” for progressive download protocols (such as HTTP) or “streaming” for streaming protocols
+     *
+     * @param string $delivery One of MediaFile::DELIVERY_ constants
+     *
+     * @return MediaFile
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function setDelivery(string $delivery): self
     {
-        if (!in_array($delivery, array(self::DELIVERY_PROGRESSIVE, self::DELIVERY_STREAMING))) {
-            throw new \Exception('Wrong delivery specified');
+        if (!in_array($delivery, [self::DELIVERY_PROGRESSIVE, self::DELIVERY_STREAMING])) {
+            throw new \InvalidArgumentException('Wrong delivery specified');
         }
         
         $this->domElement->setAttribute('delivery', $delivery);
+
         return $this;
     }
-    
-    public function setType($mime)
+
+    /**
+     * MIME type for the file container. Popular MIME types include, but are not
+     * limited to “video/mp4” for MP4, “audio/mpeg” and "audio/aac" for audio ads.
+     *
+     * @param string $mime
+     *
+     * @return MediaFile
+     */
+    public function setType(string $mime): self
     {
         $this->domElement->setAttribute('type', $mime);
         return $this;
     }
-    
-    public function setWidth($width)
+
+    /**
+     * The native width of the video file, in pixels. (0 for audio ads)
+     *
+     * @param int $width
+     *
+     * @return MediaFile
+     */
+    public function setWidth(int $width): self
     {
-        $this->domElement->setAttribute('width', $width);
-        return $this;
-    }
-    
-    public function setHeight($height)
-    {
-        $this->domElement->setAttribute('height', $height);
+        $this->domElement->setAttribute('width', (string)$width);
+
         return $this;
     }
 
-    public function setUrl($url)
+    /**
+     * The native height of the video file, in pixels. (0 for audio ads)
+     *
+     * @param int $height
+     *
+     * @return MediaFile
+     */
+    public function setHeight(int $height): self
+    {
+        $this->domElement->setAttribute('height', (string)$height);
+
+        return $this;
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return MediaFile
+     */
+    public function setUrl(string $url): self
     {
         $cdata = $this->domElement->ownerDocument->createCDATASection($url);
     
@@ -85,21 +133,28 @@ class MediaFile
 
     /**
      * @param int $bitrate
+     *
      * @return $this
      */
-    public function setBitrate($bitrate)
+    public function setBitrate(int $bitrate): self
     {
-        $this->domElement->setAttribute('bitrate', (int) $bitrate);
+        $this->domElement->setAttribute('bitrate', (string)$bitrate);
+
         return $this;
     }
 
     /**
-     * Please note that this attribute is deprecated since VAST 4.1 along with VPAID
+     * @deprecated Please note that this attribute is deprecated since VAST 4.1 along with VPAID
+     *
+     * Identifies the API needed to execute an interactive media file, but current support is for backward
+     * compatibility. Please use the <InteractiveCreativeFile> element to include files that
+     * require an API for execution.
      *
      * @param string $value
+     *
      * @return $this
      */
-    public function setApiFramework($value)
+    public function setApiFramework(string $value): self
     {
         $this->domElement->setAttribute('apiFramework', (string) $value);
 

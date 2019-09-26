@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * This file is part of the PHP-VAST package.
@@ -24,7 +25,7 @@ abstract class AbstractLinearCreative extends AbstractCreative
      * this event should be used to indicate when the player considers that it has loaded
      * and buffered the creative’s media and assets either fully or to the extent that it is ready to play the media.
      */
-    const EVENT_TYPE_LOADED = 'loaded';
+    public const EVENT_TYPE_LOADED = 'loaded';
 
     /**
      * not to be confused with an impression, this event indicates that an individual creative
@@ -33,52 +34,52 @@ abstract class AbstractLinearCreative extends AbstractCreative
      * others. This event enables ad servers to track which ad creative are viewed, and therefore, which
      * platforms are more common.
      */
-    const EVENT_TYPE_CREATIVEVIEW = 'creativeView';
+    public const EVENT_TYPE_CREATIVEVIEW = 'creativeView';
                      
     /**
      * this event is used to indicate that an individual creative within the ad was loaded and playback
      * began. As with creativeView, this event is another way of tracking creative playback.
      */
-    const EVENT_TYPE_START = 'start';
+    public const EVENT_TYPE_START = 'start';
     
     // the creative played for at least 25% of the total duration.
-    const EVENT_TYPE_FIRSTQUARTILE = 'firstQuartile';
+    public const EVENT_TYPE_FIRSTQUARTILE = 'firstQuartile';
     
     // the creative played for at least 50% of the total duration.
-    const EVENT_TYPE_MIDPOINT = 'midpoint';
+    public const EVENT_TYPE_MIDPOINT = 'midpoint';
     
     // the creative played for at least 75% of the duration.
-    const EVENT_TYPE_THIRDQUARTILE = 'thirdQuartile';
+    public const EVENT_TYPE_THIRDQUARTILE = 'thirdQuartile';
     
     // The creative was played to the end at normal speed.
-    const EVENT_TYPE_COMPLETE = 'complete';
+    public const EVENT_TYPE_COMPLETE = 'complete';
     
     // the user activated the mute control and muted the creative.
-    const EVENT_TYPE_MUTE = 'mute';
+    public const EVENT_TYPE_MUTE = 'mute';
     
     // the user activated the mute control and unmuted the creative.
-    const EVENT_TYPE_UNMUTE = 'unmute';
+    public const EVENT_TYPE_UNMUTE = 'unmute';
     
     // the user clicked the pause control and stopped the creative.
-    const EVENT_TYPE_PAUSE = 'pause';
+    public const EVENT_TYPE_PAUSE = 'pause';
     
     // the user activated the rewind control to access a previous point in the creative timeline.
-    const EVENT_TYPE_REWIND = 'rewind';
+    public const EVENT_TYPE_REWIND = 'rewind';
     
     // the user activated the resume control after the creative had been stopped or paused.
-    const EVENT_TYPE_RESUME = 'resume';
+    public const EVENT_TYPE_RESUME = 'resume';
     
     // the user activated a control to extend the video player to the edges of the viewer’s screen.
-    const EVENT_TYPE_FULLSCREEN = 'fullscreen';
+    public const EVENT_TYPE_FULLSCREEN = 'fullscreen';
     
     // the user activated the control to reduce video player size to original dimensions.
-    const EVENT_TYPE_EXITFULLSCREEN = 'exitFullscreen';
+    public const EVENT_TYPE_EXITFULLSCREEN = 'exitFullscreen';
     
     // the user activated a control to expand the creative.
-    const EVENT_TYPE_EXPAND = 'expand';
+    public const EVENT_TYPE_EXPAND = 'expand';
     
     // the user activated a control to reduce the creative to its original dimensions.
-    const EVENT_TYPE_COLLAPSE = 'collapse';
+    public const EVENT_TYPE_COLLAPSE = 'collapse';
     
     /**
      * The user activated a control that launched an additional portion of the
@@ -87,7 +88,7 @@ abstract class AbstractLinearCreative extends AbstractCreative
      * metric as applying to non-linear ads only. The “acceptInvitationLinear” event extends the metric for use
      * in Linear creative.
      */
-    const EVENT_TYPE_ACCEPTINVITATIONLINEAR = 'acceptInvitationLinear';
+    public const EVENT_TYPE_ACCEPTINVITATIONLINEAR = 'acceptInvitationLinear';
     
     /**
      * The user clicked the close button on the creative. The name of this event distinguishes it
@@ -96,18 +97,18 @@ abstract class AbstractLinearCreative extends AbstractCreative
      * extends the “close” event for use in Linear creative.
      * Available in VAST v.3, not available in VAST v.4
      */
-    const EVENT_TYPE_CLOSELINEAR = 'closeLinear';
+    public const EVENT_TYPE_CLOSELINEAR = 'closeLinear';
     
     // the user activated a skip control to skip the creative, which is a
     // different control than the one used to close the creative.
-    const EVENT_TYPE_SKIP = 'skip';
+    public const EVENT_TYPE_SKIP = 'skip';
     
     /**
      * the creative played for a duration at normal speed that is equal to or greater than the
      * value provided in an additional attribute for offset . Offset values can be time in the format
      * HH:MM:SS or HH:MM:SS.mmm or a percentage value in the format n% . Multiple progress ev
      */
-    const EVENT_TYPE_PROGRESS = 'progress';
+    public const EVENT_TYPE_PROGRESS = 'progress';
 
     /**
      * Dom Element of <Creative></Creative>
@@ -141,7 +142,7 @@ abstract class AbstractLinearCreative extends AbstractCreative
      *
      * @return \DOMElement
      */
-    protected function getDomElement()
+    protected function getDomElement(): \DOMElement
     {
         return $this->linearCreativeDomElement;
     }
@@ -151,9 +152,9 @@ abstract class AbstractLinearCreative extends AbstractCreative
      *
      * @return array
      */
-    public static function getEventList()
+    public static function getEventList(): array
     {
-        return array(
+        return [
             self::EVENT_TYPE_LOADED,
             self::EVENT_TYPE_CREATIVEVIEW,
             self::EVENT_TYPE_START,
@@ -174,7 +175,7 @@ abstract class AbstractLinearCreative extends AbstractCreative
             self::EVENT_TYPE_CLOSELINEAR,
             self::EVENT_TYPE_SKIP,
             self::EVENT_TYPE_PROGRESS,
-        );
+        ];
     }
 
     /**
@@ -182,7 +183,7 @@ abstract class AbstractLinearCreative extends AbstractCreative
      *
      * @return \DOMElement
      */
-    protected function getVideoClicksDomElement()
+    protected function getVideoClicksDomElement(): \DOMElement
     {
         // create container
         if (!empty($this->videoClicksDomElement)) {
@@ -207,9 +208,10 @@ abstract class AbstractLinearCreative extends AbstractCreative
      * Add click tracking url
      *
      * @param string $url
-     * @return $this
+     *
+     * @return AbstractLinearCreative
      */
-    public function addVideoClicksClickTracking($url)
+    public function addVideoClicksClickTracking(string $url): self
     {
         // create ClickTracking
         $clickTrackingDomElement = $this->getDomElement()->ownerDocument->createElement('ClickTracking');
@@ -226,9 +228,10 @@ abstract class AbstractLinearCreative extends AbstractCreative
      * Add custom click url
      *
      * @param string $url
-     * @return $this
+     *
+     * @return AbstractLinearCreative
      */
-    public function addVideoClicksCustomClick($url)
+    public function addVideoClicksCustomClick(string $url): self
     {
         // create CustomClick
         $customClickDomElement = $this->getDomElement()->ownerDocument->createElement('CustomClick');
@@ -245,9 +248,10 @@ abstract class AbstractLinearCreative extends AbstractCreative
      * Set video click through url
      *
      * @param string $url
-     * @return $this
+     *
+     * @return AbstractLinearCreative
      */
-    public function setVideoClicksClickThrough($url)
+    public function setVideoClicksClickThrough(string $url): self
     {
         // create cdata
         $cdata = $this->getDomElement()->ownerDocument->createCDATASection($url);
@@ -274,7 +278,7 @@ abstract class AbstractLinearCreative extends AbstractCreative
      *
      * @return \DOMElement
      */
-    protected function getTrackingEventsDomElement()
+    protected function getTrackingEventsDomElement(): \DOMElement
     {
         // create container
         if ($this->trackingEventsDomElement) {
@@ -305,10 +309,11 @@ abstract class AbstractLinearCreative extends AbstractCreative
      * @param string $event
      * @param string $url
      *
-     * @return $this
+     * @return AbstractLinearCreative
+     *
      * @throws \Exception
      */
-    public function addTrackingEvent($event, $url)
+    public function addTrackingEvent(string $event, string $url): self
     {
         if (!in_array($event, $this->getEventList())) {
             throw new \Exception(sprintf('Wrong event "%s" specified', $event));
@@ -332,9 +337,9 @@ abstract class AbstractLinearCreative extends AbstractCreative
      * @param string $url
      * @param int|string $offset seconds or time in format "H:m:i" or percents in format "n%"
      *
-     * @return $this
+     * @return AbstractLinearCreative
      */
-    public function addProgressTrackingEvent($url, $offset)
+    public function addProgressTrackingEvent(string $url, $offset): self
     {
         // create Tracking
         $trackingDomElement = $this->linearCreativeDomElement->ownerDocument->createElement('Tracking');
@@ -372,14 +377,14 @@ abstract class AbstractLinearCreative extends AbstractCreative
 
         // get hours
         $hours = floor($seconds / 3600);
-        $time[] = str_pad($hours, 2, '0', STR_PAD_LEFT);
+        $time[] = str_pad((string)$hours, 2, '0', STR_PAD_LEFT);
 
         // get minutes
         $seconds = $seconds % 3600;
-        $time[] = str_pad(floor($seconds / 60), 2, '0', STR_PAD_LEFT);
+        $time[] = str_pad((string)floor($seconds / 60), 2, '0', STR_PAD_LEFT);
 
         // get seconds
-        $time[] = str_pad($seconds % 60, 2, '0', STR_PAD_LEFT);
+        $time[] = str_pad((string)($seconds % 60), 2, '0', STR_PAD_LEFT);
 
         return implode(':', $time);
     }

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * This file is part of the PHP-VAST package.
@@ -37,7 +38,7 @@ abstract class AbstractAdNode extends AbstractNode
      *
      * @var array
      */
-    private $creatives = array();
+    private $creatives = [];
 
     /**
      * @var \DomElement
@@ -65,14 +66,14 @@ abstract class AbstractAdNode extends AbstractNode
      *
      * @return string
      */
-    abstract public function getAdSubElementTagName();
+    abstract public function getAdSubElementTagName(): string;
 
     /**
      * Instance of "\Vast\Ad\(InLine|Wrapper)" element
      *
      * @return \DOMElement
      */
-    protected function getDomElement()
+    protected function getDomElement(): \DOMElement
     {
         return $this->domElement;
     }
@@ -82,7 +83,7 @@ abstract class AbstractAdNode extends AbstractNode
      *
      * @return string
      */
-    public function getId()
+    public function getId(): string
     {
         return $this->adDomElement->getAttribute('id');
     }
@@ -94,7 +95,7 @@ abstract class AbstractAdNode extends AbstractNode
      *
      * @return InLine|Wrapper|AbstractAdNode
      */
-    public function setId($id)
+    public function setId(string $id): self
     {
         $this->adDomElement->setAttribute('id', $id);
 
@@ -110,9 +111,9 @@ abstract class AbstractAdNode extends AbstractNode
      *
      * @return InLine|Wrapper|AbstractAdNode
      */
-    public function setSequence($sequence)
+    public function setSequence(int $sequence): self
     {
-        $this->adDomElement->setAttribute('sequence', $sequence);
+        $this->adDomElement->setAttribute('sequence', (string)$sequence);
 
         return $this;
     }
@@ -120,7 +121,7 @@ abstract class AbstractAdNode extends AbstractNode
     /**
      * @return int
      */
-    public function getSequence()
+    public function getSequence(): int
     {
         return (int)($this->adDomElement->getAttribute('sequence'));
     }
@@ -132,7 +133,7 @@ abstract class AbstractAdNode extends AbstractNode
      *
      * @return InLine|Wrapper|AbstractAdNode
      */
-    public function setAdSystem($adSystem)
+    public function setAdSystem(string $adSystem): self
     {
         $this->setScalarNodeCdata('AdSystem', $adSystem);
 
@@ -144,7 +145,7 @@ abstract class AbstractAdNode extends AbstractNode
      *
      * @return string
      */
-    public function getAdSystem()
+    public function getAdSystem(): string
     {
         $adSystem = $this->getScalarNodeValue('AdSystem');
 
@@ -154,7 +155,7 @@ abstract class AbstractAdNode extends AbstractNode
     /**
      * @return string[]
      */
-    abstract protected function getAvailableCreativeTypes();
+    abstract protected function getAvailableCreativeTypes(): array;
 
     /**
      * Build object for creative of given type
@@ -164,7 +165,7 @@ abstract class AbstractAdNode extends AbstractNode
      *
      * @return AbstractCreative
      */
-    abstract protected function buildCreativeElement($type, \DOMElement $creativeDomElement);
+    abstract protected function buildCreativeElement(string $type, \DOMElement $creativeDomElement): AbstractCreative;
 
     /**
      * Create "creative" object of given type
@@ -175,7 +176,7 @@ abstract class AbstractAdNode extends AbstractNode
      *
      * @return AbstractCreative
      */
-    final protected function buildCreative($type)
+    final protected function buildCreative(string $type): AbstractCreative
     {
         // check type
         if (!in_array($type, $this->getAvailableCreativeTypes())) {
@@ -214,9 +215,9 @@ abstract class AbstractAdNode extends AbstractNode
      *
      * @param string $url
      *
-     * @return $this
+     * @return AbstractAdNode
      */
-    public function addError($url)
+    public function addError(string $url): self
     {
         $this->addCdataNode('Error', $url);
 
@@ -228,7 +229,7 @@ abstract class AbstractAdNode extends AbstractNode
      *
      * @return array
      */
-    public function getErrors()
+    public function getErrors(): array
     {
         return $this->getValuesOfArrayNode('Error');
     }
@@ -243,9 +244,9 @@ abstract class AbstractAdNode extends AbstractNode
      *        be requested at the same time or as close in time as possible to help prevent
      *        discrepancies.
      *
-     * @return $this
+     * @return AbstractAdNode
      */
-    public function addImpression($url, $id = null)
+    public function addImpression(string $url, string $id = null): self
     {
         $attributes = array();
         if ($id !== null) {
@@ -262,21 +263,11 @@ abstract class AbstractAdNode extends AbstractNode
     }
 
     /**
-     * @deprecated Ad may have multiple impressions, so use self::addImpression()
-     *
-     * @param string $url
-     */
-    public function setImpression($url)
-    {
-        $this->addImpression($url);
-    }
-
-    /**
      * Get previously set impression tracking url value
      *
      * @return array
      */
-    public function getImpressions()
+    public function getImpressions(): array
     {
         return $this->getValuesOfArrayNode('Impression');
     }
@@ -287,9 +278,9 @@ abstract class AbstractAdNode extends AbstractNode
      * @param string $type
      * @param string $value
      *
-     * @return $this
+     * @return AbstractAdNode
      */
-    public function addExtension($type, $value)
+    public function addExtension(string $type, string $value): self
     {
         // get container
         if (!$this->extensionsDomElement) {

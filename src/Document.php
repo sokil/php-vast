@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * This file is part of the PHP-VAST package.
@@ -36,13 +37,6 @@ class Document extends AbstractNode
     private $vastAdNodeList = array();
 
     /**
-     * @deprecated
-     *
-     * @var Factory
-     */
-    private static $documentFactory;
-
-    /**
      * @param \DOMDocument $DOMDocument
      */
     public function __construct(\DOMDocument $DOMDocument, ElementBuilder $vastElementBuilder)
@@ -54,21 +48,9 @@ class Document extends AbstractNode
     /**
      * @return \DOMElement
      */
-    protected function getDomElement()
+    protected function getDomElement(): \DOMElement
     {
         return $this->domDocument->documentElement;
-    }
-
-    /**
-     * Convert to string
-     *
-     * @deprecated use `(string) $document` instead
-     *
-     * @return string
-     */
-    public function toString()
-    {
-        return $this->__toString();
     }
 
     /**
@@ -86,7 +68,7 @@ class Document extends AbstractNode
      *
      * @return \DomDocument
      */
-    public function toDomDocument()
+    public function toDomDocument(): \DOMDocument
     {
         return $this->domDocument;
     }
@@ -100,7 +82,7 @@ class Document extends AbstractNode
      *
      * @return AbstractAdNode|InLine|Wrapper
      */
-    private function createAdSection($type)
+    private function createAdSection($type): AbstractAdNode
     {
         // Check Ad type
         if (!in_array($type, array(InLine::TAG_NAME, Wrapper::TAG_NAME))) {
@@ -138,7 +120,7 @@ class Document extends AbstractNode
      *
      * @return \Sokil\Vast\Ad\InLine
      */
-    public function createInLineAdSection()
+    public function createInLineAdSection(): InLine
     {
         return $this->createAdSection(InLine::TAG_NAME);
     }
@@ -148,7 +130,7 @@ class Document extends AbstractNode
      *
      * @return \Sokil\Vast\Ad\Wrapper
      */
-    public function createWrapperAdSection()
+    public function createWrapperAdSection(): Wrapper
     {
         return $this->createAdSection(Wrapper::TAG_NAME);
     }
@@ -160,7 +142,7 @@ class Document extends AbstractNode
      *
      * @throws \Exception
      */
-    public function getAdSections()
+    public function getAdSections(): array
     {
         if (!empty($this->vastAdNodeList)) {
             return $this->vastAdNodeList;
@@ -209,9 +191,9 @@ class Document extends AbstractNode
      *
      * @param string $url
      *
-     * @return $this
+     * @return Document
      */
-    public function addErrors($url)
+    public function addErrors(string $url): self
     {
         $this->addCdataNode('Error', $url);
         return $this;
@@ -222,58 +204,8 @@ class Document extends AbstractNode
      *
      * @return array
      */
-    public function getErrors()
+    public function getErrors(): array
     {
         return $this->getValuesOfArrayNode('Error');
-    }
-
-    /**
-     * @deprecated Helper method to get factory for deprecated methods
-     *
-     * @return Factory
-     */
-    private static function getFactory()
-    {
-        if (empty(self::$documentFactory)) {
-            self::$documentFactory = new Factory();
-        }
-
-        return self::$documentFactory;
-    }
-
-    /**
-     * @deprecated use Factory::create
-     *
-     * @param string $vastVersion
-     *
-     * @return Document
-     */
-    public static function create($vastVersion = '2.0')
-    {
-        return self::getFactory()->create($vastVersion);
-    }
-
-    /**
-     * @deprecated use Factory::fromFile
-     *
-     * @param string $filename
-     *
-     * @return Document
-     */
-    public static function fromFile($filename)
-    {
-        return self::getFactory()->fromFile($filename);
-    }
-
-    /**
-     * @deprecated use Factory::fromString
-     *
-     * @param string $xmlString
-     *
-     * @return Document
-     */
-    public static function fromString($xmlString)
-    {
-        return self::getFactory()->fromString($xmlString);
     }
 }

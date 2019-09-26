@@ -2,6 +2,8 @@
 
 namespace Sokil\Vast\Stub\CustomElementBuilder;
 
+use Sokil\Vast\Creative\InLine\Linear\MediaFile;
+use Sokil\Vast\Document;
 use Sokil\Vast\ElementBuilder;
 use Sokil\Vast\Stub\CustomElementBuilder\Element\CustomDocument;
 use Sokil\Vast\Stub\CustomElementBuilder\Element\CustomInLine;
@@ -9,6 +11,10 @@ use Sokil\Vast\Stub\CustomElementBuilder\Element\CustomMediaFile;
 use Sokil\Vast\Stub\CustomElementBuilder\Element\CustomWrapper;
 use Sokil\Vast\Stub\CustomElementBuilder\Element\CustomWrapperAdLinearCreative;
 use Sokil\Vast\Stub\CustomElementBuilder\Element\CustomInLineAdLinearCreative;
+use Sokil\Vast\Creative\Wrapper\Linear as WrapperAdLinearCreative;
+use Sokil\Vast\Creative\InLine\Linear as InLineAdLinearCreative;
+use Sokil\Vast\Ad\Wrapper;
+use Sokil\Vast\Ad\InLine;
 
 class CustomElementBuilder extends ElementBuilder
 {
@@ -19,7 +25,7 @@ class CustomElementBuilder extends ElementBuilder
      *
      * @return CustomDocument
      */
-    public function createDocument(\DomDocument $xmlDocument)
+    public function createDocument(\DomDocument $xmlDocument): Document
     {
         return new CustomDocument(
             $xmlDocument,
@@ -34,7 +40,7 @@ class CustomElementBuilder extends ElementBuilder
      *
      * @return CustomInLine
      */
-    public function createInLineAdNode(\DomElement $adElement)
+    public function createInLineAdNode(\DomElement $adElement): InLine
     {
         return new CustomInLine($adElement, $this);
     }
@@ -46,7 +52,7 @@ class CustomElementBuilder extends ElementBuilder
      *
      * @return CustomWrapper
      */
-    public function createWrapperAdNode(\DomElement $adElement)
+    public function createWrapperAdNode(\DomElement $adElement): Wrapper
     {
         return new CustomWrapper($adElement, $this);
     }
@@ -58,7 +64,7 @@ class CustomElementBuilder extends ElementBuilder
      *
      * @return CustomInLineAdLinearCreative
      */
-    public function createInLineAdLinearCreative(\DOMElement $creativeDomElement)
+    public function createInLineAdLinearCreative(\DOMElement $creativeDomElement): InLineAdLinearCreative
     {
         return new CustomInLineAdLinearCreative($creativeDomElement, $this);
     }
@@ -70,7 +76,7 @@ class CustomElementBuilder extends ElementBuilder
      *
      * @return CustomWrapperAdLinearCreative
      */
-    public function createWrapperAdLinearCreative(\DOMElement $creativeDomElement)
+    public function createWrapperAdLinearCreative(\DOMElement $creativeDomElement): WrapperAdLinearCreative
     {
         return new CustomWrapperAdLinearCreative($creativeDomElement, $this);
     }
@@ -82,7 +88,7 @@ class CustomElementBuilder extends ElementBuilder
      *
      * @return CustomMediaFile
      */
-    public function createInLineAdLinearCreativeMediaFile(\DOMElement $mediaFileDomElement)
+    public function createInLineAdLinearCreativeMediaFile(\DOMElement $mediaFileDomElement): MediaFile
     {
         return new CustomMediaFile($mediaFileDomElement);
     }

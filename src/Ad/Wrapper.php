@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * This file is part of the PHP-VAST package.
@@ -29,7 +30,7 @@ class Wrapper extends AbstractAdNode
     /**
      * @return string
      */
-    public function getAdSubElementTagName()
+    public function getAdSubElementTagName(): string
     {
         return self::TAG_NAME;
     }
@@ -38,22 +39,24 @@ class Wrapper extends AbstractAdNode
      * URI of ad tag of downstream Secondary Ad Server
      *
      * @param string $uri
-     * @return $this
+     *
+     * @return Wrapper
      */
-    public function setVASTAdTagURI($uri)
+    public function setVASTAdTagURI(string $uri): self
     {
         $this->setScalarNodeCdata('VASTAdTagURI', $uri);
+
         return $this;
     }
 
     /**
      * @return string[]
      */
-    protected function getAvailableCreativeTypes()
+    protected function getAvailableCreativeTypes(): array
     {
-        return array(
+        return [
             self::CREATIVE_TYPE_LINEAR,
-        );
+        ];
     }
 
     /**
@@ -62,7 +65,7 @@ class Wrapper extends AbstractAdNode
      *
      * @return AbstractCreative|WrapperAdLinearCreative
      */
-    protected function buildCreativeElement($type, \DOMElement $creativeDomElement)
+    protected function buildCreativeElement(string $type, \DOMElement $creativeDomElement): AbstractCreative
     {
         switch ($type) {
             case self::CREATIVE_TYPE_LINEAR:
@@ -79,8 +82,10 @@ class Wrapper extends AbstractAdNode
      * Create Linear creative
      *
      * @return WrapperAdLinearCreative
+     *
+     * @throws \Exception
      */
-    public function createLinearCreative()
+    public function createLinearCreative(): WrapperAdLinearCreative
     {
         /** @var WrapperAdLinearCreative $creative */
         $creative = $this->buildCreative(self::CREATIVE_TYPE_LINEAR);

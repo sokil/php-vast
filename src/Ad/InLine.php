@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * This file is part of the PHP-VAST package.
@@ -29,7 +30,7 @@ class InLine extends AbstractAdNode
     /**
      * @return string
      */
-    public function getAdSubElementTagName()
+    public function getAdSubElementTagName(): string
     {
         return self::TAG_NAME;
     }
@@ -41,7 +42,7 @@ class InLine extends AbstractAdNode
      *
      * @return InLine
      */
-    public function setAdTitle($value)
+    public function setAdTitle(string $value): self
     {
         $this->setScalarNodeCdata('AdTitle', $value);
 
@@ -51,11 +52,11 @@ class InLine extends AbstractAdNode
     /**
      * @return string[]
      */
-    protected function getAvailableCreativeTypes()
+    protected function getAvailableCreativeTypes(): array
     {
-        return array(
+        return [
             self::CREATIVE_TYPE_LINEAR,
-        );
+        ];
     }
 
     /**
@@ -64,7 +65,7 @@ class InLine extends AbstractAdNode
      *
      * @return AbstractCreative|InLineAdLinearCreative
      */
-    protected function buildCreativeElement($type, \DOMElement $creativeDomElement)
+    protected function buildCreativeElement($type, \DOMElement $creativeDomElement): AbstractCreative
     {
         switch ($type) {
             case self::CREATIVE_TYPE_LINEAR:
@@ -84,7 +85,7 @@ class InLine extends AbstractAdNode
      *
      * @return InLineAdLinearCreative
      */
-    public function createLinearCreative()
+    public function createLinearCreative(): InLineAdLinearCreative
     {
         /** @var InLineAdLinearCreative $creative */
         $creative = $this->buildCreative(self::CREATIVE_TYPE_LINEAR);

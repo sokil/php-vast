@@ -453,8 +453,8 @@ class DocumentTest extends AbstractTestCase
         $factory = new Factory();
         $document = $factory->create('2.0');
 
-        $this->assertContains('<?xml version="1.0" encoding="UTF-8"?>', $document->toString());
-        $this->assertContains('<VAST version="2.0"/>', $document->toString());
+        $this->assertContains('<?xml version="1.0" encoding="UTF-8"?>', (string)$document);
+        $this->assertContains('<VAST version="2.0"/>', (string)$document);
     }
 
     /**
@@ -475,7 +475,6 @@ class DocumentTest extends AbstractTestCase
     {
         $factory = new Factory();
         $document = $factory->create('2.0');
-        $document::create('1.0');
 
         $this->assertInstanceOf('\DomDocument', $document->toDomDocument());
     }
@@ -486,11 +485,10 @@ class DocumentTest extends AbstractTestCase
     public function testFromString()
     {
         $factory = new Factory();
-        $document = $factory->create('2.0');
 
         $this->assertInstanceOf(
             'Sokil\Vast\Document',
-            $document::fromString('<?xml version="1.0" encoding="UTF-8"?><VAST version="2.0"/>')
+            $factory->fromString('<?xml version="1.0" encoding="UTF-8"?><VAST version="2.0"/>')
         );
     }
 
@@ -500,9 +498,8 @@ class DocumentTest extends AbstractTestCase
     public function testFromFile()
     {
         $factory = new Factory();
-        $document = $factory->create('2.0');
 
-        $this->assertInstanceOf('Sokil\Vast\Document', $document::fromFile(__DIR__ . '/data/vast.xml'));
+        $this->assertInstanceOf('Sokil\Vast\Document', $factory->fromFile(__DIR__ . '/data/vast.xml'));
     }
 
     /**

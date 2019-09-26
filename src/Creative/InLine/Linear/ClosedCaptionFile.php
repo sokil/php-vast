@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * This file is part of the PHP-VAST package.
@@ -42,9 +43,10 @@ class ClosedCaptionFile
      *
      * @param string $mime Mime type of the file
      */
-    public function setType($mime)
+    public function setType(string $mime): self
     {
         $this->domElement->setAttribute('type', $mime);
+
         return $this;
     }
 
@@ -53,9 +55,10 @@ class ClosedCaptionFile
      *
      * @param string $languag Language of the file e.g: 'en'
      */
-    public function setLanguage($language)
+    public function setLanguage(string $language): self
     {
         $this->domElement->setAttribute('language', $language);
+
         return $this;
     }
 
@@ -64,7 +67,7 @@ class ClosedCaptionFile
      *
      * @param string $url URL of the file
      */
-    public function setUrl($url)
+    public function setUrl(string $url): self
     {
         $cdata = $this->domElement->ownerDocument->createCDATASection($url);
 

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * This file is part of the PHP-VAST package.
@@ -18,7 +19,7 @@ abstract class AbstractNode
      *
      * @return \DOMElement
      */
-    abstract protected function getDomElement();
+    abstract protected function getDomElement(): \DOMElement;
 
     /**
      * Set cdata for given child node or create new child node
@@ -26,9 +27,9 @@ abstract class AbstractNode
      * @param string $name name of node
      * @param string $value value of cdata
      *
-     * @return $this
+     * @return AbstractNode
      */
-    protected function setScalarNodeCdata($name, $value)
+    protected function setScalarNodeCdata($name, $value): self
     {
         // get tag
         $childDomElement = $this->getDomElement()->getElementsByTagName($name)->item(0);
@@ -57,7 +58,7 @@ abstract class AbstractNode
      *
      * @throws \InvalidArgumentException when node not found
      */
-    protected function getScalarNodeValue($name)
+    protected function getScalarNodeValue(string $name): string
     {
         $domElements = $this->getDomElement()->getElementsByTagName($name);
         if ($domElements->length === 0) {
@@ -74,9 +75,9 @@ abstract class AbstractNode
      * @param string $value
      * @param array $attributes
      *
-     * @return $this
+     * @return AbstractNode
      */
-    protected function addCdataNode($nodeName, $value, array $attributes = array())
+    protected function addCdataNode($nodeName, $value, array $attributes = []): self
     {
         // create element
         $domElement = $this->getDomElement()->ownerDocument->createElement($nodeName);
@@ -99,7 +100,7 @@ abstract class AbstractNode
      *
      * @return string[]
      */
-    protected function getValuesOfArrayNode($nodeName)
+    protected function getValuesOfArrayNode(string $nodeName): array
     {
         $domElements = $this->getDomElement()->getElementsByTagName($nodeName);
 

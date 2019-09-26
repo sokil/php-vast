@@ -1,5 +1,7 @@
 ## 2.0 (2019-09-26)
 * Support PHP 7.1.3 and above
+* Removed deprecated Document::toString(), use casting object to string
+* Removed deprecated document builders Document::create(), Document::fromFile(), Document::fromString(), use Factory instead
 
 ## 1.0 (2019-09-26)
 * Support Closed Caption Files

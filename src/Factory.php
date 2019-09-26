@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * This file is part of the PHP-VAST package.
@@ -37,7 +38,7 @@ class Factory
      *
      * @return Document
      */
-    public function create($vastVersion = '2.0')
+    public function create(string $vastVersion = '2.0'): Document
     {
         $xml = $this->createDomDocument();
 
@@ -61,7 +62,7 @@ class Factory
      *
      * @return Document
      */
-    public function fromFile($filename)
+    public function fromFile(string $filename): Document
     {
         $xml = $this->createDomDocument();
         $xml->load($filename);
@@ -76,7 +77,7 @@ class Factory
      *
      * @return Document
      */
-    public function fromString($xmlString)
+    public function fromString(string $xmlString): Document
     {
         $xml = $this->createDomDocument();
         $xml->loadXml($xmlString);
@@ -89,7 +90,7 @@ class Factory
      *
      * @return \DomDocument
      */
-    private function createDomDocument()
+    private function createDomDocument(): \DOMDocument
     {
         return new \DomDocument('1.0', 'UTF-8');
     }
