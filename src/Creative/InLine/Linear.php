@@ -14,7 +14,6 @@ namespace Sokil\Vast\Creative\InLine;
 use Sokil\Vast\Creative\AbstractLinearCreative;
 use Sokil\Vast\Creative\InLine\Linear\ClosedCaptionFile;
 use Sokil\Vast\Creative\InLine\Linear\MediaFile;
-use Sokil\Vast\Creative\InLine\Linear\AdParameters;
 
 class Linear extends AbstractLinearCreative
 {
@@ -22,7 +21,7 @@ class Linear extends AbstractLinearCreative
      * @var \DOMElement
      */
     private $mediaFilesDomElement;
-    
+
     /**
      * @var \DOMElement
      */
@@ -59,26 +58,28 @@ class Linear extends AbstractLinearCreative
 
         return $this;
     }
-    
+
     /**
-     * @return  \DOMElement MediaFiles
+     * @return \DOMElement
      */
-    private function getMediaFilesElement(){
-      if (empty($this->mediaFilesDomElement)) {
-          $this->mediaFilesDomElement = $this->getDomElement()->getElementsByTagName('MediaFiles')->item(0);
-          if (!$this->mediaFilesDomElement) {
-              $this->mediaFilesDomElement = $this->getDomElement()->ownerDocument->createElement('MediaFiles');
-              $this->getDomElement()
-                  ->getElementsByTagName('Linear')
-                  ->item(0)
-                  ->appendChild($this->mediaFilesDomElement);
-          }
-      }
-      return $this->mediaFilesDomElement;
+    private function getMediaFilesElement()
+    {
+        if (empty($this->mediaFilesDomElement)) {
+            $this->mediaFilesDomElement = $this->getDomElement()->getElementsByTagName('MediaFiles')->item(0);
+            if (!$this->mediaFilesDomElement) {
+                $this->mediaFilesDomElement = $this->getDomElement()->ownerDocument->createElement('MediaFiles');
+                $this->getDomElement()
+                    ->getElementsByTagName('Linear')
+                    ->item(0)
+                    ->appendChild($this->mediaFilesDomElement);
+            }
+        }
+
+        return $this->mediaFilesDomElement;
     }
-      
+
     /**
-     * @return \DOMElement MediaFile
+     * @return MediaFile
      */
     public function createMediaFile()
     {
@@ -92,29 +93,29 @@ class Linear extends AbstractLinearCreative
         // object
         return $this->vastElementBuilder->createInLineAdLinearCreativeMediaFile($mediaFileDomElement);
     }
-    
+
     /**
-     * @return \DOMElement ClosedCaptionFile
+     * @return ClosedCaptionFile
      */
-    public function createClosedCaptionFile() 
+    public function createClosedCaptionFile()
     {
         //ensure closedCaptionFilesDomElement existence
         if (empty($this->closedCaptionFilesDomElement)) {
-           $mediaFilesElement = $this->getMediaFilesElement();
-            $this->closedCaptionFilesDomElement = $mediaFilesElement->getElementsByTagName('ClosedCaptionFiles')->item(0);	
-            if (!$this->closedCaptionFilesDomElement) {	
-                $this->closedCaptionFilesDomElement = $this->getDomElement()->ownerDocument->createElement('ClosedCaptionFiles');	
-                $mediaFilesElement->appendChild($this->closedCaptionFilesDomElement);	
-            }	
+            $mediaFilesElement = $this->getMediaFilesElement();
+            $this->closedCaptionFilesDomElement = $mediaFilesElement->getElementsByTagName('ClosedCaptionFiles')->item(0);
+            if (!$this->closedCaptionFilesDomElement) {
+                $this->closedCaptionFilesDomElement = $this->getDomElement()->ownerDocument->createElement('ClosedCaptionFiles');
+                $mediaFilesElement->appendChild($this->closedCaptionFilesDomElement);
+            }
         }
-        
+
         //create closedCaptionFileDomElement and append to closedCaptionFilesDomElement
         $closedCaptionFileDomElement = $this->closedCaptionFilesDomElement->ownerDocument->createElement('ClosedCaptionFile');
         $this->closedCaptionFilesDomElement->appendChild($closedCaptionFileDomElement);
 
         return $this->vastElementBuilder->createInLineAdLinearCreativeClosedCaptionFile($closedCaptionFileDomElement);
     }
-    
+
     /**
      * @param array|string $params
      *
@@ -147,6 +148,7 @@ class Linear extends AbstractLinearCreative
 
     /**
      * @param int|string $time seconds or time in format "H:m:i"
+     *
      * @return $this
      */
     public function skipAfter($time)
@@ -167,6 +169,7 @@ class Linear extends AbstractLinearCreative
      *
      * @param int|string $idRegistry
      * @param int|string $universalAdId
+     *
      * @return $this
      */
     public function setUniversalAdId($idRegistry, $universalAdId)
@@ -183,6 +186,7 @@ class Linear extends AbstractLinearCreative
      * Set 'id' attribute of 'creative' element
      *
      * @param string $id
+     *
      * @return $this
      */
     public function setId($id)
@@ -196,6 +200,7 @@ class Linear extends AbstractLinearCreative
      * Set 'adId' attribute of 'creative' element
      *
      * @param string $adId
+     *
      * @return $this
      */
     public function setAdId($adId)

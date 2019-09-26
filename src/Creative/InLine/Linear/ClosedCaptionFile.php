@@ -19,7 +19,7 @@ class ClosedCaptionFile
      * @var \DomElement
      */
     private $domElement;
-    
+
     /**
      * @param \DomElement $domElement
      */
@@ -27,23 +27,23 @@ class ClosedCaptionFile
     {
         $this->domElement = $domElement;
     }
-    
+
     /**
      * Set file mime type
      *
      * @param string $mime Mime type of the file
-    */
+     */
     public function setType($mime)
     {
         $this->domElement->setAttribute('type', $mime);
         return $this;
     }
-    
+
     /**
      * Set file language
      *
      * @param string $languag Language of the file e.g: 'en'
-    */
+     */
     public function setLanguage($language)
     {
         $this->domElement->setAttribute('language', $language);
@@ -54,11 +54,11 @@ class ClosedCaptionFile
      * Set file URL
      *
      * @param string $url URL of the file
-    */
+     */
     public function setUrl($url)
     {
         $cdata = $this->domElement->ownerDocument->createCDATASection($url);
-    
+
         // update CData
         if ($this->domElement->hasChildNodes()) {
             $this->domElement->replaceChild($cdata, $this->domElement->firstChild);
