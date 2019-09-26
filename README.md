@@ -30,7 +30,7 @@ composer require sokil/php-vast
 ```php
 // create document
 $factory = new \Sokil\Vast\Factory();
-$document = $factory->create('2.0');
+$document = $factory->create('4.1');
 
 // insert Ad section
 $ad1 = $document
@@ -52,7 +52,7 @@ $linearCreative = $ad1
     ->addTrackingEvent('start', 'http://ad.server.com/trackingevent/start')
     ->addTrackingEvent('pause', 'http://ad.server.com/trackingevent/stop');
 
-// add closed caption file
+// add closed caption file (Closed Caption support starts on VAST 4.1)
 $linearCreative
     ->createClosedCaptionFile()
     ->setLanguage('en-US')
