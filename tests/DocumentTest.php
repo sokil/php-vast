@@ -172,7 +172,7 @@ class DocumentTest extends AbstractTestCase
             ->addImpression('http://ad.server.com/impression');
         $ad1
           ->createLinearCreative()
-          ->createClosedCaption()
+          ->createClosedCaptionFile()
           ->setLanguage('en')
           ->setType('text/srt')
           ->setUrl('http://http://example.com/test.srt');
@@ -199,13 +199,13 @@ class DocumentTest extends AbstractTestCase
         $linear = $ad1->createLinearCreative();
         
         $linear
-          ->createClosedCaption()
+          ->createClosedCaptionFile()
           ->setLanguage('en')
           ->setType('text/srt')
           ->setUrl('http://example.com/test.srt');
         
         $linear
-          ->createClosedCaption()
+          ->createClosedCaptionFile()
           ->setLanguage('es-DO')
           ->setType('text/vtt')
           ->setUrl('http://example.com/closedcaption.vtt')

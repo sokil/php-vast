@@ -51,6 +51,13 @@ $linearCreative = $ad1
     ->addVideoClicksCustomClick('http://ad.server.com/videoclicks/customclick')
     ->addTrackingEvent('start', 'http://ad.server.com/trackingevent/start')
     ->addTrackingEvent('pause', 'http://ad.server.com/trackingevent/stop');
+
+// add closed caption file
+$linearCreative
+    ->createClosedCaptionFile()
+    ->setLanguage('en-US')
+    ->setType('text/srt')
+    ->setUrl('http://server.com/cc.srt');
     
 // add 100x100 media file
 $linearCreative
@@ -103,84 +110,6 @@ This will generate:
                             <Tracking event="pause"><![CDATA[http://ad.server.com/trackingevent/stop]]></Tracking>
                         </TrackingEvents>
                         <MediaFiles>
-                            <MediaFile delivery="progressive" type="video/mp4" height="100" width="100" bitrate="2500">
-                                <![CDATA[http://server.com/media1.mp4]]>
-                            </MediaFile>
-                            <MediaFile delivery="progressive" type="video/mp4" height="200" width="200" bitrate="2500">
-                                <![CDATA[http://server.com/media2.mp4]]>
-                            </MediaFile>
-                        </MediaFiles>
-                    </Linear>
-                </Creative>
-            </Creatives>
-        </InLine>
-    </Ad>
-</VAST>
-```
-
-## Closed Caption Support
-
-Closed Captions as per VAST 4.1 specification are supported as follows
-
-```php
-// create document
-$factory = new \Sokil\Vast\Factory();
-$document = $factory->create('4.1'); //Note that closed caption support starts from VAST 4.1
-
-// insert Ad section
-$ad1 = $document
-    ->createInLineAdSection()
-    ->setId('ad1')
-    ->setAdSystem('Ad Server Name')
-    ->setAdTitle('Ad Title')
-    ->addImpression('http://ad.server.com/impression', 'imp1');
-
-// create creative for ad section
-$linearCreative = $ad1
-    ->createLinearCreative()
-    ->setDuration(128)
-    ->setId('013d876d-14fc-49a2-aefd-744fce68365b')
-    ->setAdId('pre')
-
-// add closed caption file
-$linearCreative
-    ->createClosedCaptionFile()
-    ->setLanguage('en-US')
-    ->setType('text/srt')
-    ->setUrl('http://server.com/cc.srt');
-    
-// add 100x100 media file
-$linearCreative
-    ->createMediaFile()
-    ->setProgressiveDelivery()
-    ->setType('video/mp4')
-    ->setHeight(100)
-    ->setWidth(100)
-    ->setBitrate(2500)
-    ->setUrl('http://server.com/media1.mp4');
-    
-// get dom document
-$domDocument = $document->toDomDocument();
-
-// get XML string
-echo $document;
-```
-
-This will generate:
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<VAST version="4.1">
-    <Ad id="ad1">
-        <InLine>
-            <AdSystem>Ad Server Name</AdSystem>
-            <AdTitle><![CDATA[Ad Title]]></AdTitle>
-            <Impression id="imp1"><![CDATA[http://ad.server.com/impression]]></Impression>
-            <Creatives>
-                <Creative>
-                    <Linear>
-                        <Duration>00:02:08</Duration>
-                        <MediaFiles>
                             <ClosedCaptionFiles>
                               <ClosedCaptionFile language="en-US" type="text/srt">
                                   <![CDATA[http://server.com/cc.srt]]>
@@ -188,6 +117,9 @@ This will generate:
                             </ClosedCaptionFiles>
                             <MediaFile delivery="progressive" type="video/mp4" height="100" width="100" bitrate="2500">
                                 <![CDATA[http://server.com/media1.mp4]]>
+                            </MediaFile>
+                            <MediaFile delivery="progressive" type="video/mp4" height="200" width="200" bitrate="2500">
+                                <![CDATA[http://server.com/media2.mp4]]>
                             </MediaFile>
                         </MediaFiles>
                     </Linear>
