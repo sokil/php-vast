@@ -114,7 +114,7 @@ class Linear extends AbstractLinearCreative
         $this->closedCaptionFilesDomElement->appendChild($closedCaptionFileDomElement);
 
         // object
-        return new ClosedCaptionFile($closedCaptionFileDomElement);
+        return $this->vastElementBuilder->createInLineAdLinearCreativeClosedCaptionFile($closedCaptionFileDomElement);
     }
     
         
