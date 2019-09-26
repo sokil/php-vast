@@ -5,14 +5,23 @@
  *
  * (c) Dmytro Sokil <dmytro.sokil@gmail.com>
  *
- * File created by Leonardo Matos Rodriguez  <leon486@gmail.com>
- *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
 namespace Sokil\Vast\Creative\InLine\Linear;
 
+/**
+ * Optional node that enables closed caption sidecar files associated with the ad media (video or audio)
+ * to be provided to the player. Multiple files with different mime-types may be provided to allow the player
+ * to select the one it is compatible with.
+ *
+ * Compatible with VAST starting from version 4.1
+ *
+ * See section 3.9.4 of VAST specification version 4.1
+ *
+ * @author Leonardo Matos Rodriguez <leon486@gmail.com>
+ */
 class ClosedCaptionFile
 {
     /**
