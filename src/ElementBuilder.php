@@ -99,7 +99,7 @@ class ElementBuilder
     }
     
     /**
-     * <Ad><InLine><Creatives><Creative><Linear><MediaFiles><ClosedCaptionFiless><ClosedCaptionFile>
+     * <Ad><InLine><Creatives><Creative><Linear><MediaFiles><ClosedCaptionFiles><ClosedCaptionFile>
      *
      * @param \DOMElement $mediaFileDomElement
      *
