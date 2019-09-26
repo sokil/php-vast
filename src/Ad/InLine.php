@@ -65,7 +65,7 @@ class InLine extends AbstractAdNode
      *
      * @return AbstractCreative|InLineAdLinearCreative
      */
-    protected function buildCreativeElement($type, \DOMElement $creativeDomElement): AbstractCreative
+    protected function buildCreativeElement(string $type, \DOMElement $creativeDomElement): AbstractCreative
     {
         switch ($type) {
             case self::CREATIVE_TYPE_LINEAR:
