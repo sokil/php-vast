@@ -12,7 +12,6 @@
 namespace Sokil\Vast\Creative\InLine;
 
 use Sokil\Vast\Creative\AbstractLinearCreative;
-
 use Sokil\Vast\Creative\InLine\Linear\ClosedCaptionFile;
 use Sokil\Vast\Creative\InLine\Linear\MediaFile;
 use Sokil\Vast\Creative\InLine\Linear\AdParameters;
