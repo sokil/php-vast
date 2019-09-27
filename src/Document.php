@@ -34,7 +34,7 @@ class Document extends AbstractNode
      *
      * @var AbstractAdNode[]
      */
-    private $vastAdNodeList = array();
+    private $vastAdNodeList = [];
 
     /**
      * @param \DOMDocument $DOMDocument
@@ -85,7 +85,7 @@ class Document extends AbstractNode
     private function createAdSection($type): AbstractAdNode
     {
         // Check Ad type
-        if (!in_array($type, array(InLine::TAG_NAME, Wrapper::TAG_NAME))) {
+        if (!in_array($type, [InLine::TAG_NAME, Wrapper::TAG_NAME])) {
             throw new \InvalidArgumentException(sprintf('Ad type %s not supported', $type));
         }
 

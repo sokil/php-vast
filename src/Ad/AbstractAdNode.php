@@ -248,7 +248,7 @@ abstract class AbstractAdNode extends AbstractNode
      */
     public function addImpression(string $url, string $id = null): self
     {
-        $attributes = array();
+        $attributes = [];
         if ($id !== null) {
             $attributes['id'] = $id;
         }

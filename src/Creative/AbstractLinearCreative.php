@@ -373,7 +373,7 @@ abstract class AbstractLinearCreative extends AbstractCreative
     {
         $seconds = (int) $seconds;
 
-        $time = array();
+        $time = [];
 
         // get hours
         $hours = floor($seconds / 3600);
