@@ -147,7 +147,7 @@ use Sokil\Vast\Creative\InLine\Linear\MediaFile;
 
 class AcmeMediaFile extends MediaFile
 {
-    public function setMinDiration($seconds)
+    public function setMinDuration($seconds)
     {
         $seconds = (int)$seconds;
         if ($seconds <= 0) {
