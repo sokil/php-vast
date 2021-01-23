@@ -1,7 +1,7 @@
 PHP-VAST
 ========
 
-[![Build Status](https://travis-ci.org/sokil/php-vast.png?branch=master&1)](https://travis-ci.org/sokil/php-vast)
+[![Build](https://github.com/sokil/php-bitmap/workflows/Test/badge.svg?branch=2.0)](https://github.com/sokil/php-bitmap/actions?query=workflow%3ATest)
 [![Total Downloads](http://img.shields.io/packagist/dt/sokil/php-vast.svg?1)](https://packagist.org/packages/sokil/php-vast)
 [![Coverage Status](https://coveralls.io/repos/github/sokil/php-vast/badge.svg?branch=master&1)](https://coveralls.io/github/sokil/php-vast?branch=master)
 
