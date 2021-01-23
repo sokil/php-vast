@@ -22,7 +22,7 @@ abstract class AbstractTestCase extends \PHPUnit\Framework\TestCase
     {
         $this->assertXmlStringEqualsXmlFile(
             $this->getFullXMLFixturePath($expectedXmlFixturePath),
-            $actualXmlDomDocument->toDomDocument()
+            (string)$actualXmlDomDocument
         );
     }
 }

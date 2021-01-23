@@ -238,11 +238,10 @@ class DocumentTest extends AbstractTestCase
 
     /**
      * Test for creating media file with invalid delivery
-     * @expectedException        \Exception
-     * @expectedExceptionMessage Wrong delivery specified
      */
     public function testCreateAdSectionWithInvalidDelivery()
     {
+        $this->expectExceptionMessage('Wrong delivery specified');
         $factory = new Factory();
         $document = $factory->create('2.0');
 
@@ -453,8 +452,8 @@ class DocumentTest extends AbstractTestCase
         $factory = new Factory();
         $document = $factory->create('2.0');
 
-        $this->assertContains('<?xml version="1.0" encoding="UTF-8"?>', (string)$document);
-        $this->assertContains('<VAST version="2.0"/>', (string)$document);
+        $this->assertStringContainsString('<?xml version="1.0" encoding="UTF-8"?>', (string)$document);
+        $this->assertStringContainsString('<VAST version="2.0"/>', (string)$document);
     }
 
     /**
