@@ -234,6 +234,7 @@ class DocumentTest extends AbstractTestCase
 
         $linear = $ad1->createLinearCreative();
         $linear->createMediaFile()->setStreamingDelivery();
+        $linear->createInteractiveCreativeFile()->setType('text/html')->setApiFramework('SIMID')->setUrl('http://example.com/index.html');
 
         $this->assertVastDocumentSameWithXmlFixture('linearCreativeWithInteractiveCreativeAndMediaFile.xml', $document);
     }
