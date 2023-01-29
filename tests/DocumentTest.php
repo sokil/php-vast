@@ -217,6 +217,29 @@ class DocumentTest extends AbstractTestCase
     }
 
     /**
+     * Test for creating media file with Interactive Creative and Media Files
+     */
+    public function testCreateLinearCreativeWithInteractiveCreativeFileAndMedia()
+    {
+        $factory = new Factory();
+        $document = $factory->create('4.1');
+
+        // insert Ad section
+        $ad1 = $document
+            ->createInLineAdSection()
+            ->setId('ad1')
+            ->setAdSystem('Ad Server Name')
+            ->setAdTitle('Ad Title')
+            ->addImpression('http://ad.server.com/impression');
+
+        $linear = $ad1->createLinearCreative();
+        $linear->createMediaFile()->setStreamingDelivery();
+        $linear->createInteractiveCreativeFile()->setType('text/html')->setApiFramework('SIMID')->setUrl('http://example.com/index.html');
+
+        $this->assertVastDocumentSameWithXmlFixture('linearCreativeWithInteractiveCreativeAndMediaFile.xml', $document);
+    }
+
+    /**
      * Test for creating media file with specific delivery
      */
     public function testCreateAdSectionWithDelivery()

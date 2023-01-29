@@ -14,6 +14,7 @@ namespace Sokil\Vast\Creative\InLine;
 
 use Sokil\Vast\Creative\AbstractLinearCreative;
 use Sokil\Vast\Creative\InLine\Linear\ClosedCaptionFile;
+use Sokil\Vast\Creative\InLine\Linear\InteractiveCreativeFile;
 use Sokil\Vast\Creative\InLine\Linear\MediaFile;
 
 class Linear extends AbstractLinearCreative
@@ -93,6 +94,19 @@ class Linear extends AbstractLinearCreative
 
         // object
         return $this->vastElementBuilder->createInLineAdLinearCreativeMediaFile($mediaFileDomElement);
+    }
+
+    public function createInteractiveCreativeFile(): InteractiveCreativeFile
+    {
+        // get needed DOM element
+        $mediaFilesDomElement = $this->getMediaFilesElement();
+
+        // create MediaFile and append to MediaFiles
+        $mediaFileDomElement = $mediaFilesDomElement->ownerDocument->createElement('InteractiveCreativeFile');
+        $mediaFilesDomElement->appendChild($mediaFileDomElement);
+
+        // object
+        return $this->vastElementBuilder->createInlineAdLinearCreativeInteractiveCreativeMediaFile($mediaFileDomElement);
     }
 
     /**

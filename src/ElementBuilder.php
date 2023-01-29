@@ -15,6 +15,7 @@ namespace Sokil\Vast;
 use Sokil\Vast\Ad\InLine;
 use Sokil\Vast\Ad\Wrapper;
 use Sokil\Vast\Creative\InLine\Linear as InLineAdLinearCreative;
+use Sokil\Vast\Creative\InLine\Linear\InteractiveCreativeFile;
 use Sokil\Vast\Creative\Wrapper\Linear as WrapperAdLinearCreative;
 use Sokil\Vast\Creative\InLine\Linear\MediaFile;
 use Sokil\Vast\Creative\InLine\Linear\ClosedCaptionFile;
@@ -98,7 +99,19 @@ class ElementBuilder
     {
         return new MediaFile($mediaFileDomElement);
     }
-    
+
+    /**
+     * <Ad><InLine><Creatives><Creative><Linear><MediaFiles><InteractiveCreativeFile>
+     *
+     * @param \DOMElement $mediaFileDomElement
+     *
+     * @return InteractiveCreativeFile
+     */
+    public function createInlineAdLinearCreativeInteractiveCreativeMediaFile(\DOMElement $mediaFileDomElement): InteractiveCreativeFile
+    {
+        return new InteractiveCreativeFile($mediaFileDomElement);
+    }
+
     /**
      * <Ad><InLine><Creatives><Creative><Linear><MediaFiles><ClosedCaptionFiles><ClosedCaptionFile>
      *
