@@ -1,3 +1,6 @@
+## 2.1.0 (2023-01-29)
+* Add support for InteractiveCreativeFile as per 4.1 VAST specification
+
 ## 2.0 (2019-09-26)
 * Support PHP 7.1.3 and above
 * Removed deprecated Document::toString(), use casting object to string
