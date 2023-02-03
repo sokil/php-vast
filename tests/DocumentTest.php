@@ -21,6 +21,7 @@ class DocumentTest extends AbstractTestCase
             ->setId('ad1')
             ->setAdSystem('Ad Server Name')
             ->setAdTitle('Ad Title')
+            ->setDescription('Ad Description')
             ->addImpression('http://ad.server.com/impression', 'imp1');
 
         // create creative for ad section

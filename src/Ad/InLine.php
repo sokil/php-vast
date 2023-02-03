@@ -50,6 +50,20 @@ class InLine extends AbstractAdNode
     }
 
     /**
+     * Set description
+     *
+     * @param string $value
+     *
+     * @return InLine
+     */
+    public function setDescription(string $value): self
+    {
+        $this->setScalarNodeCdata('Description', $value);
+
+        return $this;
+    }
+
+    /**
      * @return string[]
      */
     protected function getAvailableCreativeTypes(): array

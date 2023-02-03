@@ -4,6 +4,7 @@
         <InLine>
             <AdSystem><![CDATA[Ad Server Name]]></AdSystem>
             <AdTitle><![CDATA[Ad Title]]></AdTitle>
+            <Description><![CDATA[Ad Description]]></Description>
             <Impression id="imp1"><![CDATA[http://ad.server.com/impression]]></Impression>
             <Creatives>
                 <Creative id="013d876d-14fc-49a2-aefd-744fce68365b" adId="pre">
