@@ -1,3 +1,6 @@
+## 2.2.1 (2023-01-29)
+* Allows setting the `Description` and `AdServingId` of an `Inline` ad.
+
 ## 2.2.0 (2023-01-29)
 * Add support for InteractiveCreativeFile as per 4.1 VAST specification
 
