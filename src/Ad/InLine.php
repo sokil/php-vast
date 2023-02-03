@@ -50,6 +50,20 @@ class InLine extends AbstractAdNode
     }
 
     /**
+     * Set Ad serving ID
+     *
+     * @param string $value
+     *
+     * @return InLine
+     */
+    public function setAdServingId(string $value): self
+    {
+        $this->setScalarNodeCdata('AdServingId', $value);
+
+        return $this;
+    }
+
+    /**
      * Set description
      *
      * @param string $value

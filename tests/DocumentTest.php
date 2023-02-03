@@ -21,6 +21,7 @@ class DocumentTest extends AbstractTestCase
             ->setId('ad1')
             ->setAdSystem('Ad Server Name')
             ->setAdTitle('Ad Title')
+            ->setAdServingId('my-ad-server-id')
             ->setDescription('Ad Description')
             ->addImpression('http://ad.server.com/impression', 'imp1');
 

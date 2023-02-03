@@ -4,6 +4,7 @@
         <InLine>
             <AdSystem><![CDATA[Ad Server Name]]></AdSystem>
             <AdTitle><![CDATA[Ad Title]]></AdTitle>
+            <AdServingId><![CDATA[my-ad-server-id]]></AdServingId>
             <Description><![CDATA[Ad Description]]></Description>
             <Impression id="imp1"><![CDATA[http://ad.server.com/impression]]></Impression>
             <Creatives>
